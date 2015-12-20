@@ -1,0 +1,107 @@
+{
+    "listOfRecipes": [
+    {
+        "name": "Avocado Salad Dressing",
+        "created": "September 2015",
+        "ingredients": [
+            {
+                "item": "Avocado",
+                "amount": "2"
+            },
+            {
+                "item": "Lemon Juice",
+                "amount": "1.5 Tablespoons"
+            },
+            {
+                "item": "Maple Syrup",
+                "amount": "1 Tablespoon"
+            },{
+                "item": "Dry Mustard",
+                "amount": "0.5 Teaspoon"
+            },{
+                "item": "Celery Salt",
+                "amount": "0.5 Teaspoon"
+            },{
+                "item": "Black Pepper",
+                "amount": "0.5 Teaspoon"
+            },
+            {
+                "item": "Garlic Powder",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Water",
+                "amount": "2 bottles"
+            }
+        ],
+        "directions": [
+            "Add all ingredients to blender",
+            "Blend"
+        ]
+    },
+    {
+        "name": "Pasta & Veggies",
+        "created": "Sept 2015",
+        "ingredients": [
+            {
+                "item": "Red Pepper",
+                "amount": "2"
+            },
+            {
+                "item": "Celery",
+                "amount": "2"
+            },
+            {
+                "item": "Onion",
+                "amount": "2"
+            },
+            {
+                "item": "Basil",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Thyme",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Oregano",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Italian Seasoning",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Garlic Powder",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Black Pepper",
+                "amount": "0.5 Teaspoon"
+            },
+            {
+                "item": "Sage",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Salt",
+                "amount": "1 Teaspoon"
+            },
+            {
+                "item": "Red Pepper Flakes",
+                "amount": "0.5 Teaspoon"
+            },
+            {
+                "item": "Nutritional Yeast",
+                "amount": "1 Tablespoon"
+            },{
+                "item": "Rice Pasta",
+                "amount": "1 Bag"
+            }
+        ],
+        "direction": [
+            "Saute red pepper, celery and onion in water first"
+        ]
+    }
+]
+}
