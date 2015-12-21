@@ -4,7 +4,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 var buildPath = path.join(__dirname, 'assets');
-var entry = path.join(__dirname, 'app', 'index.jsx');
+var entry = path.join(__dirname, 'app', 'index.js');
 
 
 module.exports = {
