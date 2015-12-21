@@ -4,7 +4,8 @@ import {
     addRecipe,
     deleteRecipe,
     updateRecipeName,
-    updateRecipeDirections
+    updateRecipeDirections,
+    updateRecipeIngredients
 } from '../js/core';
 
 import { snakeCase } from '../js/core_helpers';
@@ -21,6 +22,10 @@ const recipeList = (state = Map(), action) => {
         case 'UPDATE_RECIPE_DIRECTIONS':
             return state.update(snakeCase(action.recipeName), (recipe) => {
                 return updateRecipeDirections(recipe, action.directions);
+            });
+        case 'UPDATE_RECIPE_INGREDIENTS':
+            return state.update(snakeCase(action.recipeName), (recipe) => {
+                return updateRecipeIngredients(recipe, action.ingredients);
             });
         default:
             return state;

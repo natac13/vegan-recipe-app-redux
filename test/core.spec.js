@@ -2,7 +2,13 @@ import { List, Map, fromJS } from 'immutable';
 import { expect }    from 'chai';
 import moment from 'moment'
 
-import { addRecipe, deleteRecipe, updateRecipeName } from '../app/js/core';
+import {
+    addRecipe,
+    deleteRecipe,
+    updateRecipeName,
+    updateRecipeDirections,
+    updateRecipeIngredients
+} from '../app/js/core';
 
 describe('Application Logic', () => {
     describe('The recipe list. The state variable in these tests.', () => {
@@ -117,50 +123,78 @@ describe('Application Logic', () => {
 
 /*** Updating the recipe ***/
         describe('Updating a recipe name property on the recipe and key value of the immutable map recipe list', () => {
-            it('should update the name of the recipe as well as the key on the state', () => {
-                const state = Map({
-                    oatmeal_and_bananas: Map({
-                        name: 'Oatmeal and Bananas',
-                        directions: List.of('add oats', 'add cinnamon', 'cook'),
-                        ingredients: List.of(Map({item: 'oats', amount: '4 scoops'}))
-                    }),
-                    mashed_potatoes: Map({
-                        name: 'Mashed Potatoes',
-                        direction: List.of('peel', 'boil'),
-                        ingredients: List()
-                    })
-                });
-                const oldName = 'Oatmeal and Bananas';
-                const newName = 'Oatmeal Banana';
-                const nextState = updateRecipeName(state, oldName, newName);
+            describe('Recipe Name', () => {
+                it('should update the name of the recipe as well as the key on the state', () => {
+                    const state = Map({
+                        oatmeal_and_bananas: Map({
+                            name: 'Oatmeal and Bananas',
+                            directions: List.of('add oats', 'add cinnamon', 'cook'),
+                            ingredients: List.of(Map({item: 'oats', amount: '4 scoops'}))
+                        }),
+                        mashed_potatoes: Map({
+                            name: 'Mashed Potatoes',
+                            direction: List.of('peel', 'boil'),
+                            ingredients: List()
+                        })
+                    });
+                    const oldName = 'Oatmeal and Bananas';
+                    const newName = 'Oatmeal Banana';
+                    const nextState = updateRecipeName(state, oldName, newName);
 
-                expect(nextState).to.equal(fromJS({
-                    mashed_potatoes: {
-                        name: 'Mashed Potatoes',
-                        direction: ['peel', 'boil'],
-                        ingredients: []
-                    },
-                    oatmeal_banana: {
-                        name: 'Oatmeal Banana',
-                        directions: ['add oats', 'add cinnamon', 'cook'],
-                        ingredients: [{item: 'oats', amount: '4 scoops'}]
-                    },
-                }));
+                    expect(nextState).to.equal(fromJS({
+                        mashed_potatoes: {
+                            name: 'Mashed Potatoes',
+                            direction: ['peel', 'boil'],
+                            ingredients: []
+                        },
+                        oatmeal_banana: {
+                            name: 'Oatmeal Banana',
+                            directions: ['add oats', 'add cinnamon', 'cook'],
+                            ingredients: [{item: 'oats', amount: '4 scoops'}]
+                        },
+                    }));
+                });
+
+                it('should do nothing when the name to update was not already present on the list', () => {
+                    const state = Map({
+                        oatmeal_banana: Map({name: 'Oatmeal Banana'}),
+                        mashed_potatoes: Map({name: 'Mashed Potatoes'})
+                    });
+
+                    const oldName = 'Salad';
+                    const newName = 'Lunch Salad';
+                    const nextState = updateRecipeName(state, oldName, newName);
+                    expect(nextState.size).to.equal(2);
+                    expect(nextState).to.not.include.key('salad');
+                    expect(nextState).to.not.include.key('lunch_salad');
+                    expect(nextState).to.include.keys(['oatmeal_banana', 'mashed_potatoes']);
+                });
             });
 
-            it('should do nothing when the name to update was not already present on the list', () => {
-                const state = Map({
-                    oatmeal_banana: Map({name: 'Oatmeal Banana'}),
-                    mashed_potatoes: Map({name: 'Mashed Potatoes'})
+            describe('Recipe directions', () => {
+                it('should update the directions with a new set when given a recipe name on the list', () => {
+                    // The state is just the recipe itself in this case.
+                    // Above it was the recipe list!
+                    const state = Map({
+                        name: 'Oatmeal and Banana',
+                        direction: List.of('Oats in pot', 'Water in pot', 'Cook'),
+                        ingredients: List()
+                    });
+                    const directions = [
+                        'Pour oats into pot',
+                        'Pour water into pot',
+                        'Cook!',
+                        'Enjoy'
+                    ];
+                    const nextState = updateRecipeDirections(state, directions);
+                    expect(nextState.get('directions').size).to.equal(4);
+                    expect(nextState.get('directions')).to.equal(List.of(
+                        'Pour oats into pot',
+                        'Pour water into pot',
+                        'Cook!',
+                        'Enjoy'
+                    ));
                 });
-
-                const oldName = 'Salad';
-                const newName = 'Lunch Salad';
-                const nextState = updateRecipeName(state, oldName, newName);
-                expect(nextState.size).to.equal(2);
-                expect(nextState).to.not.include.key('salad');
-                expect(nextState).to.not.include.key('lunch_salad');
-                expect(nextState).to.include.keys(['oatmeal_banana', 'mashed_potatoes']);
             });
         });
     });

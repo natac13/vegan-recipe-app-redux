@@ -1,5 +1,6 @@
 import { List, Map, fromJS } from 'immutable';
 import { expect }    from 'chai';
+import R from 'ramda';
 
 import * as types from '../../app/constants/recipeTypes';
 import * as actions from '../../app/actions/creators';
@@ -27,6 +28,20 @@ describe('The Recipe List Reducer', () => {
             const nextState = reducer(state, action);
             expect(nextState.size).to.equal(2);
             expect(nextState).to.include.keys(['oatmeal_banana', 'mashed_potatoes']);
+        });
+
+        it('should handle a series of ADD_RECIPE actions by being used as the callback function of reduce', () => {
+            const state = Map();
+            const stateActions = [
+                actions.addRecipe(Map({name: 'Oatmeal Banana'})),
+                actions.addRecipe(Map({name: 'Mashed Potatoes'})),
+                actions.addRecipe(Map({name: 'Lunch Salad'})),
+                actions.addRecipe(Map({name: 'Bean Burrito'})),
+
+            ];
+            const jumpToState = R.reduce(reducer, state);
+            const finalState = jumpToState(stateActions);
+            expect(finalState.size).to.equal(4);
         });
     });
 /*=====  End of Adding Recipes  ======*/
@@ -102,6 +117,28 @@ describe('The Recipe List Reducer', () => {
             const stateDirections = nextState.getIn(['mashed_potatoes', 'directions']);
             expect(stateDirections.size).to.equal(3);
             expect(stateDirections).to.include('Cut up');
+        });
+
+        it('should handle UPDATE_RECIPE_INGREDIENTS', () => {
+            const state = Map({
+                mashed_potatoes: Map({
+                    name: 'Mashed Potatoes',
+                    directions: List(),
+                    ingredients: List.of(
+                        Map({item: 'potatoes', amount: 2}),
+                        Map({item: 'water', amount: '2 bottles'})
+                    )
+                })
+            });
+            const recipeName = 'Mashed Potatoes';
+            const ingredients = List.of(
+                Map({item: 'potatoes', amount: 4}),
+                Map({item: 'water', amount: 3})
+            );
+            const action = actions.updateIngredients(recipeName, ingredients);
+            const nextState = reducer(state, action);
+            expect(nextState.size).to.equal(1);
+            expect(nextState.getIn(['mashed_potatoes', 'ingredients'])).to.equal(ingredients)
         })
     });
 

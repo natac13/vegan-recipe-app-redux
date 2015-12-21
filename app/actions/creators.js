@@ -30,3 +30,11 @@ export function updateRecipeDirections(recipeName, directions) {
         directions
     };
 }
+
+export function updateIngredients(recipeName, ingredients) {
+    return {
+        type: types.UPDATE_RECIPE_INGREDIENTS,
+        recipeName,
+        ingredients
+    };
+}
