@@ -4,3 +4,4 @@ I am using the includes.keys instead of to.equal for most test since I add a uni
 try to get the webpack -dev-middlewaer with express working again 
 
 try to get hot module reload wokring by setting up .babelrc file
+- had to put NODE_ENV=test (something other than development or undefined) since the .bablerc file will start the react-hmr plugin which throws an error for the testing. 
