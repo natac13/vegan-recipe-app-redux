@@ -5,6 +5,9 @@ import routes     from './config/routes';
 import Main from './components/Main.js';
 
 
+import configureStore from './store/configureStore';
+const store = configureStore();
+console.log(store.getState())
 import './scss/main.scss';
 
 
