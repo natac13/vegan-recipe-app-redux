@@ -5,11 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-node server.js",
-    "test": "NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
+    "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
     "postinstall": "webpack -p --config ./webpack.production.config.js --progress --colors",
-    "production": "NODE_ENV=production webpack -p --config ./webpack.production.config.js",
-    "sim": "NODE_ENV=production webpack -p --config ./webpack.production.config.js && NODE_ENV=production babel-node server.js"
+    "production": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js",
+    "sim": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js && NODE_ENV=production babel-node server.js"
   },
   "keywords": [
     "vegan"
@@ -27,6 +27,7 @@
     "babel-preset-react": "6.3.13",
     "babel-preset-stage-0": "6.3.13",
     "classnames": "2.2.1",
+    "cross-env": "1.0.5",
     "css-loader": "0.23.1",
     "express": "4.13.3",
     "file-loader": "0.8.5",
@@ -45,6 +46,7 @@
     "react-router": "1.0.3",
     "react-tap-event-plugin": "0.2.1",
     "redux": "3.0.5",
+    "redux-simple-router": "1.0.2",
     "sass-loader": "3.1.2",
     "style-loader": "0.13.0",
     "webpack": "1.12.9"
