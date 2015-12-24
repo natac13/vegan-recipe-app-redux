@@ -1,27 +1,30 @@
 import React             from 'react';
 import { render }        from 'react-dom';
 import Router            from 'react-router';
+import { Provider }      from 'react-redux';
 import { createHistory } from 'history';
 import routes            from './config/routes';
 
 import { syncReduxAndRouter } from 'redux-simple-router'
 
 
-import Main from './components/Main.js';
-
-
 import configureStore from './store/configureStore';
 const store = configureStore();
-console.log(store.getState())
 import './scss/main.scss';
 
 
 
 const rootElement = document.getElementById('root');
-const histroy = createHistory();
+const history = createHistory();
+
+syncReduxAndRouter(history, store);
+
+
 render((
-  <Router history={history} >
-    {routes}
-  </Router>
+    <Provider store={store}>
+        <Router history={history} >
+            {routes}
+        </Router>
+    </Provider>
 ), rootElement);
 

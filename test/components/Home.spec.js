@@ -5,19 +5,19 @@ import {
         scryRenderedDOMComponentsWithTag,
         Simulate
     } from 'react-addons-test-utils';
-import Home from '../../app/components/Home';
+import { Home } from '../../app/components/Home';
 
 import { expect } from 'chai';
 
 describe('The Home component', () => {
-    it('should contain two links ', () => {
+    it('should contain two buttons ', () => {
         const component = renderIntoDocument(
             <Home />
         );
-        const links = scryRenderedDOMComponentsWithTag(component, 'a');
-        let [a,b] = links;
+        const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
+        let [a,b] = buttons;
         console.log(a.textContent);
-        console.log(a);
-        expect(links.length).to.equal(2);
+
+        expect(buttons.length).to.equal(2);
     });
 });
