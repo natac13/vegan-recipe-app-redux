@@ -1,5 +1,6 @@
 import * as types from '../constants/recipeTypes';
 
+export { pushPath } from 'redux-simple-router'
 
 export function addRecipe(recipe) {
     return {

@@ -6,7 +6,6 @@ const RaisedButton = require('material-ui/lib/raised-button');
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as ActionCreators from '../actions/creators';
-import { pushPath } from 'redux-simple-router'
 
 
 function mapStateToProps(state) {
@@ -15,10 +14,11 @@ function mapStateToProps(state) {
         routing
     }
 }
-const actions = Object.assign({}, ActionCreators, {pushPath:pushPath})
+
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(actions, dispatch)
+        actions: bindActionCreators(ActionCreators, dispatch),
+        dispatch
     }
 }
 
@@ -30,6 +30,7 @@ export class Home extends Component{
     }
 
     render(){
+        console.log(this.props)
         return (
           <div className="">
                 <RaisedButton

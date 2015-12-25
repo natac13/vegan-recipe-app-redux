@@ -29,6 +29,7 @@ function recipeExtras(recipe) {
  * the main state.
  * @param {object|immutable} recipe a recipe with a name property to set as the
  * key of the recipe list Map
+ * should have a name, directions and ingredients property from user.
  */
 export function addRecipe(state, recipe) {
     recipe = recipeExtras(recipe);
