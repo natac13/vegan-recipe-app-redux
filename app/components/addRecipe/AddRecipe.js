@@ -1,18 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
-import './addRecipeStyle.scss';
-
-const TextField = require('material-ui/lib/text-field');
-
 
 import format from '../../js/format';
 
 /*** Components ***/
+const TextField = require('material-ui/lib/text-field');
 import LivePreview from './LivePreview';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../../actions/creators';
+
+/*** styling ***/
+import style from './style';
+console.log(style)
 
 
 function mapStateToProps(state) {
@@ -95,10 +96,10 @@ class AddRecipe extends Component {
         });
 
         return (
-            <div className="col span_4_of_8">
+            <div className={style.wrapper}>
                 <form
                     role="form"
-                    className="recipe-input"
+                    className={style.recipeInput}
                     onSubmit={this.handleSubmit} >
                 <TextField
                     floatingLabelText="New Recipe Name"
@@ -115,6 +116,7 @@ class AddRecipe extends Component {
                     <button type="submit" >Submit</button>
                 </form>
                 <LivePreview
+                    className={style.livePreview}
                     name={name}
                     directions={outputDirections}
                     ingredients={outputIngredients} />

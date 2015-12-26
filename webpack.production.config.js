@@ -4,6 +4,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
@@ -23,18 +24,6 @@ module.exports = {
         path: buildPath,
         filename: 'bundle.js'
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './app/index.html'
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            minimize: true,
-            compress: {
-                warnings: false
-            }
-        })
-    ],
     resolve: {
         extensions: ['', '.js', '.jsx', '.scss', '.json']
     },
@@ -52,7 +41,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loader: 'style!css!postcss!sass'
+                loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
 
             },
             {
@@ -61,5 +50,18 @@ module.exports = {
             }
         ]
     },
-    postcss: [autoprefixer]
+    postcss: [autoprefixer],
+    plugins: [
+        new ExtractTextPlugin('style.css', {allChunk: true}),
+        new HtmlWebpackPlugin({
+            template: './app/index.html'
+        }),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            compress: {
+                warnings: false
+            }
+        })
+    ]
 };

@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+
 const Paper = require('material-ui/lib/paper');
+import style from './style'
 
 const LivePreview = ( { name, directions, ingredients }) => {
     return (
-        <div className="col span_4_of_8 recipe-output">
+        <div className={style.livePreview}>
             <Paper
                 zDepth={4}
                 rounded={false}

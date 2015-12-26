@@ -10,7 +10,7 @@ import { syncReduxAndRouter } from 'redux-simple-router'
 
 import configureStore from './store/configureStore';
 const store = configureStore();
-import './scss/main.scss';
+import './main.scss';
 
 
 

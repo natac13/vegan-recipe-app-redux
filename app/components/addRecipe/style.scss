@@ -1,0 +1,21 @@
+$primary-color: #AEA500;
+.recipeInput {
+  background: $primary-color;
+  float: left;
+  width: 50%;
+}
+
+.livePreview {
+  background: #ddd;
+  color: #222;
+  width: 50%;
+  float: left;
+  border-radius: 5px;
+
+}
+
+.wrapper {
+  width: 100%;
+  margin: 1% 0 1% 1.6%;
+}
+
