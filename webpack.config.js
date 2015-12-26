@@ -28,7 +28,7 @@ module.exports = {
         // inline: true,
         progress: true,
         // Only appears to work when running server from CLI and not server.js
-        contentBase: './',
+        contentBase: './'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
@@ -36,7 +36,7 @@ module.exports = {
 
     ],
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx', '.scss', '.json']
     },
     module: {
         loaders: [
@@ -54,6 +54,10 @@ module.exports = {
                 include: path.join(__dirname, 'app', 'scss'),
                 loader: 'style!css!sass'
 
+            },
+            {
+                test: /\.json$/,
+                loader: 'json'
             }
         ]
     }

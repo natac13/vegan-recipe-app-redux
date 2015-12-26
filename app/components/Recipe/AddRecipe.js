@@ -2,12 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
 
 const TextField = require('material-ui/lib/text-field');
-const Paper = require('material-ui/lib/paper');
+
 
 import format from '../../js/format';
 
+/*** Components ***/
+import LivePreview from './LivePreview';
+
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../../actions/creators';
 
 
@@ -16,14 +19,14 @@ function mapStateToProps(state) {
     return {
         recipeList,
         routing
-    }
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(ActionCreators, dispatch),
         dispatch
-    }
+    };
 }
 
 class AddRecipe extends Component {
@@ -38,11 +41,11 @@ class AddRecipe extends Component {
         // console.log(this.props);
         this.state = {
             data: fromJS({
-                name,
-                ingredients,
-                directions
+                name: '',
+                ingredients: [],
+                directions:[]
             })
-        }
+        };
     }
 
     handleChange(event) {
@@ -58,27 +61,30 @@ class AddRecipe extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const { name, directions, ingredients } = event.target
+        const { name, directions, ingredients } = event.target;
         const recipe = {
             name: name.value,
             directions: directions.value,
             ingredients: ingredients.value
         };
         this.props.actions.addRecipe(recipe);
+        this.props.actions.pushPath('/recipes');
     }
 
     componentDidUpdate() {
-        console.log(this.props)
+        console.log(this.props);
     }
 
     render() {
-        let outputDirections = this.state.data.get('directions').map((direction, index) => {
+        const { data } = this.state;
+        const name = data.get('name');
+        const outputDirections = data.get('directions').map((direction, index) => {
             return (
                 <li key={index}> {direction}</li>
             );
         });
 
-        let outputIngredients = this.state.data.get('ingredients').map((ingredient, index) => {
+        const outputIngredients = data.get('ingredients').map((ingredient, index) => {
             return (
                 <li key={index}>
                     <p>Item: {ingredient.get('item')} </p>
@@ -87,13 +93,6 @@ class AddRecipe extends Component {
             );
         });
 
-        let list = this.props.recipeList.map((recipe, index) =>{
-            return (
-                <li key={index}>
-                    <p> recipe name {recipe.get('name')}</p>
-                </li>
-            );
-        });
         return (
             <div className="">
                 <form
@@ -114,28 +113,18 @@ class AddRecipe extends Component {
                     id="ingredients" />
                     <button type="submit" >Submit</button>
                 </form>
-                <div className="col span_4_of_8 recipe-output">
-                    <Paper zDepth={4} rounded={false}>
-                        <p>Name!!!: {this.state.data.get('name')}</p>
-                        Directions:
-                        <ul>
-                            {outputDirections}
-                        </ul>
-                        Ingredients
-                        <ul>
-                            {outputIngredients}
-                        </ul>
+                <LivePreview
+                    name={name}
+                    directions={outputDirections}
+                    ingredients={outputIngredients} />
 
-                    </Paper>
-                    <ul>
-                    {list}
-                    </ul>
-                </div>
 
             </div>
         );
     }
 }
+
+
 
 export default connect(
     mapStateToProps,
