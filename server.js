@@ -14,7 +14,7 @@ const webpackOptions = {
     publicPath: config.output.publicPath,
     // needed so that when going to the localhost:3000 it will load the contents
     // from this directory
-    contentBase: './build',
+    contentBase: './',
     hot: true,
     quiet: false,
     // hides all the bundling file names

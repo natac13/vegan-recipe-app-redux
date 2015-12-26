@@ -6,8 +6,6 @@ const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
-
 var buildPath = path.join(__dirname, 'build');
 var entry = path.join(__dirname, 'app', 'index.js');
 

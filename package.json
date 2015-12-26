@@ -8,7 +8,7 @@
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
     "postinstall": "webpack -p --config ./webpack.production.config.js --progress --colors",
-    "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js --progress --color ",
+    "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js --progress --color",
     "deploy": "npm run build && gh-pages -d build"
   },
   "keywords": [
@@ -67,7 +67,9 @@
     "eslint-plugin-react": "3.11.3",
     "gh-pages": "0.8.0",
     "jsdom": "7.2.1",
+    "json-loader": "0.5.4",
     "mocha": "2.3.4",
+    "postcss-loader": "0.8.0",
     "react-addons-test-utils": "0.14.3",
     "react-transform-catch-errors": "1.0.0",
     "react-transform-hmr": "1.0.1",

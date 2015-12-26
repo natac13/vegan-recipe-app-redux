@@ -1,8 +1,11 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
+
+const path = require('path');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 
 var buildPath = path.join(__dirname, 'build');
@@ -49,7 +52,6 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                include: path.join(__dirname, 'app', 'scss'),
                 loader: 'style!css!postcss!sass'
 
             },
@@ -58,5 +60,6 @@ module.exports = {
                 loader: 'json'
             }
         ]
-    }
+    },
+    postcss: [autoprefixer]
 };

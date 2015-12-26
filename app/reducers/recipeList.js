@@ -1,4 +1,5 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
+
 import * as actionCreators from '../actions/creators';
 import {
     addRecipe,
