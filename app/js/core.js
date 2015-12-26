@@ -1,7 +1,7 @@
 import { Map, List, fromJS } from 'immutable';
 import { snakeCase } from './core_helpers';
 
-import uuid   from 'node-uuid';
+import uuid from 'node-uuid';
 import moment from 'moment';
 
 /**

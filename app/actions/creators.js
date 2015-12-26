@@ -39,3 +39,36 @@ export function updateIngredients(recipeName, ingredients) {
         ingredients
     };
 }
+
+/*===============================
+=            MongoDb            =
+===============================*/
+
+export function buildList(recipeList) {
+    return {
+        type: types.BUILD_LIST,
+        recipeList
+    }
+}
+
+// export function showError(error) {
+//     return {
+//         type: types.SHOW_ERROR,
+//         error
+//     }
+// }
+
+// import { fetchFromMongo } from '../js/database';
+
+// export function getFullRecipeList() {
+//     return function(dispatch, getState) {
+//         return fetchFromMongo().then(
+//             docs => dispatch(buildList(docs)),
+//             error => dispatch(showError(error))
+//         );
+//     };
+// }
+//
+
+
+/*=====  End of MongoDb  ======*/

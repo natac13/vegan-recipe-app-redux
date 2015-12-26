@@ -13,7 +13,6 @@ import * as ActionCreators from '../../actions/creators';
 
 /*** styling ***/
 import style from './style';
-console.log(style)
 
 
 function mapStateToProps(state) {

@@ -9,6 +9,8 @@ import {
     updateRecipeIngredients
 } from '../js/core';
 
+// import { mongoDataToImmutableMap } from '../js/database';
+
 import { snakeCase } from '../js/core_helpers';
 // sample file for now
 var initialState = require("../../sample");
@@ -31,6 +33,8 @@ const recipeList = (state = Map(), action) => {
             return state.update(snakeCase(action.recipeName), (recipe) => {
                 return updateRecipeIngredients(recipe, action.ingredients);
             });
+        case 'BUILD_LIST':
+            return fromJS(action.recipeList);
         default:
             return state;
     }
