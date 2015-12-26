@@ -39,10 +39,21 @@ export function updateIngredients(recipeName, ingredients) {
         ingredients
     };
 }
+import Rebase from 're-base';
 
-/*===============================
-=            MongoDb            =
-===============================*/
+export function getRecipeListFirebase(context) {
+    return function(dispatch, getState) {
+        let base = Rebase.createClass('https://vegan-recipes.firebaseio.com/');
+        base.fetch('recipeList', {
+            context: context,
+            asArray: false,
+            then: (data) => {
+                dispatch(buildList(data));
+            }
+        });
+        return Promise.resolve()
+    }
+}
 
 export function buildList(recipeList) {
     return {
@@ -50,6 +61,17 @@ export function buildList(recipeList) {
         recipeList
     }
 }
+
+/*===============================
+=            MongoDb            =
+===============================*/
+
+// export function buildList(recipeList) {
+//     return {
+//         type: types.BUILD_LIST,
+//         recipeList
+//     }
+// }
 
 // export function showError(error) {
 //     return {

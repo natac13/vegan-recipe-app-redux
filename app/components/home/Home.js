@@ -32,26 +32,15 @@ function mapDispatchToProps(dispatch) {
 
 
 /*=====  End of Connect to Redux setup  ======*/
-import Rebase from 're-base';
-let base = Rebase.createClass('https://vegan-recipes.firebaseio.com/')
-console.log(base)
+
+
 
 export class Home extends Component{
 
     constructor(props) {
         super(props);
         // need to dispatch the async action here.
-        console.log(this.props.recipeList)
-        base.fetch('recipeList', {
-            context: this,
-            asArray: false,
-            then: (data) => {
-                console.log('from firebase')
-                console.log(data);
-                console.log(this.props.actions);
-                this.props.actions.buildList(data);
-            }
-        });
+        this.props.actions.getRecipeListFirebase(this);
     }
     componentDidUpdate() {
         console.log('updated');
