@@ -5,7 +5,7 @@ const RaisedButton = require('material-ui/lib/raised-button');
 
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../actions/creators';
 
 

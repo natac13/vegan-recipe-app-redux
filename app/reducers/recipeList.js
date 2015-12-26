@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import * as actionCreators from '../actions/creators';
 import {
     addRecipe,
@@ -12,9 +12,8 @@ import { snakeCase } from '../js/core_helpers';
 // sample file for now
 var initialState = require("../../sample");
 
-console.log(initialState);
 
-const recipeList = (state = fromJS(initialState.recipeList), action) => {
+const recipeList = (state = Map(), action) => {
     switch (action.type) {
         case 'ADD_RECIPE':
             return addRecipe(state, action.recipe);

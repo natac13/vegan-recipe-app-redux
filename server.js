@@ -14,7 +14,7 @@ const webpackOptions = {
     publicPath: config.output.publicPath,
     // needed so that when going to the localhost:3000 it will load the contents
     // from this directory
-    contentBase: config.devServer.contentBase,
+    contentBase: './',
     hot: true,
     quiet: false,
     // hides all the bundling file names
@@ -46,7 +46,7 @@ let compiler = webpack(config);
 
 /*** during development I am using a webpack-dev-server ***/
 if(isDevelopment) {
-    new WebpackDevServer(webpack(config), webpackOptions)
+    new WebpackDevServer(compiler, webpackOptions)
     .listen(port, 'localhost', function(err) {
         if (err) { console.log(err); }
         console.log(`Listening on port: ${port}`);

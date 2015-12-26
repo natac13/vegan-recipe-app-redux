@@ -1,10 +1,11 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 
 
-var buildPath = path.join(__dirname, 'assets');
+var buildPath = path.join(__dirname, 'build');
 var entry = path.join(__dirname, 'app', 'index.js');
 module.exports = {
     // real source-map for production
@@ -17,8 +18,7 @@ module.exports = {
     ],
     output: {
         path: buildPath,
-        filename: 'bundle.js',
-        publicPath: '/assets/' // need for hot reload. or hit refresh each time
+        filename: 'bundle.js'
     },
     plugins: [
         new webpack.optimize.DedupePlugin(),
@@ -29,12 +29,15 @@ module.exports = {
             }
         })
     ],
+    resolve: {
+        extensions: ['', '.js', '.jsx', '.scss', '.json']
+    },
     module: {
         loaders: [
             {
                 test: /\.jsx?$/,
                 include: path.join(__dirname, 'app'),
-                exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules)/,
                 loader: 'babel',
                 query: {
                     cacheDirectory: true,
@@ -44,9 +47,14 @@ module.exports = {
             {
                 test: /\.scss$/,
                 include: path.join(__dirname, 'app', 'scss'),
-                loader: 'style!css!sass'
+                loader: 'style!css!postcss!sass'
 
+            },
+            {
+                test: /\.json$/,
+                loader: 'json'
             }
         ]
-    }
+    },
+    postcss: [autoprefixer]
 };
