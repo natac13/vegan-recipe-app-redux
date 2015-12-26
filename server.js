@@ -14,7 +14,7 @@ const webpackOptions = {
     publicPath: config.output.publicPath,
     // needed so that when going to the localhost:3000 it will load the contents
     // from this directory
-    contentBase: './',
+    // contentBase: './build/',
     hot: true,
     quiet: false,
     // hides all the bundling file names
@@ -36,7 +36,7 @@ let compiler = webpack(config);
 // app.use(webpackMiddleware(compiler, webpackOptions));
 // app.use(webpackHotMiddleware(compiler));
 
-// app.get('/', (req, res) => {
+// app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'index.html'));
 // });
 // app.listen(port, function() {

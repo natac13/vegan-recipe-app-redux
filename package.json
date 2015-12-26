@@ -9,6 +9,7 @@
     "test:watch": "npm run test -- --watch",
     "postinstall": "webpack -p --config ./webpack.production.config.js --progress --colors",
     "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js --progress --color",
+    "x": "babel-node test.js",
     "deploy": "npm run build && gh-pages -d build"
   },
   "keywords": [
