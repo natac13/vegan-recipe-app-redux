@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
-// import { Link }             from 'react-router';
 
+/*** Components ***/
 const RaisedButton = require('material-ui/lib/raised-button');
 
+/*** Styling ***/
+import style from './style.scss';
+
+/*==============================================
+=            Connection to Redux setup            =
+==============================================*/
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../actions/creators';
+import * as ActionCreators from '../../actions/creators';
 
 
 function mapStateToProps(state) {
@@ -25,6 +31,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 
+/*=====  End of Connect to Redux setup  ======*/
+
+
+
 export class Home extends Component{
 
     constructor(props) {
@@ -32,7 +42,6 @@ export class Home extends Component{
     }
 
     render(){
-        console.log(this.props.recipeList.toJS())
         return (
           <div className="">
                 <RaisedButton

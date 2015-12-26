@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
-const RaisedButton = require('material-ui/lib/raised-button');
 import { snakeCase } from '../../js/core_helpers';
 
+const RaisedButton = require('material-ui/lib/raised-button');
+
+import style from './style.scss';
 
 const ListItem = ( { link, name } ) => {
     const snakedName = snakeCase(name);
@@ -15,8 +17,8 @@ const ListItem = ( { link, name } ) => {
 };
 
 ListItem.propTypes = {
-    link: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequied
+    name: PropTypes.string.isRequired,
+    link: PropTypes.func.isRequired
 };
 
 export default ListItem;

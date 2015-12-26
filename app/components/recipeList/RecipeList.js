@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-
+/*** Components ***/
 import ListItem from './ListItem';
+
+/*** Styling ***/
+import style from './style.scss';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

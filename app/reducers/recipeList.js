@@ -15,7 +15,7 @@ var initialState = require("../../sample");
 
 
 
-const recipeList = (state = fromJS(initialState.recipeList), action) => {
+const recipeList = (state = Map(), action) => {
     switch (action.type) {
         case 'ADD_RECIPE':
             return addRecipe(state, action.recipe);

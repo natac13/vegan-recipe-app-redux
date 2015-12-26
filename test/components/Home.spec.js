@@ -5,7 +5,7 @@ import {
         scryRenderedDOMComponentsWithTag,
         Simulate
     } from 'react-addons-test-utils';
-import { Home } from '../../app/components/Home';
+import { Home } from '../../app/components/home/Home';
 
 import { expect } from 'chai';
 
