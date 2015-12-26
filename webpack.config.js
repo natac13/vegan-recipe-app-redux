@@ -28,15 +28,6 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/build/' // need for hot reload. or hit refresh each time
     },
-
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './app/index.html'
-        }),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
-
-    ],
     resolve: {
         extensions: ['', '.js', '.jsx', '.scss', '.json']
     },
@@ -53,7 +44,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loader: 'style!css!postcss!sass'
+                loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
 
             },
             {
@@ -62,5 +53,14 @@ module.exports = {
             }
         ]
     },
-    postcss: [autoprefixer]
+    postcss: [autoprefixer],
+    plugins: [
+        new ExtractTextPlugin('style.css', {allChunk: true}),
+        new HtmlWebpackPlugin({
+            template: './app/index.html'
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
+
+    ]
 };

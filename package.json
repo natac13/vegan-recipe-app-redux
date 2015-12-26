@@ -4,6 +4,7 @@
   "description": "An app to store vegan recipes",
   "main": "server.js",
   "scripts": {
+    "clean": "rimraf build/",
     "start": "babel-node server.js",
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",

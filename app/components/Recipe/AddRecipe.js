@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
+import './addRecipeStyle.scss';
 
 const TextField = require('material-ui/lib/text-field');
 
@@ -94,10 +95,10 @@ class AddRecipe extends Component {
         });
 
         return (
-            <div className="">
+            <div className="col span_4_of_8">
                 <form
                     role="form"
-                    className="col span_4_of_8 recipe-input"
+                    className="recipe-input"
                     onSubmit={this.handleSubmit} >
                 <TextField
                     floatingLabelText="New Recipe Name"
