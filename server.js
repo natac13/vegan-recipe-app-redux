@@ -1,20 +1,20 @@
-import express from 'express';
-import path    from 'path';
+// import express from 'express';
+// import path    from 'path';
 
-let app = express();
+// let app = express();
 
 /*** Webpack imports ***/
 import webpack          from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import config           from './webpack.config.js';
-import webpackMiddleware    from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+// import webpackMiddleware    from 'webpack-dev-middleware';
+// import webpackHotMiddleware from 'webpack-hot-middleware';
 
 const webpackOptions = {
     publicPath: config.output.publicPath,
     // needed so that when going to the localhost:3000 it will load the contents
     // from this directory
-    contentBase: config.devServer.contentBase,
+    contentBase: './build',
     hot: true,
     quiet: false,
     // hides all the bundling file names
@@ -29,7 +29,7 @@ const webpackOptions = {
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 const port = isDevelopment ? 3023 : process.env.PORT;
-const public_path = path.join(__dirname, 'public');
+
 let compiler = webpack(config);
 // app.use('/', express.static(public_path));
 
@@ -46,7 +46,7 @@ let compiler = webpack(config);
 
 /*** during development I am using a webpack-dev-server ***/
 if(isDevelopment) {
-    new WebpackDevServer(webpack(config), webpackOptions)
+    new WebpackDevServer(compiler, webpackOptions)
     .listen(port, 'localhost', function(err) {
         if (err) { console.log(err); }
         console.log(`Listening on port: ${port}`);

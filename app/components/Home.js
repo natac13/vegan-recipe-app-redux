@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Link }             from 'react-router';
+// import { Link }             from 'react-router';
 
 const RaisedButton = require('material-ui/lib/raised-button');
+
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -9,9 +10,10 @@ import * as ActionCreators from '../actions/creators';
 
 
 function mapStateToProps(state) {
-    const { routing } = state;
+    const { routing, recipeList } = state;
     return {
-        routing
+        routing,
+        recipeList
     }
 }
 
@@ -30,11 +32,11 @@ export class Home extends Component{
     }
 
     render(){
-        console.log(this.props)
+        console.log(this.props.recipeList.toJS())
         return (
           <div className="">
                 <RaisedButton
-                    label="See Recipe List"
+                    label="See Recipe List!"
                     onClick={() => this.props.actions.pushPath('/recipes')}
                     className="material-icons-custom-github" />
 

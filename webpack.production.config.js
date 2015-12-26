@@ -2,9 +2,10 @@
 
 var path = require('path');
 var webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
-var buildPath = path.join(__dirname, 'assets');
+var buildPath = path.join(__dirname, 'build');
 var entry = path.join(__dirname, 'app', 'index.js');
 module.exports = {
     // real source-map for production
@@ -17,10 +18,12 @@ module.exports = {
     ],
     output: {
         path: buildPath,
-        filename: 'bundle.js',
-        publicPath: '/assets/' // need for hot reload. or hit refresh each time
+        filename: 'bundle.js'
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            template: './app/index.html'
+        }),
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             minimize: true,
@@ -29,12 +32,15 @@ module.exports = {
             }
         })
     ],
+    resolve: {
+        extensions: ['', '.js', '.jsx', '.scss', '.json']
+    },
     module: {
         loaders: [
             {
                 test: /\.jsx?$/,
                 include: path.join(__dirname, 'app'),
-                exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules)/,
                 loader: 'babel',
                 query: {
                     cacheDirectory: true,
@@ -44,8 +50,12 @@ module.exports = {
             {
                 test: /\.scss$/,
                 include: path.join(__dirname, 'app', 'scss'),
-                loader: 'style!css!sass'
+                loader: 'style!css!postcss!sass'
 
+            },
+            {
+                test: /\.json$/,
+                loader: 'json'
             }
         ]
     }
