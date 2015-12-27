@@ -1,21 +1,37 @@
 $primary-bg: #D8D8D8;
 .recipeInput {
-  background: $primary-bg;
-  float: left;
+  flex: 1 100%;
   width: 50%;
 }
 
 .livePreview {
+  flex: 1 100%;
   background: #ddd;
   color: #222;
-  width: 50%;
-  float: left;
   border-radius: 5px;
 
 }
 
 .wrapper {
-  width: 100%;
-  margin: 1% 0 1% 1.6%;
+  display: flex;
 }
+
+.directionsList {
+  list-style: lower-roman;
+  padding: 1em 3em;
+  li {
+    margin: 0.5em;
+  }
+}
+
+.ingredientsList {
+  list-style: upper-roman;
+  padding: 1em 3em;
+  li {
+    margin: 0.5em;
+    font-size: 1em;
+    line-height: 1.25em;
+  }
+}
+
 

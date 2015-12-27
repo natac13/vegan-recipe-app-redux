@@ -37,11 +37,11 @@ const itemify = R.compose(convertToItemObject, R.split(':'));
 const format = (property) => {
     if(property === 'directions') {
         // return a function :: a -> [a]
-        return R.compose(fromJS, R.map(presentation), R.split(','));
+        return R.compose(fromJS, R.map(presentation), R.split(';'));
     }
     if(property === 'ingredients') {
         // function :: String a -> [Object b]
-        return R.compose(fromJS, R.map(itemify), R.split(','))
+        return R.compose(fromJS, R.map(itemify), R.split(';'))
     }
     // was the name property so just pass through
     return R.trim;

@@ -13,11 +13,11 @@ const LivePreview = ( { name, directions, ingredients }) => {
                 className="live-preview">
                 <p>Name: {name}</p>
                 Directions:
-                <ul>
+                <ul className={style.directionsList}>
                     {directions}
                 </ul>
                 Ingredients
-                <ul>
+                <ul className={style.ingredientsList}>
                     {ingredients}
                 </ul>
 
