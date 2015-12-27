@@ -41,15 +41,21 @@ export function updateIngredients(recipeName, ingredients) {
 }
 
 import Firebase from 'firebase';
-const ref = new Firebase('https://vegan-recipes.firebaseio.com/');
-const list = ref.child('recipeList');
+import Fireproof from 'fireproof';
+const fireRef = new Firebase('https://vegan-recipes.firebaseio.com/');
+const fp = new Fireproof(fireRef);
+const list = fp.child('recipeList');
+
 
 export function getRecipeListFirebase(context) {
     return function(dispatch, getState) {
-        list.once('value', function(snapShot) {
-            dispatch(buildList(snapShot.val()))
-        })
-        return Promise.resolve()
+        // list.once('value', function(snapShot) {
+        //     dispatch(buildList(snapShot.val()))
+        // })
+        // return Promise.resolve()
+        return list.then(function(snap) {
+            dispatch(buildList(snap.val()));
+        });
     }
 }
 
@@ -60,10 +66,10 @@ export function addRecipeFirebase(recipe) {
     return function (dispatch, getState) {
         const snakedName = snakeCase(recipe.name);
         const buffedRecipe = recipeExtras(recipe).toObject();
-        list.child(snakedName).set(buffedRecipe);
-        // buffs the recipe internally
-        dispatch(addRecipe(recipe))
-        return Promise.resolve()
+        return list.child(snakedName).set(buffedRecipe).then(function() {
+            dispatch(addRecipe(recipe));
+        });
+
     }
 }
 
