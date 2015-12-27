@@ -1,0 +1,27 @@
+$primary-button: #C3E369;
+$text: #513D1F;
+
+
+.linkButton {
+  box-sizing: border-box;
+  font-size: 24px;
+  line-height: 28px;
+  width: 10em;
+  height: auto;
+  padding: 0.2em;
+  box-shadow: 0 0 10px #333;
+  margin: auto;
+  background: $primary-button;
+  transition: all .7s ease;
+  border: none;
+  border-radius: 3px;
+  color: $text;
+
+  &:hover {
+    background: darken($primary-button, 15%);
+    transform: scale(1.05);
+    box-shadow: 0 0 2px #333;
+    color: darken($text, 5%);
+  }
+
+}

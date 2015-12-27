@@ -1,0 +1,12 @@
+$primary-bg: #E4DED1;
+.recipeList {
+  background: $primary-bg;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recipeItem {
+  margin: auto;
+}

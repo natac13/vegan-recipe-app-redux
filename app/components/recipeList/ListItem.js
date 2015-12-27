@@ -8,11 +8,11 @@ import style from './style.scss';
 const ListItem = ( { link, name } ) => {
     const snakedName = snakeCase(name);
     return (
-        <li className="recipe-item">
+        <div className={style.recipeItem}>
             <RaisedButton
                 onClick={() => link(`/recipes/${snakedName}`)}
                 label={name} />
-        </li>
+        </div>
     );
 };
 

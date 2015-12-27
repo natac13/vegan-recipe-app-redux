@@ -1,0 +1,30 @@
+.photoBanner {
+  display: flex;
+  flex-flow: row no-wrap;
+  justify-content: space-around;
+
+}
+
+.bananas {
+  background: url('./img/bananas_in_box.png') center no-repeat;
+  background-size: 100%;
+  height: 10em;
+  width: 10em;
+}
+
+.oatmealBananas {
+  background: url('./img/oatmeal_and_bananas.png') center no-repeat;
+  background-size: 100%;
+  height: 10em;
+  width: 10em;
+}
+
+.bigRiceSalad {
+  background: url('./img/big_rice_salad.png') center no-repeat;
+  background-size: 100%;
+  height: 10em;
+  width: 10em;
+}
+
+
+

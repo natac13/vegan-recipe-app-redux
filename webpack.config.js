@@ -29,7 +29,7 @@ module.exports = {
         publicPath: '/build/' // need for hot reload. or hit refresh each time
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.scss', '.json', '.node']
+        extensions: ['', '.js', '.jsx', '.scss', '.json', '.node', '.png']
     },
     module: {
         loaders: [
@@ -53,7 +53,11 @@ module.exports = {
             },
             {
                 test: /\.node$/,
-                loader: "node-loader"
+                loader: 'node-loader'
+            },
+            {
+                test: /\.(jpe?g|png)$/,
+                loader: 'url?limit=25000'
             }
         ]
     },

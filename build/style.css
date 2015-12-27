@@ -1,3 +1,112 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+html {
+  line-height: 24px;
+  line-height: 1.5rem; }
+
+.style__header___10Il9 {
+  font-size: 36px;
+  font-size: 2.25rem;
+  line-height: 48px;
+  line-height: 3rem;
+  text-align: center; }
+
+.style__container___3ZVSy {
+  display: block; }
+.style__photoBanner___2Rkh2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row no-wrap;
+      -ms-flex-flow: row no-wrap;
+          flex-flow: row no-wrap;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around; }
+
+.style__bananas___VN3N4 {
+  background: url(/build/98341cc80b48444d2ef9fcc092b73eb2.png) center no-repeat;
+  background-size: 100%;
+  height: 10em;
+  width: 10em; }
+
+.style__oatmealBananas___fQXJC {
+  background: url(/build/bb340f94910e83c5aeae17c2872c7ce0.png) center no-repeat;
+  background-size: 100%;
+  height: 10em;
+  width: 10em; }
+
+.style__bigRiceSalad___1H5EH {
+  background: url(/build/19fc3c75145f6849e402a8461c2b0328.png) center no-repeat;
+  background-size: 100%;
+  height: 10em;
+  width: 10em; }
+.style__container___15O3- {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background: #E4DED1;
+  width: 100%;
+  margin: auto; }
+
+.style__linkButton___U24Sd {
+  margin: auto;
+  padding: 1em; }
+
+.style__app___1NkMl {
+  margin: auto; }
 .style__recipeInput___1Llnk {
   background: #AEA500;
   float: left;
@@ -13,8 +122,5 @@
 .style__wrapper___2sH5U {
   width: 100%;
   margin: 1% 0 1% 1.6%; }
-html {
-  line-height: 24px;
-  line-height: 1.5rem; }
 
 /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdHlsZS5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

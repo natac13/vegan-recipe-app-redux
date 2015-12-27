@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 /*** Components ***/
 const RaisedButton = require('material-ui/lib/raised-button');
+import PhotoBanner from './photoBanner/';
+import LinkButton  from './linkButton/';
 
 /*** Styling ***/
 import style from './style.scss';
@@ -46,24 +48,23 @@ export class Home extends Component{
     }
     componentDidUpdate() {
         console.log('updated');
-        console.log(this.props.recipeList)
+        console.log(this.props.recipeList);
     }
 
     render(){
         return (
-          <div className="">
-                <RaisedButton
-                    label="See Recipe List!"
-                    onClick={() => this.props.actions.pushPath('/recipes')}
-                    className="material-icons-custom-github" />
-
-                <RaisedButton
+        <div className={style.app}>
+            <PhotoBanner />
+            <div className={style.container}>
+                <LinkButton
+                    label="See Recipe List Natac Vantage"
+                    onClick={() => this.props.actions.pushPath('/recipes')} />
+                <LinkButton
                     label="Add New Recipe"
-                    onClick={() => this.props.actions.pushPath('/addnew')}
-                    className="material-icons-custom-github" />
+                    onClick={() => this.props.actions.pushPath('/addnew')} />
 
-
-          </div>
+            </div>
+        </div>
         );
     }
 }
