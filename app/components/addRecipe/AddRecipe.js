@@ -98,8 +98,7 @@ class AddRecipe extends Component {
             <div className={style.wrapper}>
                 <form
                     role="form"
-                    className={style.recipeInput}
-                    onSubmit={this.handleSubmit} >
+                    className={style.recipeInput}>
                 <TextField
                     floatingLabelText="New Recipe Name"
                     onChange={this.handleChange}
@@ -112,7 +111,7 @@ class AddRecipe extends Component {
                     floatingLabelText="Ingredients"
                     onChange={this.handleChange}
                     id="ingredients" />
-                    <button type="submit" >Submit</button>
+                    <button type="button" onClick={this.handleSubmit}>Submit</button>
                 </form>
                 <LivePreview
                     className={style.livePreview}
