@@ -40,7 +40,9 @@ export class Home extends Component{
     constructor(props) {
         super(props);
         // need to dispatch the async action here.
-        this.props.actions.getRecipeListFirebase(this);
+        if(!!this.props.actions) {
+            this.props.actions.getRecipeListFirebase(this);
+        }
     }
     componentDidUpdate() {
         console.log('updated');

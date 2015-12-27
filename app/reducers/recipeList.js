@@ -34,7 +34,7 @@ const recipeList = (state = Map(), action) => {
                 return updateRecipeIngredients(recipe, action.ingredients);
             });
         case 'BUILD_LIST':
-            return fromJS(action.recipeList);
+            return state.merge(fromJS(action.recipeList));
         default:
             return state;
     }

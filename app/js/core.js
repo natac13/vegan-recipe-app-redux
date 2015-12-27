@@ -9,10 +9,10 @@ import moment from 'moment';
  * sure I get back an immutable Map deeply converted.
  * Will created a extras map with an id and created_date to merge to the recipe
  * map.
- * @param  {[type]} recipe [description]
- * @return {[type]}        [description]
+ * @param   {object} recipe  has the input fields
+ * @return  {Immutable Map}        recipe buffed with an id and date.
  */
-function recipeExtras(recipe) {
+export function recipeExtras(recipe) {
     recipe = fromJS(recipe);
     const id = uuid.v4();
     const date = moment().format('MMMM Do YYYY');

@@ -68,12 +68,12 @@ class AddRecipe extends Component {
             directions: directions.value,
             ingredients: ingredients.value
         };
-        this.props.actions.addRecipe(recipe);
+        this.props.actions.addRecipeFirebase(recipe);
         this.props.actions.pushPath('/recipes');
     }
 
     componentDidUpdate() {
-        console.log(this.props);
+        // console.log(this.props);
     }
 
     render() {
