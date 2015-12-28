@@ -6,9 +6,9 @@ $text: #513D1F;
   box-sizing: border-box;
   font-size: 24px;
   line-height: 28px;
-  width: 10em;
-  height: auto;
-  padding: 0.2em;
+  letter-spacing: 1px;
+  flex: 1 100%;
+  padding: 0.5em;
   box-shadow: 0 0 10px #333;
   margin: auto;
   background: $primary-button;
@@ -18,10 +18,15 @@ $text: #513D1F;
   color: $text;
 
   &:hover {
-    background: darken($primary-button, 15%);
-    transform: scale(1.05);
+    background: darken($primary-button, 10%);
     box-shadow: 0 0 2px #333;
     color: darken($text, 5%);
+    letter-spacing: 3px;
+    border-radius: 8px;
   }
 
+}
+
+@media only-screen and (max-width: 699px) {
+  width: 100%;
 }

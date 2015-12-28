@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/natac13/vegan-recipe-app-redux.svg)](https://travis-ci.org/natac13/vegan-recipe-app-redux)
+[![Build Status](https://travis-ci.org/natac13/vegan-recipe-app-redux.svg)](https://travis-ci.org/natac13/vegan-recipe-app-redux) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
 
 ## Intro 
 

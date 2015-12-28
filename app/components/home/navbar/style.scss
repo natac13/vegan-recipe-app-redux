@@ -1,0 +1,15 @@
+$primary-bg: #E4DED1;
+.navbar {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  background: $primary-bg;
+  width: 100%;
+  margin-top: 1em;
+  height: 20vh;
+}
+
+@media only-screen and (max-width: 699px) {
+  flex-flow: column;
+  height: auto;
+}

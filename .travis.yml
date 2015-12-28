@@ -3,6 +3,8 @@ language: node_js
 node_js: stable
 git:
   depth: 3
+notifications:
+  email: false
 cache:
-    directories:
-      - node_modules
+  directories:
+    - node_modules

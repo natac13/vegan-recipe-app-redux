@@ -9,8 +9,10 @@
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ignore-styles --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
     "postinstall": "webpack -p --config ./webpack.production.config.js --progress --colors",
+    "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js --progress --color",
-    "deploy": "npm run build && gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "x": "babel-node test.js",
     "commit": "git-cz"
   },
@@ -102,7 +104,9 @@
     "webpack-dev-server": "1.14.0",
     "webpack-hot-middleware": "2.6.0"
   },
-  "czConfig": {
-    "path": "node_modules/cz-conventional-changelog"
+  "config": {
+    "commitizen": {
+        "path": "node_modules/cz-conventional-changelog"
+    }
   }
 }

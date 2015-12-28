@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 /*** Components ***/
 const RaisedButton = require('material-ui/lib/raised-button');
-import LinkButton  from './linkButton/';
+
+import Navbar      from './navbar/';
 import PhotoBanner from './photoBanner/';
 
 /*** Styling ***/
@@ -52,10 +53,30 @@ export class Home extends Component{
     }
 
     render(){
+        const { pushPath } = this.props.actions;
+        const nav1 = {
+            label: 'Add New Recipe',
+            onClick() {
+                pushPath('/addnew')
+            }
+        }
+        const nav2 = {
+            label: 'See Recipe List',
+            onClick() {
+                pushPath('/recipes');
+            }
+        }
+        const nav3 = {
+            label: 'Login',
+            onClick() {
+                pushPath('/login')
+            }
+        }
         return (
         <div className={style.app}>
+            <Navbar nav1={nav1} nav2={nav2} nav3={nav3} />
             <PhotoBanner />
-            <div className={style.container}>
+            {/*<div className={style.container}>
                 <LinkButton
                     label="See Recipe List Natac Vantage"
                     onClick={() => this.props.actions.pushPath('/recipes')} />
@@ -63,7 +84,7 @@ export class Home extends Component{
                     label="Add New Recipe"
                     onClick={() => this.props.actions.pushPath('/addnew')} />
 
-            </div>
+            </div>*/}
         </div>
         );
     }
