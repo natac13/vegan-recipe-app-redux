@@ -11,7 +11,8 @@
     "postinstall": "webpack -p --config ./webpack.production.config.js --progress --colors",
     "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js --progress --color",
     "deploy": "npm run build && gh-pages -d build",
-    "x": "babel-node test.js"
+    "x": "babel-node test.js",
+    "commit": "git-cz"
   },
   "repository": {
     "type": "git",
@@ -80,9 +81,12 @@
     "babel-preset-react-hmre": "1.0.0",
     "chai": "3.4.1",
     "chai-immutable": "1.5.3",
+    "commitizen": "2.4.6",
     "cross-env": "1.0.6",
+    "cz-conventional-changelog": "1.1.5",
     "eslint-plugin-react": "3.11.3",
     "gh-pages": "0.8.0",
+    "ignore-styles": "1.2.0",
     "jsdom": "7.2.1",
     "json-loader": "0.5.4",
     "mocha": "2.3.4",
@@ -97,5 +101,8 @@
     "webpack-dev-middleware": "1.4.0",
     "webpack-dev-server": "1.14.0",
     "webpack-hot-middleware": "2.6.0"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
   }
 }
