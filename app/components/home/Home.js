@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 /*** Components ***/
 const RaisedButton = require('material-ui/lib/raised-button');
-import PhotoBanner from './photoBanner/';
 import LinkButton  from './linkButton/';
+import PhotoBanner from './photoBanner/';
 
 /*** Styling ***/
 import style from './style.scss';

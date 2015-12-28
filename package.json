@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf build/",
     "start": "babel-node server.js",
-    "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
+    "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ignore-styles --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
     "postinstall": "webpack -p --config ./webpack.production.config.js --progress --colors",
     "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js --progress --color",

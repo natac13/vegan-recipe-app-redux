@@ -23,8 +23,6 @@ describe('Application Logic', () => {
                     ingredients: List.of(Map({item:'Potatoes', amount: 3}))
                 });
                 const nextState = addRecipe(state, recipe);
-                console.log(nextState);
-                console.log('hello')
                 expect(nextState).to.contain.keys(fromJS({
                     mashed_potatoes: {
                         name: 'Mashed Potatoes',
