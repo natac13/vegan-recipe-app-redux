@@ -86,7 +86,6 @@
     "cz-conventional-changelog": "1.1.5",
     "eslint-plugin-react": "3.11.3",
     "gh-pages": "0.8.0",
-    "ghooks": "1.0.1",
     "ignore-styles": "1.2.0",
     "jsdom": "7.2.1",
     "json-loader": "0.5.4",
@@ -105,10 +104,5 @@
   },
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"
-  },
-  "config": {
-    "ghooks": {
-        "pre-commit": "npm test"
-    }
   }
 }
