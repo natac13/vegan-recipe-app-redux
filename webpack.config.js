@@ -29,7 +29,7 @@ module.exports = {
         publicPath: '/build/' // need for hot reload. or hit refresh each time
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.scss', '.json', '.node', '.png']
+        extensions: ['', '.js', '.jsx', '.css', '.scss', '.json', '.node', '.png']
     },
     module: {
         loaders: [
@@ -43,7 +43,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.s?css$/,
                 loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
 
             },

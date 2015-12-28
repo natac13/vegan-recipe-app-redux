@@ -76,15 +76,7 @@ export class Home extends Component{
         <div className={style.app}>
             <Navbar nav1={nav1} nav2={nav2} nav3={nav3} />
             <PhotoBanner />
-            {/*<div className={style.container}>
-                <LinkButton
-                    label="See Recipe List Natac Vantage"
-                    onClick={() => this.props.actions.pushPath('/recipes')} />
-                <LinkButton
-                    label="Add New Recipe"
-                    onClick={() => this.props.actions.pushPath('/addnew')} />
 
-            </div>*/}
         </div>
         );
     }
