@@ -13,10 +13,20 @@
     "deploy": "npm run build && gh-pages -d build",
     "x": "babel-node test.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natac13/vegan-recipe-app-redux"
+  },
   "keywords": [
-    "vegan"
+    "vegan",
+    "recipes",
+    "react",
+    "redux",
+    "firebase",
+    "mocha",
+    "webpack"
   ],
-  "author": "Sean Campbell",
+  "author": "Sean Campbell <sean.campbell13@gmail.com> (http://seancampbellnatac.com)",
   "license": "MIT",
   "dependencies": {
     "babel": "6.3.13",
