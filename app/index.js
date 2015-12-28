@@ -29,9 +29,9 @@ syncReduxAndRouter(history, store);
  * there has to be a better way. However I got this working.
  */
 import { pushPath } from './actions/creators';
-console.log(store.getState());
+// console.log(store.getState());
 store.dispatch(pushPath('/'));
-console.log(store.getState());
+// console.log(store.getState());
 
 
 /*=====  End of gh-pages Hack  ======*/

@@ -17,6 +17,9 @@ $text: #513D1F;
   border-radius: 3px;
   color: $text;
 
+  @media screen and (max-width: 699px) {
+    width: 100%;
+  }
   &:hover {
     background: darken($primary-button, 10%);
     box-shadow: 0 0 2px #333;
@@ -25,8 +28,4 @@ $text: #513D1F;
     border-radius: 8px;
   }
 
-}
-
-@media only-screen and (max-width: 699px) {
-  width: 100%;
 }

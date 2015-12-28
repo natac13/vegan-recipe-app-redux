@@ -4,24 +4,32 @@ $primary-color: #F4FFBD;
 $primary-bg: #E4DED1;
 $text: #005869;
 
+* {
+  font-family: Roboto;
+}
 @keyframes pulse {
   0% { text-shadow: 8px 3px 13px darken($primary-color, 80%); }
   50% { text-shadow: -3px 1px 8px darken($primary-color, 40%); }
   100% { text-shadow: 8px 3px 13px darken($primary-color, 80%); }
 }
 .header {
-  font-family: 'Caveat', cursive;
   margin: 0;
-  color: $text;
   text-align: center;
   background-color: $primary-color;
 
   h1 {
-    animation: pulse 5s infinite;
-    font-size: 2em;
+    color: $text;
+    font-family: 'Caveat', cursive;
+    font-size: 7em;
     font-weight: normal;
+    animation: pulse 5s infinite;
     letter-spacing: 3px;
     margin: 0;
+
+    @media screen and (max-width: 699px) {
+      font-size: 5em;
+      padding-bottom: 0.5em;
+    }
   }
 }
 

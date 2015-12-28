@@ -5,11 +5,12 @@ $primary-bg: #E4DED1;
   align-items: stretch;
   background: $primary-bg;
   width: 100%;
-  margin-top: 1em;
-  height: 20vh;
-}
+  padding-top: 1em;
+  padding-bottom: 1em;
 
-@media only-screen and (max-width: 699px) {
-  flex-flow: column;
-  height: auto;
+  @media screen and (max-width: 699px) {
+    flex-flow: column;
+    height: auto;
+    padding: 0;
+  }
 }
