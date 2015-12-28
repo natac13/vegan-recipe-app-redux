@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/natac13/vegan-recipe-app-redux.svg)](https://travis-ci.org/natac13/vegan-recipe-app-redux)
+
 ## Intro 
 
 This is a *Vegan* Recipe storage app that I built for my mom to store her growing collection. We both went vegan in the early part of 2015 and with her love of cooking she has set out to remake a bunch of dishes from prior as well as create new ones for us to enjoy. During this process she may even teach me how to cook.
