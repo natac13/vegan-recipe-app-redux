@@ -65,8 +65,8 @@ class AddRecipe extends Component {
         const { name, directions, ingredients } = event.target;
         const recipe = {
             name: name.value,
-            directions: directions.value,
-            ingredients: ingredients.value
+            directions: format('directions', directions.value),
+            ingredients: format('ingredients', ingredients.value)
         };
         this.props.actions.addRecipeFirebase(recipe);
         this.props.actions.pushPath('/recipes');
