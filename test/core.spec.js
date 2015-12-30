@@ -68,7 +68,7 @@ describe('Application Logic', () => {
                     directions: ['peel', 'boil'],
                     ingredients: [{ item:'Potatoes', amount: 3 }]
                 };
-                const date = moment().format('MMMM Do YYYY')
+                const date = moment().format('MMMM Do, YYYY')
                 const nextState = addRecipe(state, recipe);
                 expect(nextState.get('mashed_potatoes')).to.contain.key('created_date');
                 expect(nextState.getIn(['mashed_potatoes', 'created_date'])).to.equal(date);

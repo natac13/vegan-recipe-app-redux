@@ -63,13 +63,16 @@ export function getRecipeListFirebase(context) {
 
 import {
     recipeExtras,
-    covertRecipeFromFirebase
+    properRecipeFormat
 } from '../js/core';
 import { snakeCase } from '../js/core_helpers';
 
 /**
- * This recipe is form the user input and is in the string format for directions
+ * This recipe is from the user input and is in the string format for directions
  * and the ingredients
+ *
+ * Need to add checks for if no name property on the recipe coming in.
+ * If this is the case do not send to firebase or the redux store!
  */
 export function addRecipeFirebase(recipe) {
     return function (dispatch, getState) {
@@ -86,8 +89,9 @@ export function addRecipeFirebase(recipe) {
             // the recipe object already has a created_date and id. Therefore
             // using them instead of creating new versions.
 
-            const realFormatRecipe = covertRecipeFromFirebase(buffedRecipe)
-            dispatch(addRecipe(realFormatRecipe));
+            const realFormatRecipe = properRecipeFormat(buffedRecipe)
+            // check that there is a recipe coming back from formatting
+            if (!!realFormatRecipe) dispatch(addRecipe(realFormatRecipe));
         });
 
     }

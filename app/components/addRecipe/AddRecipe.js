@@ -64,6 +64,14 @@ class AddRecipe extends Component {
             directions: directions.value,
             ingredients: ingredients.value
         };
+        /**
+
+            TODO:
+            - add validation
+            - Stop the addRecipeFirebase action if there is no name value!
+
+         */
+
         this.props.actions.addRecipeFirebase(recipe);
         this.props.actions.pushPath('/recipes');
     }

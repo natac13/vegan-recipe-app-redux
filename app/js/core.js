@@ -101,6 +101,13 @@ export function updateRecipeIngredients(recipe, ingredients) {
 }
 
 
+
+/*===================================================
+=            Database Related Functions             =
+===================================================*/
+
+
+
 /**
  * Will take in the recipeList from Firebase and convert to the recipeList to
  * save in the redux store.
@@ -111,25 +118,36 @@ export function updateRecipeIngredients(recipe, ingredients) {
  * @return {Immutable Map} spread out the recipe first then override the name,
  * directions and ingredient properties with proper format after format function
  */
-export function convertFirebaseData(recipeList) {
-    // returns a function waiting on a recipeList object to return a new object
-    const converter = R.map(recipe => {
+export const convertFirebaseData = R.compose(fromJS,
+                                            R.map(properRecipeFormat))
+
+/**
+ * Takes in a recipe object which is either from Firebase or the input user data
+ * Therefore the directions and ingredients are just in string form
+ * Spread out all properties, override the name, directions and ingredients after
+ * running through the formatter
+ * @param  {object} recipe an object built with user input data or received from
+ * Firebase
+ * @return {object}        same recipe as input but the directions, and
+ * ingredients are in the proper array form
+ */
+export function properRecipeFormat({...recipe, name, directions, ingredients}) {
+    if (!!name) {
+        name        = format('name')(name);
+        directions  = !!directions ? format('directions')(directions)   : [];
+        ingredients = !!ingredients ? format('ingredients')(ingredients) : [];
+
         return {
             ...recipe,
-            name: format('name')(recipe.name),
-            directions: format('directions')(recipe.directions),
-            ingredients: format('ingredients')(recipe.ingredients)
+            name,
+            directions,
+            ingredients
         }
-    });
-    return fromJS(converter(recipeList));
-}
-
-
-export function covertRecipeFromFirebase(recipe) {
-    return {
-        ...recipe,
-        name: format('name')(recipe.name),
-        directions: format('directions')(recipe.directions),
-        ingredients: format('ingredients')(recipe.ingredients)
     }
+
+    return false;
+
 }
+
+
+/*=====  End of Database Related Functions  ======*/
