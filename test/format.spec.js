@@ -68,6 +68,39 @@ describe('The formatting function', () => {
             expect(itemA.get('item')).to.equal('Bananas')
 
         });
+
+    });
+
+    describe('Edge cases', () => {
+        it('should be giving the property, directions, and the string to format and return an List of directions', () => {
+            const property = 'directions';
+            const value = 'peel; boil them; enjoy';
+            const directions = format(property)(value);
+            expect(directions).to.be.instanceof(List);
+            expect(directions.size).to.equal(3);
+        });
+
+        it('should have an tailing semicolon and not add an extra item to the the directions list', () => {
+            const property = 'directions';
+            const value = 'peel; boil them; enjoy;';
+            const directions = format(property)(value);
+            expect(directions.size).to.equal(3);
+            expect(directions).to.equal(List.of('Peel', 'Boil them', 'Enjoy'));
+        });
+
+        it('should ignore any blank direction. Meaning a semicolon and nothing and semicolon', () => {
+            const property = 'directions';
+            const value = 'peel; ; enjoy;  ;';
+            const directions = format(property)(value);
+            expect(directions.size).to.equal(2);
+        });
+
+        it('should have an tailing semicolon and not add an extra item to the the directions list', () => {
+            const property = 'ingredients';
+            const value = 'bananas: 2; oatmeal: 3 scoops; apples: 4;'
+            const ingredients = format(property)(value);
+            expect(ingredients.size).to.equal(3);
+        });
     });
 
 

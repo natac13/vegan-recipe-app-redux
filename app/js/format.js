@@ -18,14 +18,29 @@ const presentation = R.compose(capitalize, R.trim)
  * @return {[type]}                [description]
  */
 export const convertToItemObject = ( [ item, amount ] ) => {
+    if (!item || !amount) { return false; }
     return {
         item: presentation(item),
         amount: amount
     }
 }
 
-const itemify = R.compose(convertToItemObject, R.split(':'));
 
+/**
+ * Will check if the item coerces to a boolean true
+ * @param  {string} item
+ * @return {boolean}
+ */
+const emptyString = (item) => {
+    return !!R.trim(item);
+}
+
+const itemify = R.compose(convertToItemObject, R.filter(emptyString), R.split(':'));
+
+const trace = R.curry((tag, x) => {
+    console.log(tag, x);
+    return x;
+})
 /**
  * format :: String a -> Function b
  * @param  {string} property a string which is used to determine which function
@@ -37,11 +52,11 @@ const itemify = R.compose(convertToItemObject, R.split(':'));
 const format = (property) => {
     if(property === 'directions') {
         // return a function :: a -> [a]
-        return R.compose(fromJS, R.map(presentation), R.split(';'));
+        return R.compose(fromJS, R.map(presentation), R.filter(emptyString), R.split(';'));
     }
     if(property === 'ingredients') {
         // function :: String a -> [Object b]
-        return R.compose(fromJS, R.map(itemify), R.split(';'))
+        return R.compose(fromJS, R.map(itemify), R.filter(emptyString), R.split(';'))
     }
     // was the name property so just pass through
     return R.trim;

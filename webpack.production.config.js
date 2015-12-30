@@ -49,8 +49,11 @@ module.exports = {
                 loader: 'json'
             },
             {
-                test: /\.(jpe?g|png)$/,
-                loader: 'url?limit=25000'
+                test: /\.(jpe?g|png|gif)$/,
+                loaders: [
+                            'file?hash=sha512&digest=hex&name=[name]_[hash].[ext]',
+                            'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                        ]
             }
         ]
     },
