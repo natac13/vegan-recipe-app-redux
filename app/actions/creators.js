@@ -54,25 +54,52 @@ export function getRecipeListFirebase(context) {
         // })
         // return Promise.resolve()
         return list.then(function(snap) {
+            // NOTE: recipeList in firebase format through buildList
+            // Convert in the reducer
             dispatch(buildList(snap.val()));
         });
     }
 }
 
-import { recipeExtras } from '../js/core';
+import {
+    recipeExtras,
+    covertRecipeFromFirebase
+} from '../js/core';
 import { snakeCase } from '../js/core_helpers';
 
+/**
+ * This recipe is form the user input and is in the string format for directions
+ * and the ingredients
+ */
 export function addRecipeFirebase(recipe) {
     return function (dispatch, getState) {
+        // create a child Firebase ref for the new recipe
         const snakedName = snakeCase(recipe.name);
-        const buffedRecipe = recipeExtras(recipe).toObject();
-        return list.child(snakedName).set(buffedRecipe).then(function() {
-            dispatch(addRecipe(recipe));
+        const dbPath = list.child(snakedName);
+
+
+        // the recipe will get a different uuid for firebase and the store.
+        let buffedRecipe = recipeExtras(recipe).toObject();
+
+        return dbPath.set(buffedRecipe).then(function() {
+            // By passing the buffedRecipe to addRecipe I let recipeExtras see
+            // the recipe object already has a created_date and id. Therefore
+            // using them instead of creating new versions.
+
+            const realFormatRecipe = covertRecipeFromFirebase(buffedRecipe)
+            dispatch(addRecipe(realFormatRecipe));
         });
 
     }
 }
 
+/**
+ * currently the recipeList going through this action creator is in Firebase
+ * format. So the directions and ingredients are strings. The reducer function
+ * will handle the conversion.
+ * @param  {object} recipeList From Firebase
+ * @return {object}            Action object for the reducer function recipeList
+ */
 export function buildList(recipeList) {
     return {
         type: types.BUILD_LIST,

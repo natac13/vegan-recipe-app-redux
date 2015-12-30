@@ -69,6 +69,13 @@ describe('The formatting function', () => {
 
         });
 
+        it('should take in this avocado: 2; lemon juice: 1.5 tablespoon; Maple syrup: 1 tablespoon and return  and immutable List of Maps', () => {
+            const property = 'ingredients';
+            const value = 'avocado: 2; lemon juice: 1.5 tablespoon; Maple syrup: 1 tablespoon';
+            const state = format(property)(value);
+            expect(state).to.be.instanceof(List);
+        })
+
     });
 
     describe('Edge cases', () => {

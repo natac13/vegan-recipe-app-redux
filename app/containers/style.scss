@@ -5,7 +5,7 @@ $primary-bg: #E4DED1;
 $text: #005869;
 
 * {
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
 }
 @keyframes pulse {
   0% { text-shadow: 8px 3px 13px darken($primary-color, 80%); }
@@ -19,7 +19,7 @@ $text: #005869;
 
   h1 {
     color: $text;
-    font-family: 'Caveat', cursive;
+    font-family: 'Allura', cursive;
     font-size: 7em;
     font-weight: normal;
     animation: pulse 5s infinite;

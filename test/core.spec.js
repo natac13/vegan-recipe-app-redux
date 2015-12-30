@@ -7,7 +7,8 @@ import {
     deleteRecipe,
     updateRecipeName,
     updateRecipeDirections,
-    updateRecipeIngredients
+    updateRecipeIngredients,
+    recipeExtras
 } from '../app/js/core';
 
 describe('Application Logic', () => {
@@ -196,6 +197,27 @@ describe('Application Logic', () => {
                     ));
                 });
             });
+        });
+    });
+
+    describe('Buffing the recipe object with extras', () => {
+        it('should use the given create data of a recipe if supplied', () => {
+            const recipe = {
+                name: 'Sean',
+                created_date: 'October 13, 1987',
+                directions: ['leave to', 'himself']
+            };
+            const buffedRecipe = recipeExtras(recipe);
+            expect(buffedRecipe.get('created_date')).to.equal('October 13, 1987')
+        });
+
+        it('should add an id field when none present', () => {
+            const recipe = {
+                name: 'Oatmeal and Banana'
+            }
+            const buffedRecipe = recipeExtras(recipe);
+            expect(buffedRecipe.has('id')).to.be.true;
+            expect(buffedRecipe.has('created_date')).to.be.true;
         });
     });
 });

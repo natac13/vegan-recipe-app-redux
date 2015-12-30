@@ -1,0 +1,16 @@
+{
+    "recipeList": {
+        "avocado_salad_dressing": {
+            "name": "Avocado Salad Dressing",
+            "created": "September 2015",
+            "ingredients": "avocado: 2; lemon juice: 1.5 tablespoon; Maple syrup: 1 tablespoon ",
+            "directions": "Add all ingredients to blender; Blend"
+        },
+        "pasta_and_veggies": {
+            "name": "Pasta & Veggies",
+            "created": "Sept 2015",
+            "ingredients": "Red Pepper: 2; Celery: 2; Onion: 2; basil: 1 tablspoon",
+            "directions": "Saute red pepper, celery and onion in water first; turn on high"
+        }
+    }
+}

@@ -18,7 +18,6 @@ const presentation = R.compose(capitalize, R.trim)
  * @return {[type]}                [description]
  */
 export const convertToItemObject = ( [ item, amount ] ) => {
-    if (!item || !amount) { return false; }
     return {
         item: presentation(item),
         amount: amount
@@ -50,16 +49,19 @@ const trace = R.curry((tag, x) => {
  * ingredient objects so that they can be added to the recipe object later
  */
 const format = (property) => {
-    if(property === 'directions') {
+    if (property === 'directions') {
         // return a function :: a -> [a]
         return R.compose(fromJS, R.map(presentation), R.filter(emptyString), R.split(';'));
     }
-    if(property === 'ingredients') {
+    if (property === 'ingredients') {
         // function :: String a -> [Object b]
         return R.compose(fromJS, R.map(itemify), R.filter(emptyString), R.split(';'))
     }
     // was the name property so just pass through
-    return R.trim;
+    if (property === 'name') {
+        return R.trim;
+    }
+    return false;
 }
 
 export default format;

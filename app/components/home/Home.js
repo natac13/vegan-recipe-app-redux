@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
 /*** Components ***/
 const RaisedButton = require('material-ui/lib/raised-button');
@@ -43,13 +44,19 @@ export class Home extends Component{
     constructor(props) {
         super(props);
         // need to dispatch the async action here.
-        if(!!this.props.actions) {
+        // ONLY if recipeList is empty
+        if(!!this.props.actions && this.props.recipeList.size === 0) {
+            console.log('FIREBASE SEARCH')
             this.props.actions.getRecipeListFirebase(this);
         }
     }
+    shouldComponentUpdate = shouldPureComponentUpdate;
+
+
     componentDidUpdate() {
         console.log('updated');
-        console.log(this.props.recipeList);
+        // console.log(this.props.recipeList);
+        // console.log(JSON.stringify(this.props.recipeList.toJS(), null, 2));
     }
 
     render(){

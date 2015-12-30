@@ -6,7 +6,8 @@ import {
     deleteRecipe,
     updateRecipeName,
     updateRecipeDirections,
-    updateRecipeIngredients
+    updateRecipeIngredients,
+    convertFirebaseData
 } from '../js/core';
 
 // import { mongoDataToImmutableMap } from '../js/database';
@@ -34,7 +35,7 @@ const recipeList = (state = Map(), action) => {
                 return updateRecipeIngredients(recipe, action.ingredients);
             });
         case 'BUILD_LIST':
-            return state.merge(fromJS(action.recipeList));
+            return state.merge(convertFirebaseData(action.recipeList));
         default:
             return state;
     }

@@ -36,15 +36,11 @@ class AddRecipe extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        const name = '';
-        const ingredients = [];
-        const directions = [];
-        // console.log(this.props);
         this.state = {
             data: fromJS({
                 name: '',
                 ingredients: [],
-                directions:[]
+                directions: []
             })
         };
     }
@@ -62,11 +58,11 @@ class AddRecipe extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const { name, directions, ingredients } = event.target;
+        const { name, directions, ingredients } = this.refs.recipeForm;
         const recipe = {
             name: name.value,
-            directions: format('directions')(directions.value),
-            ingredients: format('ingredients')(ingredients.value)
+            directions: directions.value,
+            ingredients: ingredients.value
         };
         this.props.actions.addRecipeFirebase(recipe);
         this.props.actions.pushPath('/recipes');
@@ -84,7 +80,6 @@ class AddRecipe extends Component {
                 <li key={index}> {direction}</li>
             );
         });
-
         const outputIngredients = data.get('ingredients').map((ingredient, index) => {
             return (
                 <li key={index}>
@@ -98,7 +93,8 @@ class AddRecipe extends Component {
             <div className={style.wrapper}>
                 <form
                     role="form"
-                    className={style.recipeInput}>
+                    className={style.recipeInput}
+                    ref="recipeForm">
                 <TextField
                     floatingLabelText="New Recipe Name"
                     onChange={this.handleChange}

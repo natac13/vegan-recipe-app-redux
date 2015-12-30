@@ -1,5 +1,7 @@
 import { Map, List, fromJS } from 'immutable';
 import { snakeCase } from './core_helpers';
+import R from 'ramda';
+import format from './format';
 
 import uuid from 'node-uuid';
 import moment from 'moment';
@@ -15,10 +17,10 @@ import moment from 'moment';
 export function recipeExtras(recipe) {
     recipe = fromJS(recipe);
     const id = uuid.v4();
-    const date = moment().format('MMMM Do YYYY');
+    const date = moment().format('MMMM Do, YYYY');
     const extras = Map({
-        id: id,
-        created_date: date
+        id: recipe.get('id') || id,
+        created_date: recipe.get('created_date') || date
     });
     return recipe.merge(extras);
 }
@@ -96,4 +98,38 @@ export function updateRecipeDirections(recipe, directions) {
  */
 export function updateRecipeIngredients(recipe, ingredients) {
     return recipe.update('ingredients', () => fromJS(ingredients));
+}
+
+
+/**
+ * Will take in the recipeList from Firebase and convert to the recipeList to
+ * save in the redux store.
+ * From Firebase the recipe object's directions and ingredients are strings.
+ * Therefore this function will convert them to an array of string directions
+ * and an array of ingredient object
+ * @param  {object} recipeList  From Firebase
+ * @return {Immutable Map} spread out the recipe first then override the name,
+ * directions and ingredient properties with proper format after format function
+ */
+export function convertFirebaseData(recipeList) {
+    // returns a function waiting on a recipeList object to return a new object
+    const converter = R.map(recipe => {
+        return {
+            ...recipe,
+            name: format('name')(recipe.name),
+            directions: format('directions')(recipe.directions),
+            ingredients: format('ingredients')(recipe.ingredients)
+        }
+    });
+    return fromJS(converter(recipeList));
+}
+
+
+export function covertRecipeFromFirebase(recipe) {
+    return {
+        ...recipe,
+        name: format('name')(recipe.name),
+        directions: format('directions')(recipe.directions),
+        ingredients: format('ingredients')(recipe.ingredients)
+    }
 }
