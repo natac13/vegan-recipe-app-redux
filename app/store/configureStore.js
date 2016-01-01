@@ -1,11 +1,19 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import thunkMiddleware  from 'redux-thunk';
+import logger from 'redux-logger';
 import rootReducer from '../reducers/';
+
+const loggerMiddleware = logger();
+
+const createStoreWithMiddleware = applyMiddleware(
+    thunkMiddleware,
+    loggerMiddleware
+)(createStore);
+
 
 export default function configureStore(initialState) {
     // applyMiddleware supercharges createStore with middleware:
-    const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
     // We can use it exactly like “vanilla” createStore.
-    return createStoreWithMiddleware(rootReducer);
+    return createStoreWithMiddleware(rootReducer, initialState);
 }
