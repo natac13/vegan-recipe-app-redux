@@ -28,7 +28,7 @@ syncReduxAndRouter(history, store);
  * I guessed at just using pushPath to reset the URL which works but I do think
  * there has to be a better way. However I got this working.
  */
-import { pushPath } from './actions/creators';
+import { pushPath } from './actions/';
 // console.log(store.getState());
 store.dispatch(pushPath('/'));
 // console.log(store.getState());

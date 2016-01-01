@@ -9,7 +9,7 @@ import style from './style.scss';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../../actions/creators';
+import * as ActionCreators from '../../actions/';
 
 
 function mapStateToProps(state) {
@@ -36,6 +36,15 @@ export class RecipeList extends Component {
 
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        // need to dispatch the async action here.
+        // ONLY if recipeList is empty
+        if(!!this.props.actions && this.props.recipeList.size === 0) {
+            console.log('FIREBASE SEARCH')
+            this.props.actions.getRecipeListFirebase(this);
+        }
     }
 
     render() {

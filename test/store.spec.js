@@ -2,7 +2,7 @@ import { Map, List, fromJS } from 'immutable';
 import { expect } from 'chai';
 
 /*** actions ***/
-import * as actions from '../app/actions/creators';
+import * as actions from '../app/actions/';
 
 /*** store ***/
 import configureStore from '../app/store/configureStore';

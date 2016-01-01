@@ -1,5 +1,9 @@
 import { Map, List, fromJS } from 'immutable';
-import { snakeCase } from './core_helpers';
+import {
+    snakeCase,
+    snakedNameOf
+} from './core_helpers';
+
 import R from 'ramda';
 import format from './format';
 
@@ -34,10 +38,10 @@ export function recipeExtras(recipe) {
  * should have a name, directions and ingredients property from user.
  */
 export function addRecipe(state, recipe) {
+    // buff
     recipe = recipeExtras(recipe);
-    let recipeName = recipe.get('name');
-
-    const snakedName = snakeCase(recipeName);
+    // recipeList key
+    const snakedName = snakedNameOf(recipe);
 
     return state.set(snakedName, recipe);
 }
@@ -52,7 +56,7 @@ export function addRecipe(state, recipe) {
 export function deleteRecipe(state, recipeName) {
     const snakedName = snakeCase(recipeName);
 
-    return state.remove(snakedName);
+    return state.delete(snakedName);
 }
 
 /**

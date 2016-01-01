@@ -3,7 +3,7 @@ import { expect }    from 'chai';
 import R from 'ramda';
 
 import * as types from '../../app/constants/recipeTypes';
-import * as actions from '../../app/actions/creators';
+import * as actions from '../../app/actions/';
 import reducer from '../../app/reducers/recipeList';
 
 describe('The Recipe List Reducer', () => {

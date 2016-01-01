@@ -1,24 +1,31 @@
-import * as types from '../constants/recipeTypes';
+import {
+    ADD_RECIPE,
+    DELETE_RECIPE,
+    UPDATE_RECIPE_NAME,
+    UPDATE_RECIPE_DIRECTIONS,
+    UPDATE_RECIPE_INGREDIENTS,
+    BUILD_LIST
+} from '../constants/';
 
 export { pushPath } from 'redux-simple-router'
 
 export function addRecipe(recipe) {
     return {
-        type: types.ADD_RECIPE,
+        type: ADD_RECIPE,
         recipe
     };
 }
 
 export function deleteRecipe(recipeName) {
     return {
-        type: types.DELETE_RECIPE,
+        type: DELETE_RECIPE,
         recipeName
     };
 }
 
 export function updateRecipeName(oldName, newName) {
     return {
-        type: types.UPDATE_RECIPE_NAME,
+        type: UPDATE_RECIPE_NAME,
         oldName,
         newName
     };
@@ -26,7 +33,7 @@ export function updateRecipeName(oldName, newName) {
 
 export function updateRecipeDirections(recipeName, directions) {
     return {
-        type: types.UPDATE_RECIPE_DIRECTIONS,
+        type: UPDATE_RECIPE_DIRECTIONS,
         recipeName,
         directions
     };
@@ -34,38 +41,66 @@ export function updateRecipeDirections(recipeName, directions) {
 
 export function updateIngredients(recipeName, ingredients) {
     return {
-        type: types.UPDATE_RECIPE_INGREDIENTS,
+        type: UPDATE_RECIPE_INGREDIENTS,
         recipeName,
         ingredients
     };
 }
 
+
+/*======================================
+=            Firebase setup            =
+======================================*/
 import Firebase from 'firebase';
 import Fireproof from 'fireproof';
 const fireRef = new Firebase('https://vegan-recipes.firebaseio.com/');
 const fp = new Fireproof(fireRef);
 const list = fp.child('recipeList');
+/*=====  End of Firebase setup  ======*/
+
+/*=====================================
+=            asyncCreators            =
+=====================================*/
+
+import {
+    requestRecipes,
+    failedRequest,
+    successfulRequest
+} from './asyncCreators';
+
+/*=====  End of asyncCreators  ======*/
+
+
+/**
+ * currently the recipeList going through this action creator is in Firebase
+ * format. So the directions and ingredients are strings. The reducer function
+ * will handle the conversion.
+ * @param  {object} recipeList From Firebase
+ * @return {object}            Action object for the reducer function recipeList
+ */
+export function buildList(recipeList) {
+    return {
+        type: BUILD_LIST,
+        recipeList
+    }
+}
 
 
 export function getRecipeListFirebase(context) {
     return function(dispatch, getState) {
-        // list.once('value', function(snapShot) {
-        //     dispatch(buildList(snapShot.val()))
-        // })
-        // return Promise.resolve()
-        return list.then(function(snap) {
+        dispatch(requestRecipes());
+        return list.then(function good(snap) {
+            dispatch(successfulRequest());
             // NOTE: recipeList in firebase format through buildList
             // Convert in the reducer
             dispatch(buildList(snap.val()));
+        }, function noGood() {
+            dispatch(failedRequest());
         });
     }
 }
 
-import {
-    recipeExtras,
-    properRecipeFormat
-} from '../js/core';
-import { snakeCase } from '../js/core_helpers';
+
 
 /**
  * This recipe is from the user input and is in the string format for directions
@@ -97,19 +132,13 @@ export function addRecipeFirebase(recipe) {
     }
 }
 
-/**
- * currently the recipeList going through this action creator is in Firebase
- * format. So the directions and ingredients are strings. The reducer function
- * will handle the conversion.
- * @param  {object} recipeList From Firebase
- * @return {object}            Action object for the reducer function recipeList
- */
-export function buildList(recipeList) {
-    return {
-        type: types.BUILD_LIST,
-        recipeList
-    }
-}
+
+
+
+
+
+
+
 
 /*===============================
 =            MongoDb            =

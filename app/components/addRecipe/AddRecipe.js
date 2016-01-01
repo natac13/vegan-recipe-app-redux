@@ -9,7 +9,7 @@ import LivePreview from './LivePreview';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../../actions/creators';
+import * as ActionCreators from '../../actions/';
 
 /*** styling ***/
 import style from './style';
