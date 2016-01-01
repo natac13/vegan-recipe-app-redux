@@ -15,8 +15,6 @@ module.exports = {
     // real source-map for production
     devtool: 'source-map',
     entry: [
-        // sets up an ES6-ish environment with promise support
-        'babel-polyfill',
         // the main application script
         entry
     ],
@@ -25,7 +23,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.scss', '.json']
+        extensions: ['', '.js', '.jsx', '.css', '.scss', '.json', '.node', '.png']
     },
     module: {
         loaders: [
@@ -36,7 +34,7 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     cacheDirectory: true,
-                    presets: ['es2015', 'stage-0']
+                    presets: ['es2015', 'stage-0', 'react']
                 }
             },
             {
@@ -68,6 +66,11 @@ module.exports = {
             minimize: true,
             compress: {
                 warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify('production')
             }
         })
     ]

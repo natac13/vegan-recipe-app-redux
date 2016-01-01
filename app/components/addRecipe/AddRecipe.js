@@ -108,13 +108,13 @@ class AddRecipe extends Component {
                     onChange={this.handleChange}
                     id="name" />
                 <TextField
-                    floatingLabelText="Directions"
-                    onChange={this.handleChange}
-                    id="directions" />
-                <TextField
                     floatingLabelText="Ingredients"
                     onChange={this.handleChange}
                     id="ingredients" />
+                <TextField
+                    floatingLabelText="Directions"
+                    onChange={this.handleChange}
+                    id="directions" />
                     <button type="button" onClick={this.handleSubmit}>Submit</button>
                 </form>
                 <LivePreview

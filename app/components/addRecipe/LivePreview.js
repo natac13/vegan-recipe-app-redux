@@ -12,15 +12,14 @@ const LivePreview = ( { name, directions, ingredients }) => {
                 rounded={false}
                 className="live-preview">
                 <p>Name: {name}</p>
-                Directions:
-                <ul className={style.directionsList}>
-                    {directions}
-                </ul>
                 Ingredients
                 <ul className={style.ingredientsList}>
                     {ingredients}
                 </ul>
-
+                Directions:
+                <ul className={style.directionsList}>
+                    {directions}
+                </ul>
             </Paper>
         </div>
     );

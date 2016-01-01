@@ -16,10 +16,8 @@ module.exports = {
     entry: [
         // sets up an ES6-ish environment with promise support
         'babel-polyfill',
-        // The script refreshing the browser on none hot updates
-        'webpack-dev-server/client?http://localhost:3023',
-        // For hot style updates
-        'webpack/hot/only-dev-server',
+        // webpack-hot-middleware needs this
+        'webpack-hot-middleware/client',
         // the main application script
         entry
     ],
