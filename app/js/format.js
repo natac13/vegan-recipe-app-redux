@@ -2,15 +2,46 @@ import R from 'ramda';
 import { List, fromJS } from 'immutable';
 /**
  * capitalize :: String a -> a
- * takes in a word and will return a new word with the first letter upperCased
- * @param  {string} word a word to capitalize
+ * takes in a string and will return a new string with the first letter upperCased
+ * @param  {string} string a string to capitalize
  * @return {string}
  */
-export const capitalize = (word) => {
-    return R.toUpper(word.slice(0,1)) + R.toLower(word.slice(1));
+export const capitalize = (string) => {
+    return R.toUpper(string.slice(0,1)) + R.toLower(string.slice(1));
 }
 
-const presentation = R.compose(capitalize, R.trim)
+const replace = R.curry((regex, func, string) => {
+    return string.replace(regex, func)
+});
+
+/**
+ * \b word boundary
+ * \d{3} 3 digits
+ * \s? optional space
+ * [f|c] an f or a c
+ * \b word boundary
+ * ig - ignorecase and global
+ * @type {RegExp}
+ */
+const re = /\b\d{3}\s?[f|c]\b/ig;
+
+
+export function normalizeTemperature(match) {
+    return `${match.slice(0, 3)}\u00B0${(match.length === 4 ?
+                                        match.slice(3) :
+                                        match.slice(4)).toUpperCase()}`;
+}
+
+export const tempFixer = replace(re, normalizeTemperature);
+/**
+ * presentation :: String a -> String a
+ * @type {function}
+ * @param {String}
+ * @return Same string but trimmed capitalized and any temperature normalized.
+ */
+export const presentation = R.compose(tempFixer, capitalize, R.trim);
+
+
 /**
  * itemify :: [String a] -> [Object b]
  * @param  {[type]} options.item   [description]
@@ -23,7 +54,6 @@ export const convertToItemObject = ( [ item, amount ] ) => {
         amount: amount
     }
 }
-
 
 /**
  * Will check if the item coerces to a boolean true

@@ -1,7 +1,12 @@
 import { expect } from 'chai';
 import { Map, List, fromJS } from 'immutable';
 
-import format, { capitalize } from '../app/js/format';
+import format, {
+    capitalize,
+    normalizeTemperature,
+    tempFixer,
+    presentation
+} from '../app/js/format';
 
 describe('The formatting function', () => {
     describe('The capitalize function', () => {
@@ -32,6 +37,21 @@ describe('The formatting function', () => {
 
             expect(directionsList).to.equal(fromJS(['Peel potatoes', 'Wash them', 'Cut', 'Boil in water']))
         });
+
+        it('should keep any F or C capitalized; when it follows a number.', () => {
+            const property = 'directions';
+            const value = 'peel potatoes; set oven to 375F; mash; enjoy!';
+            const directionsList = format(property)(value);
+
+            expect(directionsList).to.equal(List.of('Peel potatoes', 'Set oven to 375\u00B0F', 'Mash', 'Enjoy!'));
+        });
+
+        it('should take any version of the temperature letter following a number to be converted to a degree symbol and capital letter', () => {
+            const value = 'create vegan pizza; turn oven to 350f; enjoy!';
+            const directionsList = format('directions')(value);
+
+            expect(directionsList).to.equal(List.of('Create vegan pizza', 'Turn oven to 350\u00B0F', 'Enjoy!'));
+        })
     });
 
     describe('The ingredients', () => {
@@ -110,5 +130,66 @@ describe('The formatting function', () => {
         });
     });
 
+    /*========================================
+    =            Helper functions            =
+    ========================================*/
+
+    describe('Formating helpers', () => {
+        describe('normalizeTemperature function', () => {
+            it('should take in a string 375F and return a formatted temperature of 375\u00B0F', () => {
+                const state = '375F';
+                const nextState = normalizeTemperature(state);
+                expect(nextState).to.equal('375\u00B0F');
+            });
+
+            it('should take 375 f and return 375\u00B0F', () => {
+                const state = '375 f';
+                const nextState = normalizeTemperature(state);
+                expect(nextState).to.equal('375\u00B0F');
+            });
+
+            it('should be able to handle Celsius as well; 350c to 350\u00B0C', () => {
+                const state = '350c';
+                const nextState = normalizeTemperature(state);
+                expect(nextState).to.equal('350\u00B0C');
+            })
+        });
+
+        describe('tempFixer which is the normalizeTemperature as a function waiting on the string to be given; can use to R.compose()', () => {
+            it('should be a function', () => {
+                expect(tempFixer).to.be.instanceof(Function);
+            });
+
+            it('should take in a string with a temperature value somewhere and normalize it', () => {
+                const state = 'set oven to 375 f and wait';
+                const nextState = tempFixer(state);
+                expect(nextState).to.equal('set oven to 375\u00B0F and wait')
+            });
+
+            it('should handle temperature at the end of strings', () => {
+                const state = 'oven 275c';
+                const nextState = tempFixer(state);
+                expect(nextState).to.equal('oven 275\u00B0C')
+            })
+
+            it('should take in "turn oven to 350f" and return "turn oven to 350\u00B0F"', () => {
+                const state = 'turn oven to 350f';
+                const nextState = tempFixer(state);
+                expect(nextState).to.equal('turn oven to 350\u00B0F')
+            })
+        });
+
+        describe('presentation function', () => {
+            it('should take in a string and make presentable by trimming, capitalizing and normalizing the temp', () => {
+                const state = 'turn oven to 350f';
+                const nextState = presentation(state);
+                expect(nextState).to.equal('Turn oven to 350\u00B0F')
+            });
+        });
+    });
+
+
+    /*=====  End of Helper functions  ======*/
 
 });
+
