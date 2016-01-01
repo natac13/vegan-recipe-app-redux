@@ -1,31 +1,33 @@
 $primary-button: #C3E369;
+$shade: #232323;
 $text: #513D1F;
 
 
 .linkButton {
-  box-sizing: border-box;
-  font-size: 24px;
-  line-height: 28px;
-  letter-spacing: 1px;
-  flex: 1 100%;
-  padding: 0.5em;
-  box-shadow: 0 0 10px #333;
-  margin: auto;
   background: $primary-button;
-  transition: all .7s ease;
-  border: none;
+  border: 0;
   border-radius: 3px;
+  box-shadow: 0 0 10px $shade;
+  box-sizing: border-box;
   color: $text;
+  flex: 1 100%;
+  font-size: 24px;
+  letter-spacing: 1px;
+  line-height: 28px;
+  margin: auto;
+  padding: 0.5em;
+  transition: .7s ease;
+  width: 100%;
 
   @media screen and (max-width: 699px) {
     width: 100%;
   }
   &:hover {
     background: darken($primary-button, 10%);
-    box-shadow: 0 0 2px #333;
+    border-radius: 8px;
+    box-shadow: 0 0 2px $shade;
     color: darken($text, 5%);
     letter-spacing: 3px;
-    border-radius: 8px;
   }
 
 }

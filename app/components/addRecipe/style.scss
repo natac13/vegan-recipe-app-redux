@@ -1,37 +1,24 @@
-$primary-bg: #D8D8D8;
-.recipeInput {
-  flex: 1 100%;
-  width: 50%;
-}
-
-.livePreview {
-  flex: 1 100%;
-  background: #ddd;
-  color: #222;
-  border-radius: 5px;
-
-}
+$primary-bg: #d8d8d8;
 
 .wrapper {
   display: flex;
+  flex-flow: row wrap;
 }
 
-.directionsList {
-  list-style: lower-roman;
-  padding: 1em 3em;
-  li {
-    margin: 0.5em;
-  }
+
+.recipeInput {
+  align-items: center;
+  display: flex;
+  flex: 1 450px;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: auto;
+  padding: 1em;
 }
 
-.ingredientsList {
-  list-style: upper-roman;
-  padding: 1em 3em;
-  li {
-    margin: 0.5em;
-    font-size: 1em;
-    line-height: 1.25em;
-  }
+.submit {
+  align-self: stretch;
+  flex: 2 100%;
 }
 
 

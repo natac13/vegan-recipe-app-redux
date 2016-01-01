@@ -8,10 +8,10 @@ import { List, fromJS } from 'immutable';
  */
 export const capitalize = (string) => {
     return R.toUpper(string.slice(0,1)) + R.toLower(string.slice(1));
-}
+};
 
 const replace = R.curry((regex, func, string) => {
-    return string.replace(regex, func)
+    return string.replace(regex, func);
 });
 
 /**
@@ -52,8 +52,8 @@ export const convertToItemObject = ( [ item, amount ] ) => {
     return {
         item: presentation(item),
         amount: amount
-    }
-}
+    };
+};
 
 /**
  * Will check if the item coerces to a boolean true
@@ -62,14 +62,14 @@ export const convertToItemObject = ( [ item, amount ] ) => {
  */
 const emptyString = (item) => {
     return !!R.trim(item);
-}
+};
 
 const itemify = R.compose(convertToItemObject, R.filter(emptyString), R.split(':'));
 
 const trace = R.curry((tag, x) => {
     console.log(tag, x);
     return x;
-})
+});
 /**
  * format :: String a -> Function b
  * @param  {string} property a string which is used to determine which function
@@ -85,13 +85,13 @@ const format = (property) => {
     }
     if (property === 'ingredients') {
         // function :: String a -> [Object b]
-        return R.compose(fromJS, R.map(itemify), R.filter(emptyString), R.split(';'))
+        return R.compose(fromJS, R.map(itemify), R.filter(emptyString), R.split(';'));
     }
     // was the name property so just pass through
     if (property === 'name') {
-        return R.trim;
+        return R.compose(presentation, R.trim);
     }
     return false;
-}
+};
 
 export default format;

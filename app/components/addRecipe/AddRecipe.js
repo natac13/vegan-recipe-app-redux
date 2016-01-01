@@ -5,7 +5,8 @@ import format from '../../js/format';
 
 /*** Components ***/
 const TextField = require('material-ui/lib/text-field');
-import LivePreview from './LivePreview';
+import LivePreview from '../livePreview/';
+import Button from '../home/linkButton/';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -97,25 +98,38 @@ class AddRecipe extends Component {
             );
         });
 
+        const styling = {
+            width: '100%'
+        };
         return (
             <div className={style.wrapper}>
                 <form
                     role="form"
                     className={style.recipeInput}
                     ref="recipeForm">
-                <TextField
-                    floatingLabelText="New Recipe Name"
-                    onChange={this.handleChange}
-                    id="name" />
-                <TextField
-                    floatingLabelText="Ingredients"
-                    onChange={this.handleChange}
-                    id="ingredients" />
-                <TextField
-                    floatingLabelText="Directions"
-                    onChange={this.handleChange}
-                    id="directions" />
-                    <button type="button" onClick={this.handleSubmit}>Submit</button>
+                    <TextField
+                        floatingLabelText="New Recipe Name"
+                        onChange={this.handleChange}
+                        id="name"
+                        style={styling} />
+                    <TextField
+                        floatingLabelText="Ingredients"
+                        onChange={this.handleChange}
+                        id="ingredients"
+                        style={styling} />
+                    <TextField
+                        floatingLabelText="Directions"
+                        onChange={this.handleChange}
+                        id="directions"
+                        style={styling} />
+                    <Button
+                        onClick={this.handleSubmit}
+                        label="Add New Recipe!" />
+                    {/*<button
+                        type="button"
+                        onClick={this.handleSubmit}
+                        className={style.submit}>
+                        Submit</button>*/}
                 </form>
                 <LivePreview
                     className={style.livePreview}
