@@ -110,8 +110,6 @@ export function updateRecipeIngredients(recipe, ingredients) {
 =            Database Related Functions             =
 ===================================================*/
 
-
-
 /**
  * Will take in the recipeList from Firebase and convert to the recipeList to
  * save in the redux store.
@@ -146,12 +144,11 @@ export function properRecipeFormat({...recipe, name, directions, ingredients}) {
             name,
             directions,
             ingredients
-        }
+        };
     }
 
     return false;
 
 }
-
 
 /*=====  End of Database Related Functions  ======*/

@@ -82,7 +82,7 @@ export function buildList(recipeList) {
     return {
         type: BUILD_LIST,
         recipeList
-    }
+    };
 }
 
 
@@ -97,9 +97,17 @@ export function getRecipeListFirebase(context) {
         }, function noGood() {
             dispatch(failedRequest());
         });
-    }
+    };
 }
 
+import {
+    snakeCase,
+    snakedNameOf
+} from '../js/core_helpers';
+import {
+    recipeExtras,
+    properRecipeFormat
+} from '../js/core';
 
 
 /**

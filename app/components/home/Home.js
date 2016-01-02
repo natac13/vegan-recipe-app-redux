@@ -20,9 +20,10 @@ import * as ActionCreators from '../../actions/';
 
 
 function mapStateToProps(state) {
-    const { routing, recipeList } = state;
+    const { routing, recipeList, asyncRequest } = state;
     return {
         routing,
+        asyncRequest,
         recipeList
     }
 }

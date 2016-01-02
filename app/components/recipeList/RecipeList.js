@@ -13,10 +13,11 @@ import * as ActionCreators from '../../actions/';
 
 
 function mapStateToProps(state) {
-    const { routing, recipeList } = state;
+    const { routing, recipeList, asyncRequest } = state;
     return {
-        routing,
-        recipeList
+        recipeList,
+        asyncRequest,
+        routing
     };
 }
 
@@ -42,7 +43,7 @@ export class RecipeList extends Component {
         // need to dispatch the async action here.
         // ONLY if recipeList is empty
         if(!!this.props.actions && this.props.recipeList.size === 0) {
-            console.log('FIREBASE SEARCH')
+            console.log('FIREBASE SEARCH');
             this.props.actions.getRecipeListFirebase(this);
         }
     }

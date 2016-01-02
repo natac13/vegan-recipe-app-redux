@@ -17,9 +17,10 @@ import style from './style';
 
 
 function mapStateToProps(state) {
-    const { recipeList, routing } = state;
+    const { recipeList, asyncRequest, routing } = state;
     return {
         recipeList,
+        asyncRequest,
         routing
     };
 }
