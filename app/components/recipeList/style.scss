@@ -3,6 +3,17 @@ $whiter-bg: #fff;
 $separator: #9CC268;
 $line-a: #E6F7FF;
 $line-b: #E6FFF2;
+$recipe-link: #CE06CE;
+
+@keyframes tilt {
+  0% {
+    transform: rotate(7deg);
+  }
+
+  25% {
+    transform: rotate(0deg);
+  }
+}
 
 .recipeList {
   align-items: center;
@@ -38,27 +49,34 @@ $line-b: #E6FFF2;
     border-radius: 0 0 15px 15px;
   }
 
+
   .title {
-    font-weight: 700;
+    color: $recipe-link;
     font-size: 32px;
+    font-weight: 700;
     line-height: 32px * 1.5;
+    transition: .4s ease-in;
+
     &:hover {
-      color: purple;
+      color: darken($recipe-link, 13%);
+      animation: tilt 3.5s .1s 1;
     }
   }
 
   .visible,
   .hidden {
-    margin: 1em auto;
     overflow-y: hidden;
     transition: .5s ease-in;
   }
 
   .visible {
     height: 5em;
+    margin: 1em auto;
   }
 
   .hidden {
     height: 0;
+    margin: 0;
+    padding: 0;
   }
 }
