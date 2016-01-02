@@ -50,11 +50,21 @@ export class RecipeList extends Component {
 
     render() {
         let list = this.props.recipeList.toArray().map((recipe, index) =>{
+            const {
+                name,
+                directions,
+                ingredients,
+                created_date,
+                id
+            } = recipe.toJS();
             return (
                 <ListItem
-                    name={recipe.get('name')}
+                    name={name}
+                    directions={directions}
+                    ingredients={ingredients}
+                    created_date={created_date}
                     link={this.props.actions.pushPath}
-                    key={recipe.get('id') || index} />
+                    key={id || index} />
             );
         });
 

@@ -5,7 +5,7 @@ import R from 'ramda';
 ========================================================*/
 
 export const boolUpdater = R.curry((what, toBool, state) => {
-    return state.update(what, (what) => toBool)
+    return state.update(what, (what) => toBool);
 });
 
 export const getter = R.curry((what, state) => {
@@ -22,4 +22,3 @@ export const sizer = R.curry(state => {
 
 
 /*=====  End of Curried versions of immutable.js  ======*/
-

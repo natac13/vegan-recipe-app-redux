@@ -1,12 +1,64 @@
 $primary-bg: #E4DED1;
+$whiter-bg: #fff;
+$separator: #9CC268;
+$line-a: #E6F7FF;
+$line-b: #E6FFF2;
+
 .recipeList {
+  align-items: center;
   background: $primary-bg;
-  height: 75vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  height: 75vh;
+  padding-top: 1em;
 }
 
 .recipeItem {
-  margin: auto;
+  background: $whiter-bg;
+  border-bottom: 1px solid $separator;
+  overflow: hidden;
+  padding: .7em 0;
+  text-align: center;
+  width: 75%;
+
+  &:nth-child(odd) {
+    background: $line-a;
+  }
+
+  &:nth-child(even) {
+    background: $line-b;
+  }
+
+  &:first-child {
+    border-radius: 15px 15px 0 0;
+  }
+
+  &:last-child {
+    border: 0;
+    border-radius: 0 0 15px 15px;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 32px * 1.5;
+    &:hover {
+      color: purple;
+    }
+  }
+
+  .visible,
+  .hidden {
+    margin: 1em auto;
+    overflow-y: hidden;
+    transition: .5s ease-in;
+  }
+
+  .visible {
+    height: 5em;
+  }
+
+  .hidden {
+    height: 0;
+  }
 }
