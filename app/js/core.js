@@ -121,7 +121,7 @@ export function updateRecipeIngredients(recipe, ingredients) {
  * directions and ingredient properties with proper format after format function
  */
 export const convertFirebaseData = R.compose(fromJS,
-                                            R.map(properRecipeFormat))
+                                            R.map(properRecipeFormat));
 
 /**
  * Takes in a recipe object which is either from Firebase or the input user data

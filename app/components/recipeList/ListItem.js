@@ -37,7 +37,7 @@ export default class ListItem extends Component {
                         onClick={() => link(`/recipes/${snakedName}`)}
                         label={`View - ${name}`} />
                     <RaisedButton
-                        onClick={() => link(`/recipes/${snakedName}`)}
+                        onClick={() => link(`/edit/${snakedName}`)}
                         label={`Edit - ${name}`} />
 
                 </div>

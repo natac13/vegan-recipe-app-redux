@@ -1,5 +1,5 @@
-import { fromJS, Map } from 'immutable';
-import { snakeCase } from './core_helpers';
+// import { fromJS, Map } from 'immutable';
+// import { snakeCase } from './core_helpers';
 
 // import pmongo from 'promised-mongo';
 // const url = 'mongodb://localhost:27017/vegan';
@@ -16,10 +16,10 @@ import { snakeCase } from './core_helpers';
 
 // }
 
-export function mongoDataToImmutableMap(recipeList) {
-    const obj = recipeList.reduce(function(state, doc) {
-        return state.set(snakeCase(doc.name), fromJS(doc))
-    }, Map())
+// export function mongoDataToImmutableMap(recipeList) {
+//     const obj = recipeList.reduce(function(state, doc) {
+//         return state.set(snakeCase(doc.name), fromJS(doc))
+//     }, Map())
 
-    return obj;
-}
+//     return obj;
+// }

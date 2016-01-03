@@ -5,7 +5,8 @@ import format, {
     capitalize,
     normalizeTemperature,
     tempFixer,
-    presentation
+    presentation,
+    stringifyRecipeArrays
 } from '../app/js/format';
 
 describe('The formatting function', () => {
@@ -192,4 +193,41 @@ describe('The formatting function', () => {
     /*=====  End of Helper functions  ======*/
 
 });
+
+
+/*=======================================
+=            List -> String             =
+=======================================*/
+// directions
+// ingredients
+
+describe('stringifyRecipeArrays', () => {
+    it('should take in a Immutable directions list and return an object that has a string version of the directions', () => {
+        const state = List.of('peel', 'boil', 'enjoy');
+        const nextState = stringifyRecipeArrays(null, state);
+        expect(nextState.directions).to.equal('peel;boil;enjoy')
+    });
+
+    it('should take in an Immutable List of ingredients to return a object with a string version of those ingredients', () => {
+        const state = fromJS([
+        {
+            item: 'banana',
+            amount: 3
+        },
+        {
+            item: 'oatmeal',
+            amount: '3 scoops'
+        },
+        {
+            item: 'water',
+            amount: '2 bottles'
+        }
+        ]);
+        const nextState = stringifyRecipeArrays(state, null);
+        expect(nextState.ingredients).to.equal('banana:3;oatmeal:3 scoops;water:2 bottles')
+    })
+});
+
+
+/*=====  End of List -> String   ======*/
 

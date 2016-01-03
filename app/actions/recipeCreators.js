@@ -118,7 +118,7 @@ import {
  * If this is the case do not send to firebase or the redux store!
  */
 export function addRecipeFirebase(recipe) {
-    return function (dispatch, getState) {
+    return (dispatch) => {
         // create a child Firebase ref for the new recipe
         const snakedName = snakeCase(recipe.name);
         const dbPath = list.child(snakedName);
@@ -132,12 +132,42 @@ export function addRecipeFirebase(recipe) {
             // the recipe object already has a created_date and id. Therefore
             // using them instead of creating new versions.
 
-            const realFormatRecipe = properRecipeFormat(buffedRecipe)
+            const realFormatRecipe = properRecipeFormat(buffedRecipe);
             // check that there is a recipe coming back from formatting
             if (!!realFormatRecipe) dispatch(addRecipe(realFormatRecipe));
         });
 
-    }
+    };
+}
+/**
+ * Recipe in string format with directions and ingredients
+ * @param  {object} recipe
+ */
+export function updateRecipeFirebase(recipe, oldRecipe) {
+    return (dispatch) => {
+        // different name remove out dbPath
+        if (recipe.name !== oldRecipe.get('name')) {
+            list.child(snakeCase(oldRecipe.get('name'))).remove();
+        }
+
+
+        // find the child Firebase ref for the recipe to update
+        // create a DBPath if deleted above
+        const snakedName = snakeCase(recipe.name);
+        const dbPath = list.child(snakedName);
+
+
+        return dbPath.set(recipe).then(function() {
+            const realFormatRecipe = properRecipeFormat(recipe);
+            if (!!realFormatRecipe) {
+                dispatch(updateRecipeName(oldRecipe.get('name'), realFormatRecipe.name));
+                // dispatch(updateRecipeDirections(recipe.get('name'), recipe.get('directions')));
+                // dispatch(updateIngredients(recipe.get('name'), recipe.get('ingredients')));
+            }
+            // check that there is a recipe coming back from formatting
+            // if (!!realFormatRecipe) dispatch(addRecipe(realFormatRecipe));
+        });
+    };
 }
 
 

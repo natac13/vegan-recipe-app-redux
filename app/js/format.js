@@ -95,3 +95,33 @@ const format = (property) => {
 };
 
 export default format;
+
+/**
+ * Takes in the Immutable List forms of ingredients and directions to return
+ * an object that has string versions on them respectively
+ * @param  {Immutable List} ingredients
+ * @param  {Immutable List} directions
+ * @return {object}             ingredients, directions properties
+ */
+export const stringifyRecipeArrays = (ingredients, directions) => {
+    let strIngredients,
+        strDirections;
+    if (!!ingredients) {
+        strIngredients = ingredients.reduce((prev, ingredient, index) => {
+            if (index === 0) return `${ingredient.get('item')}:${ingredient.get('amount')}`;
+            return `${prev};${ingredient.get('item')}:${ingredient.get('amount')}`;
+        }, '');
+    }
+
+    if (!!directions) {
+        strDirections = directions.reduce((prev, direction, index) => {
+            if (index === 0) return direction;
+            return `${prev};${direction}`;
+        },  '');
+    }
+
+    return {
+        ingredients: strIngredients,
+        directions: strDirections
+    };
+};
