@@ -17,26 +17,34 @@ $disabled: #efefef;
 
 .directionsList,
 .ingredientsList {
+  list-style: none;
   display: flex;
-  justify-content: space-around;
-  flex-flow: row wrap;
+  flex: 1;
+  flex-flow: column wrap;
+  padding: 2px 6px;
+  margin-left: 3em;
 
   li {
-    flex: 1 8em;
+    flex: 1 2em;
+    padding: 0.2em;
+    box-size: border-box;
+
   }
 
+}
+
+.directionsList {
+
+  li {
+    align-self: flex-start;
+  }
 }
 
 .name {
   margin-top: 0;
 }
 
-.directionsList {
-  list-style: lower-roman;
-}
-
 .ingredientsList {
-  list-style: upper-roman;
 
   li {
     font-size: 1em;

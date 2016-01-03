@@ -29,8 +29,7 @@ export class EditRecipe extends Component {
     }
 
     componentWillMount() {
-        console.log('The recipe in state');
-        console.log(this.state.recipe);
+
     }
 
     handleChange(event) {
@@ -47,8 +46,6 @@ export class EditRecipe extends Component {
         const { key } = this.props.routeParams;
         event.preventDefault();
         const { recipe } = this.state;
-        console.log('state');
-        console.log(recipe.get('name'));
         const name = recipe.get('name');
         const { ingredients, directions } = stringifyRecipeArrays(
                                                 recipe.get('ingredients'),
@@ -56,9 +53,9 @@ export class EditRecipe extends Component {
                                             );
 
         const recipeState = {
-            name: name,
-            ingredients: ingredients,
-            directions: directions
+            name,
+            ingredients,
+            directions
         };
         /**
 
@@ -92,8 +89,9 @@ export class EditRecipe extends Component {
         const outputIngredients = recipe.get('ingredients').map((ingredient, index) => {
             return (
                 <li key={index}>
-                    <p>Item: {ingredient.get('item')} </p>
-                    <p>Amount: {ingredient.get('amount')} </p>
+                    {/*<p>Item: {ingredient.get('item')} </p>
+                    <p>Amount: {ingredient.get('amount')} </p>*/}
+                    <p>{ingredient.get('amount')} - {ingredient.get('item')}</p>
                 </li>
             );
         });
@@ -126,14 +124,14 @@ export class EditRecipe extends Component {
                         onChange={this.handleChange}
                         id="directions"
                         style={styling} />
-                    <button
+                    {/*<button
                         type="button"
                         onClick={this.handleSubmit}
                         className={style.submit}>
-                        Submit Changes</button>
-                    {/*<Button
+                        Submit Changes</button>*/}
+                    <Button
                         onClick={this.handleSubmit}
-                        label="Submit Changes" />*/}
+                        label="Submit Changes" />
                 </form>
                 <LivePreview
                     className={style.livePreview}
