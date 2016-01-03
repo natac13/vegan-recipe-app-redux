@@ -52,7 +52,7 @@ export class EditRecipe extends Component {
                                                 recipe.get('directions')
                                             );
 
-        const recipeState = {
+        const updatedRecipe = {
             name,
             ingredients,
             directions
@@ -67,7 +67,7 @@ export class EditRecipe extends Component {
         /***************
         The update works for name but the store does not get updated yet
         ****************/
-        this.props.actions.updateRecipeFirebase(recipeState, this.props.recipeList.get(key));
+        this.props.actions.updateRecipeFirebase(updatedRecipe, this.props.recipeList.get(key));
         // pushPath to recipe/:the name of recipe
         this.props.actions.pushPath('/');
     }

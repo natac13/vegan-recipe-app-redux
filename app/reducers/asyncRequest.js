@@ -11,10 +11,11 @@ import {
     SUCCESSFUL_REQUEST
 } from '../constants/';
 
-const initialState = Map({
+const initialState = fromJS({
     fetching: false,
     didFail: false,
-    success: false
+    success: false,
+    startState: {}
 });
 
 
@@ -43,6 +44,6 @@ const asyncRequest = (state=initialState, action) => {
         default:
             return state;
     }
-}
+};
 
 export default asyncRequest;

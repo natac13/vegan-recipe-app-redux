@@ -1,6 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
+/*** Middlewares ***/
 import thunkMiddleware  from 'redux-thunk';
 import logger from 'redux-logger';
+import firebaseMiddleware from '../middlewares/firebaseMiddleware';
+/*** Reducer ***/
 import rootReducer from '../reducers/';
 
 
@@ -8,7 +11,8 @@ const loggerMiddleware = logger();
 
 const createStoreWithMiddleware = applyMiddleware(
     thunkMiddleware,
-    loggerMiddleware
+    loggerMiddleware,
+    firebaseMiddleware
 )(createStore);
 
 
