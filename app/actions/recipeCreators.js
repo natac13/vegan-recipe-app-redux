@@ -161,8 +161,8 @@ export function updateRecipeFirebase(recipe, oldRecipe) {
             const realFormatRecipe = properRecipeFormat(recipe);
             if (!!realFormatRecipe) {
                 dispatch(updateRecipeName(oldRecipe.get('name'), realFormatRecipe.name));
-                // dispatch(updateRecipeDirections(recipe.get('name'), recipe.get('directions')));
-                // dispatch(updateIngredients(recipe.get('name'), recipe.get('ingredients')));
+                dispatch(updateRecipeDirections(recipe.name, realFormatRecipe.directions));
+                dispatch(updateIngredients(recipe.name, realFormatRecipe.ingredients));
             }
             // check that there is a recipe coming back from formatting
             // if (!!realFormatRecipe) dispatch(addRecipe(realFormatRecipe));
