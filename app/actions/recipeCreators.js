@@ -7,7 +7,7 @@ import {
     BUILD_LIST
 } from '../constants/';
 
-export { pushPath } from 'redux-simple-router'
+export { pushPath } from 'redux-simple-router';
 
 export function addRecipe(recipe) {
     return {
@@ -86,15 +86,15 @@ export function buildList(recipeList) {
 }
 
 
-export function getRecipeListFirebase(context) {
+export function getRecipeListFirebase() {
     return function(dispatch, getState) {
         dispatch(requestRecipes());
-        return list.then(function good(snap) {
+        return list.then(function successFB(snap) {
             dispatch(successfulRequest());
             // NOTE: recipeList in firebase format through buildList
             // Convert in the reducer
             dispatch(buildList(snap.val()));
-        }, function noGood() {
+        }, function failFB() {
             dispatch(failedRequest());
         });
     };
@@ -144,7 +144,7 @@ export function addRecipeFirebase(recipe) {
  * @param  {object} recipe
  */
 export function updateRecipeFirebase(recipe, oldRecipe) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         // different name remove out dbPath
         if (recipe.name !== oldRecipe.get('name')) {
             list.child(snakeCase(oldRecipe.get('name'))).remove();

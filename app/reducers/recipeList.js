@@ -21,7 +21,7 @@ import {
 
 import { snakeCase } from '../js/core_helpers';
 // sample file for now
-var initialState = require("../../sample");
+var initialState = require('../../sample');
 
 const recipeList = (state = Map(), action) => {
     switch (action.type) {
