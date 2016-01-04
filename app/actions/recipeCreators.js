@@ -126,7 +126,9 @@ export function addRecipeFirebase(recipe) {
 
         // the recipe will get a different uuid for firebase and the store.
         let buffedRecipe = recipeExtras(recipe).toObject();
-
+        const realFormatRecipe = properRecipeFormat(buffedRecipe);
+        // check that there is a recipe coming back from formatting
+        if (!!realFormatRecipe) dispatch(addRecipe(realFormatRecipe));
         return dbPath.set(buffedRecipe).then(function() {
             // By passing the buffedRecipe to addRecipe I let recipeExtras see
             // the recipe object already has a created_date and id. Therefore
