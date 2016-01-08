@@ -47,7 +47,7 @@
     "file-loader": "0.8.5",
     "firebase": "2.3.2",
     "fireproof": "3.1.0",
-    "history": "1.7.0",
+    "history": "1.17.0",
     "html-loader": "0.4.0",
     "html-webpack-plugin": "1.7.0",
     "image-webpack-loader": "1.6.2",

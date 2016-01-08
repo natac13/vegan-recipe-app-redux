@@ -12,6 +12,17 @@ import configureStore from './store/configureStore';
 const store = configureStore();
 
 
+/*===========================================
+=            Immutable Dev tools            =
+===========================================*/
+
+import Immutable from 'immutable';
+import installDevTools from 'immutable-devtools';
+installDevTools(Immutable);
+
+/*=====  End of Immutable Dev tools  ======*/
+
+
 
 const rootElement = document.getElementById('root');
 const history = createHistory();

@@ -33,7 +33,7 @@ export class RecipeList extends Component {
 
     static propTypes = {
         recipeList: ImmutablePropTypes.map.isRequired
-    }
+    };
 
     constructor(props) {
         super(props);
