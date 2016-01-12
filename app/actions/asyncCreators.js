@@ -1,13 +1,13 @@
 import {
-    REQUEST_RECIPES,
+    DB_REQUEST,
     FAILED_REQUEST,
     SUCCESSFUL_REQUEST,
     SELECT_CATEGORY
 } from '../constants/';
 
-export function requestRecipes() {
+export function dbRequest() {
     return {
-        type: REQUEST_RECIPES
+        type: DB_REQUEST
     }
 }
 

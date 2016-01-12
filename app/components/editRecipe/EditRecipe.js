@@ -45,14 +45,6 @@ export class EditRecipe extends Component {
     handleSubmit(event) {
         const { key } = this.props.routeParams;
         event.preventDefault();
-        const { data } = this.state;
-        const { name, ingredients, directions } = stringifyRecipe(data);
-
-        const updatedRecipe = {
-            name,
-            ingredients,
-            directions
-        };
         /**
 
             TODO:
@@ -60,12 +52,9 @@ export class EditRecipe extends Component {
             - Stop the addRecipeFirebase action if there is no name value!
 
          */
-        /***************
-        The update works for name but the store does not get updated yet
-        ****************/
-        this.props.actions.updateRecipeFirebase(updatedRecipe, this.props.recipeList.get(key));
+        this.props.actions.updateRecipe(this.state.data, this.props.recipeList.get(key));
         // pushPath to recipe/:the name of recipe
-        this.props.actions.pushPath('/');
+        // this.props.actions.pushPath('/');
     }
 
     render() {

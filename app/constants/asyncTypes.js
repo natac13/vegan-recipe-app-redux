@@ -1,4 +1,4 @@
-export const REQUEST_RECIPES    = 'REQUEST_RECIPES';
+export const DB_REQUEST    = 'DB_REQUEST';
 export const SELECT_CATEGORY    = 'SELECT_CATEGORY';
 export const FAILED_REQUEST     = 'FAILED_REQUEST';
 export const SUCCESSFUL_REQUEST = 'SUCCESSFUL_REQUEST';

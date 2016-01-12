@@ -59,6 +59,14 @@ export function deleteRecipe(state, recipeName) {
     return state.delete(snakedName);
 }
 
+export function updateRecipe(state, oldRecipe, newRecipe) {
+    // delete the old recipe
+    state = deleteRecipe(state, oldRecipe.get('name'));
+    // add new recipe??
+    return addRecipe(state, newRecipe);
+
+}
+
 /**
  * Takes in the state tree, the old recipe name and a new recipe name. This will
  * find the recipe and change the name of it at the same time change the key on
