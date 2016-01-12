@@ -24,7 +24,7 @@ export class EditRecipe extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         const { key } = props.routeParams;
         this.state = {
-            recipe: props.recipeList.get(key)
+            data: props.recipeList.get(key)
         };
     }
 
@@ -38,18 +38,18 @@ export class EditRecipe extends Component {
 
 
         this.setState({
-            recipe: this.state.recipe.set(property, data)
+            data: this.state.data.set(property, data)
         });
     }
 
     handleSubmit(event) {
         const { key } = this.props.routeParams;
         event.preventDefault();
-        const { recipe } = this.state;
-        const name = recipe.get('name');
+        const { data } = this.state;
+        const name = data.get('name');
         const { ingredients, directions } = stringifyRecipeArrays(
-                                                recipe.get('ingredients'),
-                                                recipe.get('directions')
+                                                data.get('ingredients'),
+                                                data.get('directions')
                                             );
 
         const updatedRecipe = {
@@ -73,20 +73,20 @@ export class EditRecipe extends Component {
     }
 
     render() {
-        const { recipe } = this.state;
+        const { data } = this.state;
 
 
-        const name = recipe.get('name');
+        const name = data.get('name');
         const { ingredients, directions } = stringifyRecipeArrays(
-                                                recipe.get('ingredients'),
-                                                recipe.get('directions')
+                                                data.get('ingredients'),
+                                                data.get('directions')
                                             );
-        const outputDirections = recipe.get('directions').map((direction, index) => {
+        const outputDirections = data.get('directions').map((direction, index) => {
             return (
                 <li key={index}> {direction}</li>
             );
         });
-        const outputIngredients = recipe.get('ingredients').map((ingredient, index) => {
+        const outputIngredients = data.get('ingredients').map((ingredient, index) => {
             return (
                 <li key={index}>
                     {/*<p>Item: {ingredient.get('item')} </p>

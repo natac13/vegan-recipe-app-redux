@@ -85,21 +85,6 @@ export function buildList(recipeList) {
     };
 }
 
-
-export function getRecipeListFirebase() {
-    return function(dispatch, getState) {
-        dispatch(requestRecipes());
-        return list.then(function successFB(snap) {
-            dispatch(successfulRequest());
-            // NOTE: recipeList in firebase format through buildList
-            // Convert in the reducer
-            dispatch(buildList(snap.val()));
-        }, function failFB() {
-            dispatch(failedRequest());
-        });
-    };
-}
-
 import {
     snakeCase,
     snakedNameOf
