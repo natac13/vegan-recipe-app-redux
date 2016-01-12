@@ -11,9 +11,21 @@ const loggerMiddleware = logger();
 
 const createStoreWithMiddleware = applyMiddleware(
     thunkMiddleware,
-    loggerMiddleware,
-    firebaseMiddleware
+    firebaseMiddleware,
+    loggerMiddleware
 )(createStore);
+
+/*===========================================
+=            Immutable Dev tools            =
+===========================================*/
+
+import Immutable from 'immutable';
+import installDevTools from 'immutable-devtools';
+installDevTools(Immutable);
+
+/*=====  End of Immutable Dev tools  ======*/
+
+
 
 
 export default function configureStore(initialState) {
