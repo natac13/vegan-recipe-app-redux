@@ -14,8 +14,7 @@ import {
 const initialState = fromJS({
     fetching: false,
     didFail: false,
-    success: false,
-    startState: {}
+    success: false
 });
 
 

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
 
 import format, {
-    stringifyRecipeArrays
+    stringifyRecipe
 } from '../../js/format';
 
 /*** Components ***/
@@ -46,11 +46,7 @@ export class EditRecipe extends Component {
         const { key } = this.props.routeParams;
         event.preventDefault();
         const { data } = this.state;
-        const name = data.get('name');
-        const { ingredients, directions } = stringifyRecipeArrays(
-                                                data.get('ingredients'),
-                                                data.get('directions')
-                                            );
+        const { name, ingredients, directions } = stringifyRecipe(data);
 
         const updatedRecipe = {
             name,
@@ -75,12 +71,7 @@ export class EditRecipe extends Component {
     render() {
         const { data } = this.state;
 
-
-        const name = data.get('name');
-        const { ingredients, directions } = stringifyRecipeArrays(
-                                                data.get('ingredients'),
-                                                data.get('directions')
-                                            );
+        const { name, ingredients, directions } = stringifyRecipe(data);
         const outputDirections = data.get('directions').map((direction, index) => {
             return (
                 <li key={index}> {direction}</li>

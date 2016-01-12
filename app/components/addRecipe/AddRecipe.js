@@ -76,10 +76,8 @@ class AddRecipe extends Component {
             - Stop the addRecipeFirebase action if there is no name value!
 
          */
-        console.log('recipe to be added');
-        console.log(updatedRecipe);
-        // this.props.actions.addRecipeFirebase(recipe);
-        // this.props.actions.pushPath('/recipes');
+        this.props.actions.addRecipe(updatedRecipe);
+        this.props.actions.pushPath('/recipes');
     }
 
     componentDidUpdate() {
