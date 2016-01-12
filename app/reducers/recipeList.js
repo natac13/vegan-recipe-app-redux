@@ -2,6 +2,7 @@ import { fromJS, Map } from 'immutable';
 import {
     ADD_RECIPE,
     DELETE_RECIPE,
+    UPDATE_RECIPE,
     UPDATE_RECIPE_NAME,
     UPDATE_RECIPE_DIRECTIONS,
     UPDATE_RECIPE_INGREDIENTS,
@@ -11,6 +12,7 @@ import {
 import {
     addRecipe,
     deleteRecipe,
+    updateRecipe,
     updateRecipeName,
     updateRecipeDirections,
     updateRecipeIngredients,
@@ -29,6 +31,8 @@ const recipeList = (state = Map(), action) => {
             return addRecipe(state, action.recipe);
         case DELETE_RECIPE:
             return deleteRecipe(state, action.recipeName);
+        case UPDATE_RECIPE:
+            return updateRecipe(state, action.oldRecipe, action.newRecipe);
         case UPDATE_RECIPE_NAME:
             return updateRecipeName(state, action.oldName, action.newName);
         case UPDATE_RECIPE_DIRECTIONS:

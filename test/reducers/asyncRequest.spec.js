@@ -71,9 +71,9 @@ describe('The async Reducer', () => {
             expect(state.get('success')).to.be.false;
 
         })
-        it('should handle REQUEST_RECIPES', () => {
+        it('should handle DB_REQUEST', () => {
             const action = {
-                type: 'REQUEST_RECIPES'
+                type: 'DB_REQUEST'
             }
             const state = reducer(undefined, action);
             expect(state.get('fetching')).to.be.true;

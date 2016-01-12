@@ -1,6 +1,10 @@
 import {
     ADD_RECIPE,
     DELETE_RECIPE,
+<<<<<<< HEAD
+=======
+    UPDATE_RECIPE,
+>>>>>>> change/update-to-use-middleware
     UPDATE_RECIPE_NAME,
     UPDATE_RECIPE_DIRECTIONS,
     UPDATE_RECIPE_INGREDIENTS,
@@ -8,7 +12,11 @@ import {
 } from '../constants/';
 
 import {
+<<<<<<< HEAD
     requestRecipes,
+=======
+    dbRequest,
+>>>>>>> change/update-to-use-middleware
     failedRequest,
     successfulRequest
 } from '../actions/asyncCreators';
@@ -61,7 +69,11 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
         cycle from the beginner forcing me into the check with undefined.
          */
         if (action.type === BUILD_LIST) {
+<<<<<<< HEAD
             dispatch(requestRecipes());
+=======
+            dispatch(dbRequest());
+>>>>>>> change/update-to-use-middleware
             return list.then(
                 snap => {
                     dispatch(successfulRequest());
@@ -72,16 +84,59 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                 });
         }
         else if (action.type === ADD_RECIPE) {
+<<<<<<< HEAD
+=======
+            /*
+            Recipe is from the AddRecipe Component state which is an immutable
+            data structure.
+            Becomes stringified to add to the DB.
+             */
+>>>>>>> change/update-to-use-middleware
             let recipe = stringifyRecipe(action.recipe);
             // create a child Firebase ref for the new recipe
             const snakedName = snakeCase(recipe.name);
             const recipeDBPath = list.child(snakedName);
+<<<<<<< HEAD
             recipeDBPath.set(recipe).then(
                 () => console.log('fb success'),
                 err => console.log(err)
             );
             return next(action);
 
+=======
+            // Send to Firebase
+            recipeDBPath.set(recipe).then(
+                () => console.log('fb success'),
+                err => console.log(err, 'Error adding the recipe to Firebase')
+            );
+
+            // Continue flow to the reducer so the recipe is added to the store.
+            return next(action);
+        }
+        else if (action.type == UPDATE_RECIPE) {
+            const { newRecipe, oldRecipe } = action;
+            /*
+            Check if the recipe name has been changed from the original. This is
+            important since the name is used as the key for the recipe in both
+            the Firebase data structure and the Redux store.
+             */
+            if (newRecipe.get('name') !== oldRecipe.get('name')) {
+                list.child(snakeCase(oldRecipe.get('name'))).remove();
+            }
+
+            // find the child Firebase ref for the recipe to update
+            // create a DBPath if deleted above
+            const snakedName = snakeCase(newRecipe.get('name'));
+            const recipeDBPath = list.child(snakedName);
+            // Send to Firebase
+            let recipe = stringifyRecipe(newRecipe);
+            recipeDBPath.set(recipe).then(
+                () => console.log('fb success'),
+                err => console.log(err, 'Error updaing the recipe to Firebase')
+            );
+
+            return next(action);
+>>>>>>> change/update-to-use-middleware
         }
 
         const nextState = next(action);

@@ -5,7 +5,7 @@ import {
 } from '../js/immunurry';
 
 import {
-    REQUEST_RECIPES,
+    DB_REQUEST,
     SELECT_CATEGORY,
     FAILED_REQUEST,
     SUCCESSFUL_REQUEST
@@ -34,7 +34,7 @@ export const failed  = R.compose(failedData, noFetching, noSuccess);
 
 const asyncRequest = (state=initialState, action) => {
     switch (action.type) {
-        case REQUEST_RECIPES:
+        case DB_REQUEST:
             return request(state);
         case FAILED_REQUEST:
             return failed(state);
