@@ -4,7 +4,7 @@ import R                     from 'ramda';
 import {
     convertFirebaseData,
     properRecipeFormat
-}                            from '../app/js/core';
+} from '../app/js/format';
 
 /*=====================================================
 =            Firebase tools and connection            =

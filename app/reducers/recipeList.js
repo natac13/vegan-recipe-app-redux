@@ -15,10 +15,10 @@ import {
     updateRecipe,
     updateRecipeName,
     updateRecipeDirections,
-    updateRecipeIngredients,
-    convertFirebaseData
+    updateRecipeIngredients
 } from '../js/core';
 
+import { convertFirebaseData } from '../js/format';
 // import { mongoDataToImmutableMap } from '../js/database';
 
 import { snakeCase } from '../js/core_helpers';

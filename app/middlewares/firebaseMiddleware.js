@@ -24,11 +24,14 @@ import {
 } from '../js/core_helpers';
 
 import {
-    recipeExtras,
-    properRecipeFormat
+    recipeExtras
 } from '../js/core';
 
-import { stringifyRecipe } from '../js/format';
+
+import {
+    stringifyRecipe,
+    properRecipeFormat
+} from '../js/format';
 
 /*=====  End of Formatting  ======*/
 
