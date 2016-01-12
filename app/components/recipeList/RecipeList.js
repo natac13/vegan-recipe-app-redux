@@ -33,7 +33,7 @@ export class RecipeList extends Component {
 
     static propTypes = {
         recipeList: ImmutablePropTypes.map.isRequired
-    }
+    };
 
     constructor(props) {
         super(props);
@@ -45,7 +45,7 @@ export class RecipeList extends Component {
         if(!!this.props.actions && this.props.recipeList.size === 0) {
             console.log('FIREBASE SEARCH');
             // let snapshotPromise = this.props.actions.getRecipeListFirebase();
-            this.props.actions.buildList('test');
+            this.props.actions.buildList();
         }
     }
 

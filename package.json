@@ -89,6 +89,7 @@
     "eslint-plugin-react": "3.11.3",
     "gh-pages": "0.8.0",
     "ignore-styles": "1.2.0",
+    "immutable-devtools": "0.0.5",
     "jsdom": "7.2.1",
     "json-loader": "0.5.4",
     "mocha": "2.3.4",
