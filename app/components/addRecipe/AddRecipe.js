@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
 
+import moment from 'moment';
+import uuid from 'node-uuid';
+
 import format from '../../js/format';
 
 /*** Components ***/
@@ -40,6 +43,8 @@ class AddRecipe extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             data: fromJS({
+                id: uuid.v4(),
+                created_date: moment().format('MMMM Do, YYYY'),
                 name: '',
                 ingredients: [],
                 directions: []
@@ -67,6 +72,7 @@ class AddRecipe extends Component {
             - Stop the addRecipeFirebase action if there is no name value!
 
          */
+        // console.log(this.state.data);
         this.props.actions.addRecipe(this.state.data);
         this.props.actions.pushPath('/recipes');
     }

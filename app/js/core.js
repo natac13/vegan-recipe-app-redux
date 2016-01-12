@@ -39,7 +39,9 @@ export function recipeExtras(recipe) {
  */
 export function addRecipe(state, recipe) {
     // buff
-    recipe = recipeExtras(recipe);
+    // recipe = recipeExtras(recipe);
+    recipe = fromJS(recipe);
+    console.log(recipe);
     // recipeList key
     const snakedName = snakedNameOf(recipe);
 
