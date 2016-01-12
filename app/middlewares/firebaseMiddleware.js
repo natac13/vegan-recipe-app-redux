@@ -1,10 +1,7 @@
 import {
     ADD_RECIPE,
     DELETE_RECIPE,
-<<<<<<< HEAD
-=======
     UPDATE_RECIPE,
->>>>>>> change/update-to-use-middleware
     UPDATE_RECIPE_NAME,
     UPDATE_RECIPE_DIRECTIONS,
     UPDATE_RECIPE_INGREDIENTS,
@@ -12,11 +9,7 @@ import {
 } from '../constants/';
 
 import {
-<<<<<<< HEAD
-    requestRecipes,
-=======
     dbRequest,
->>>>>>> change/update-to-use-middleware
     failedRequest,
     successfulRequest
 } from '../actions/asyncCreators';
@@ -69,11 +62,7 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
         cycle from the beginner forcing me into the check with undefined.
          */
         if (action.type === BUILD_LIST) {
-<<<<<<< HEAD
-            dispatch(requestRecipes());
-=======
             dispatch(dbRequest());
->>>>>>> change/update-to-use-middleware
             return list.then(
                 snap => {
                     dispatch(successfulRequest());
@@ -84,26 +73,15 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                 });
         }
         else if (action.type === ADD_RECIPE) {
-<<<<<<< HEAD
-=======
             /*
             Recipe is from the AddRecipe Component state which is an immutable
             data structure.
             Becomes stringified to add to the DB.
              */
->>>>>>> change/update-to-use-middleware
             let recipe = stringifyRecipe(action.recipe);
             // create a child Firebase ref for the new recipe
             const snakedName = snakeCase(recipe.name);
             const recipeDBPath = list.child(snakedName);
-<<<<<<< HEAD
-            recipeDBPath.set(recipe).then(
-                () => console.log('fb success'),
-                err => console.log(err)
-            );
-            return next(action);
-
-=======
             // Send to Firebase
             recipeDBPath.set(recipe).then(
                 () => console.log('fb success'),
@@ -136,7 +114,6 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
             );
 
             return next(action);
->>>>>>> change/update-to-use-middleware
         }
 
         const nextState = next(action);
