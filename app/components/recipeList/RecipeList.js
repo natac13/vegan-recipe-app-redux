@@ -44,7 +44,8 @@ export class RecipeList extends Component {
         // ONLY if recipeList is empty
         if(!!this.props.actions && this.props.recipeList.size === 0) {
             console.log('FIREBASE SEARCH');
-            this.props.actions.getRecipeListFirebase(this);
+            // let snapshotPromise = this.props.actions.getRecipeListFirebase();
+            this.props.actions.buildList();
         }
     }
 

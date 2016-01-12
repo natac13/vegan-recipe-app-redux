@@ -60,11 +60,14 @@ class AddRecipe extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const { name, directions, ingredients } = this.refs.recipeForm;
-        const recipe = {
-            name: name.value,
-            directions: directions.value,
-            ingredients: ingredients.value
+        const { data } = this.state;
+        const name = data.get('name');
+        const ingredients = data.get('ingredients');
+        const directions  = data.get('directions');
+        const updatedRecipe = {
+            name,
+            ingredients,
+            directions
         };
         /**
 
@@ -73,8 +76,7 @@ class AddRecipe extends Component {
             - Stop the addRecipeFirebase action if there is no name value!
 
          */
-
-        this.props.actions.addRecipeFirebase(recipe);
+        this.props.actions.addRecipe(updatedRecipe);
         this.props.actions.pushPath('/recipes');
     }
 

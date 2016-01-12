@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
 
 import format, {
-    stringifyRecipeArrays
+    stringifyRecipe
 } from '../../js/format';
 
 /*** Components ***/
@@ -24,7 +24,7 @@ export class EditRecipe extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         const { key } = props.routeParams;
         this.state = {
-            recipe: props.recipeList.get(key)
+            data: props.recipeList.get(key)
         };
     }
 
@@ -38,21 +38,17 @@ export class EditRecipe extends Component {
 
 
         this.setState({
-            recipe: this.state.recipe.set(property, data)
+            data: this.state.data.set(property, data)
         });
     }
 
     handleSubmit(event) {
         const { key } = this.props.routeParams;
         event.preventDefault();
-        const { recipe } = this.state;
-        const name = recipe.get('name');
-        const { ingredients, directions } = stringifyRecipeArrays(
-                                                recipe.get('ingredients'),
-                                                recipe.get('directions')
-                                            );
+        const { data } = this.state;
+        const { name, ingredients, directions } = stringifyRecipe(data);
 
-        const recipeState = {
+        const updatedRecipe = {
             name,
             ingredients,
             directions
@@ -67,26 +63,21 @@ export class EditRecipe extends Component {
         /***************
         The update works for name but the store does not get updated yet
         ****************/
-        this.props.actions.updateRecipeFirebase(recipeState, this.props.recipeList.get(key));
+        this.props.actions.updateRecipeFirebase(updatedRecipe, this.props.recipeList.get(key));
         // pushPath to recipe/:the name of recipe
         this.props.actions.pushPath('/');
     }
 
     render() {
-        const { recipe } = this.state;
+        const { data } = this.state;
 
-
-        const name = recipe.get('name');
-        const { ingredients, directions } = stringifyRecipeArrays(
-                                                recipe.get('ingredients'),
-                                                recipe.get('directions')
-                                            );
-        const outputDirections = recipe.get('directions').map((direction, index) => {
+        const { name, ingredients, directions } = stringifyRecipe(data);
+        const outputDirections = data.get('directions').map((direction, index) => {
             return (
                 <li key={index}> {direction}</li>
             );
         });
-        const outputIngredients = recipe.get('ingredients').map((ingredient, index) => {
+        const outputIngredients = data.get('ingredients').map((ingredient, index) => {
             return (
                 <li key={index}>
                     {/*<p>Item: {ingredient.get('item')} </p>

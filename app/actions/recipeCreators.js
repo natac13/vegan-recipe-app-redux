@@ -7,7 +7,7 @@ import {
     BUILD_LIST
 } from '../constants/';
 
-export { pushPath } from 'redux-simple-router'
+export { pushPath } from 'redux-simple-router';
 
 export function addRecipe(recipe) {
     return {
@@ -72,31 +72,20 @@ import {
 
 
 /**
- * currently the recipeList going through this action creator is in Firebase
- * format. So the directions and ingredients are strings. The reducer function
- * will handle the conversion.
- * @param  {object} recipeList From Firebase
- * @return {object}            Action object for the reducer function recipeList
+ * This action is tricky. It is called in RecipeList component without any args.
+ * However my custom Firebase middleware will intercept this action and send
+ * out a request for the data, via promise. Upon success the middleware will
+ * call next on the data being returned by Firebase. Very similar to
+ * Redux-Promise however the return value from Firebase is a snapshot which I
+ * call .val() on to get the actual data.
+ * @param  {object} recipeList From Firebase and therefore directions and
+ *                             ingredients are strings
+ * @return {object}
  */
 export function buildList(recipeList) {
     return {
         type: BUILD_LIST,
         recipeList
-    };
-}
-
-
-export function getRecipeListFirebase(context) {
-    return function(dispatch, getState) {
-        dispatch(requestRecipes());
-        return list.then(function good(snap) {
-            dispatch(successfulRequest());
-            // NOTE: recipeList in firebase format through buildList
-            // Convert in the reducer
-            dispatch(buildList(snap.val()));
-        }, function noGood() {
-            dispatch(failedRequest());
-        });
     };
 }
 
@@ -111,40 +100,11 @@ import {
 
 
 /**
- * This recipe is from the user input and is in the string format for directions
- * and the ingredients
- *
- * Need to add checks for if no name property on the recipe coming in.
- * If this is the case do not send to firebase or the redux store!
- */
-export function addRecipeFirebase(recipe) {
-    return (dispatch) => {
-        // create a child Firebase ref for the new recipe
-        const snakedName = snakeCase(recipe.name);
-        const dbPath = list.child(snakedName);
-
-
-        // the recipe will get a different uuid for firebase and the store.
-        let buffedRecipe = recipeExtras(recipe).toObject();
-
-        return dbPath.set(buffedRecipe).then(function() {
-            // By passing the buffedRecipe to addRecipe I let recipeExtras see
-            // the recipe object already has a created_date and id. Therefore
-            // using them instead of creating new versions.
-
-            const realFormatRecipe = properRecipeFormat(buffedRecipe);
-            // check that there is a recipe coming back from formatting
-            if (!!realFormatRecipe) dispatch(addRecipe(realFormatRecipe));
-        });
-
-    };
-}
-/**
  * Recipe in string format with directions and ingredients
  * @param  {object} recipe
  */
 export function updateRecipeFirebase(recipe, oldRecipe) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         // different name remove out dbPath
         if (recipe.name !== oldRecipe.get('name')) {
             list.child(snakeCase(oldRecipe.get('name'))).remove();
