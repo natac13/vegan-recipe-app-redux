@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { List, fromJS } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 /**
  * capitalize :: String a -> a
  * takes in a string and will return a new string with the first letter upperCased
@@ -97,19 +97,21 @@ const format = (property) => {
 export default format;
 
 /**
- * Takes in the Immutable List forms of ingredients and directions to return
- * an object that has string versions on them respectively
- * @param  {Immutable List} ingredients
- * @param  {Immutable List} directions
- * @return {object}             ingredients, directions properties
+ * Takes in the Immutable Map Recipe which is first converted to plain JavaScript
+ * which is then run through the conversions to return a stringified recipe
+ * object
+ * @param  {Immutable Map} recipe
+ * @return {obejct}        recipe with directions and ingredients stringified
  */
-export const stringifyRecipeArrays = (ingredients, directions) => {
+export const stringifyRecipe = (recipe) => {
+    let plainRecipe = Map.isMap(recipe) ? recipe.toJS() : recipe;
+    let { ingredients, directions } = plainRecipe;
     let strIngredients,
         strDirections;
     if (!!ingredients) {
         strIngredients = ingredients.reduce((prev, ingredient, index) => {
-            if (index === 0) return `${ingredient.get('item')}:${ingredient.get('amount')}`;
-            return `${prev};${ingredient.get('item')}:${ingredient.get('amount')}`;
+            if (index === 0) return `${ingredient.item}:${ingredient.amount}`;
+            return `${prev};${ingredient.item}:${ingredient.amount}`;
         }, '');
     }
 
@@ -121,6 +123,7 @@ export const stringifyRecipeArrays = (ingredients, directions) => {
     }
 
     return {
+        ...plainRecipe,
         ingredients: strIngredients,
         directions: strDirections
     };

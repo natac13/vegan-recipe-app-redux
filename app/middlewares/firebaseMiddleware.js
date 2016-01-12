@@ -13,12 +13,37 @@ import {
     successfulRequest
 } from '../actions/asyncCreators';
 
+/*==================================
+=            Formatting            =
+==================================*/
+
+import {
+    snakeCase,
+    snakedNameOf
+} from '../js/core_helpers';
+
+import {
+    recipeExtras,
+    properRecipeFormat
+} from '../js/core';
+
+import { stringifyRecipe } from '../js/format';
+
+/*=====  End of Formatting  ======*/
+
+/*===========================================
+=            Firebase Connection            =
+===========================================*/
 
 import Firebase from 'firebase';
 import Fireproof from 'fireproof';
 const fireRef = new Firebase('https://vegan-recipes.firebaseio.com/');
 const fp = new Fireproof(fireRef);
 const list = fp.child('recipeList');
+
+/*=====  End of Firebase Connection  ======*/
+
+
 
 const firebaseMiddleware = ({ dispatch, getState }) => next => {
     let firebaseRecipeList = {};
@@ -45,6 +70,18 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                 error => {
                     dispach(failedRequest());
                 });
+        }
+        else if (action.type === ADD_RECIPE) {
+            let recipe = stringifyRecipe(action.recipe);
+            // create a child Firebase ref for the new recipe
+            const snakedName = snakeCase(recipe.name);
+            const recipeDBPath = list.child(snakedName);
+            recipeDBPath.set(recipe).then(
+                () => console.log('fb success'),
+                err => console.log(err)
+            );
+            return next(action);
+
         }
 
         const nextState = next(action);
