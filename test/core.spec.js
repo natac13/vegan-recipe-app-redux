@@ -50,49 +50,49 @@ describe('Application Logic', () => {
                 }));
             });
 
-            it('should add an id field to the recipe before adding to the list', () => {
-                const state = Map();
-                const recipe = Map({
-                    name: 'Mashed Potatoes',
-                    directions: List.of('peel', 'boil'),
-                    ingredients: List.of(Map({item:'Potatoes', amount: 3}))
-                });
-                const nextState = addRecipe(state, recipe);
-                expect(nextState.get('mashed_potatoes')).to.contain.key('id');
-            });
+            // it('should add an id field to the recipe before adding to the list', () => {
+            //     const state = Map();
+            //     const recipe = Map({
+            //         name: 'Mashed Potatoes',
+            //         directions: List.of('peel', 'boil'),
+            //         ingredients: List.of(Map({item:'Potatoes', amount: 3}))
+            //     });
+            //     const nextState = addRecipe(state, recipe);
+            //     expect(nextState.get('mashed_potatoes')).to.contain.key('id');
+            // });
 
-            it('should set a created date property on the recipe Map when added to the list', () => {
-                const state = Map();
-                const recipe = {
-                    name: 'Mashed Potatoes',
-                    directions: ['peel', 'boil'],
-                    ingredients: [{ item:'Potatoes', amount: 3 }]
-                };
-                const date = moment().format('MMMM Do, YYYY')
-                const nextState = addRecipe(state, recipe);
-                expect(nextState.get('mashed_potatoes')).to.contain.key('created_date');
-                expect(nextState.getIn(['mashed_potatoes', 'created_date'])).to.equal(date);
-            });
+            // it('should set a created date property on the recipe Map when added to the list', () => {
+            //     const state = Map();
+            //     const recipe = {
+            //         name: 'Mashed Potatoes',
+            //         directions: ['peel', 'boil'],
+            //         ingredients: [{ item:'Potatoes', amount: 3 }]
+            //     };
+            //     const date = moment().format('MMMM Do, YYYY')
+            //     const nextState = addRecipe(state, recipe);
+            //     expect(nextState.get('mashed_potatoes')).to.contain.key('created_date');
+            //     expect(nextState.getIn(['mashed_potatoes', 'created_date'])).to.equal(date);
+            // });
 
-            it('should return a state immutable fromJS so there is a deep conversion', () => {
-                const state = Map();
-                const recipe = {
-                    name: 'Mashed Potatoes',
-                    directions: ['peel', 'boil'],
-                    ingredients: [{ item:'Potatoes', amount: 3 }]
-                };
-                const nextState = addRecipe(state, recipe);
-                expect(nextState).to.equal(fromJS({
-                    mashed_potatoes: {
-                        name: 'Mashed Potatoes',
-                        directions: ['peel', 'boil'],
-                        ingredients: [{ item: 'Potatoes', amount: 3 }],
-                        // next two just pull out from the nextState
-                        id: nextState.getIn(['mashed_potatoes', 'id']),
-                        created_date: nextState.getIn(['mashed_potatoes', 'created_date'])
-                    }
-                }));
-            });
+            // it('should return a state immutable fromJS so there is a deep conversion', () => {
+            //     const state = Map();
+            //     const recipe = {
+            //         name: 'Mashed Potatoes',
+            //         directions: ['peel', 'boil'],
+            //         ingredients: [{ item:'Potatoes', amount: 3 }]
+            //     };
+            //     const nextState = addRecipe(state, recipe);
+            //     expect(nextState).to.equal(fromJS({
+            //         mashed_potatoes: {
+            //             name: 'Mashed Potatoes',
+            //             directions: ['peel', 'boil'],
+            //             ingredients: [{ item: 'Potatoes', amount: 3 }],
+            //             // next two just pull out from the nextState
+            //             id: nextState.getIn(['mashed_potatoes', 'id']),
+            //             created_date: nextState.getIn(['mashed_potatoes', 'created_date'])
+            //         }
+            //     }));
+            // });
         });
 
 /*** Deleting a Recipe from the list ***/

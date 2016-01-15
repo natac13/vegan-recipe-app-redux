@@ -41,7 +41,6 @@ export function addRecipe(state, recipe) {
     // buff
     // recipe = recipeExtras(recipe);
     recipe = fromJS(recipe);
-    console.log(recipe);
     // recipeList key
     const snakedName = snakedNameOf(recipe);
 
@@ -66,7 +65,6 @@ export function updateRecipe(state, oldRecipe, newRecipe) {
     state = deleteRecipe(state, oldRecipe.get('name'));
     // add new recipe??
     return addRecipe(state, newRecipe);
-
 }
 
 /**

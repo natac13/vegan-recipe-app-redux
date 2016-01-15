@@ -7,7 +7,6 @@ import routes            from './config/routes';
 
 import { syncReduxAndRouter } from 'redux-simple-router';
 
-
 import configureStore from './store/configureStore';
 const store = configureStore();
 
