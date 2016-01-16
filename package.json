@@ -86,6 +86,7 @@
     "commitizen": "2.4.6",
     "cross-env": "1.0.6",
     "cz-conventional-changelog": "1.1.5",
+    "eslint-plugin-babel": "3.0.0",
     "eslint-plugin-react": "3.11.3",
     "gh-pages": "0.8.0",
     "ignore-styles": "1.2.0",
