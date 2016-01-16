@@ -88,19 +88,7 @@ class AddRecipe extends Component {
     render() {
         const { data } = this.state;
         const name = data.get('name');
-        const outputDirections = data.get('directions').map((direction, index) => {
-            return (
-                <li key={index}> {direction}</li>
-            );
-        });
-        const outputIngredients = data.get('ingredients').map((ingredient, index) => {
-            return (
-                <li key={index}>
-                    <p>Item: {ingredient.get('item')} </p>
-                    <p>Amount: {ingredient.get('amount')} </p>
-                </li>
-            );
-        });
+
 
         /*** override inline style ***/
         const styling = {
@@ -144,8 +132,8 @@ class AddRecipe extends Component {
                 <LivePreview
                     className={style.livePreview}
                     name={name}
-                    directions={outputDirections}
-                    ingredients={outputIngredients} />
+                    directions={data.get('directions')}
+                    ingredients={data.get('ingredients')} />
 
 
             </div>

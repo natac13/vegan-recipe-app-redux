@@ -58,22 +58,9 @@ export class EditRecipe extends Component {
 
     render() {
         const { data } = this.state;
-
+        // get string version to use as default values on the input fields
         const { name, imageURL, ingredients, directions } = stringifyRecipe(data);
-        const outputDirections = data.get('directions').map((direction, index) => {
-            return (
-                <li key={index}> {direction}</li>
-            );
-        });
-        const outputIngredients = data.get('ingredients').map((ingredient, index) => {
-            return (
-                <li key={index}>
-                    {/*<p>Item: {ingredient.get('item')} </p>
-                    <p>Amount: {ingredient.get('amount')} </p>*/}
-                    <p>{ingredient.get('amount')} - {ingredient.get('item')}</p>
-                </li>
-            );
-        });
+
         /*** override inline style ***/
         const styling = {
             width: '100%'
@@ -121,8 +108,8 @@ export class EditRecipe extends Component {
                 <LivePreview
                     className={style.livePreview}
                     name={name}
-                    directions={outputDirections}
-                    ingredients={outputIngredients} />
+                    directions={data.get('directions')}
+                    ingredients={data.get('ingredients')} />
 
 
             </div>
