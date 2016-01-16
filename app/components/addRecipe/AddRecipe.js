@@ -18,6 +18,7 @@ import * as ActionCreators from '../../actions/';
 
 /*** styling ***/
 import style from './style';
+import * as colors from '../../scss/colors';
 
 
 function mapStateToProps(state) {
@@ -104,22 +105,34 @@ class AddRecipe extends Component {
                         floatingLabelText="New Recipe Name"
                         onChange={this.handleChange}
                         id="name"
-                        style={styling} />
+                        fullWidth="true"
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}} />
                     <TextField
                         floatingLabelText="Image URL"
                         onChange={this.handleChange}
                         id="imageURL"
-                        style={styling} />
+                        fullWidth="true"
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}} />
                     <TextField
                         floatingLabelText="Ingredients"
                         onChange={this.handleChange}
                         id="ingredients"
-                        style={styling} />
+                        fullWidth="true"
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}} />
                     <TextField
                         floatingLabelText="Directions"
                         onChange={this.handleChange}
                         id="directions"
-                        style={styling} />
+                        fullWidth="true"
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}} />
                     <Button
                         onClick={this.handleSubmit}
                         label="Add New Recipe!" />
