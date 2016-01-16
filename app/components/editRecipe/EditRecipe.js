@@ -60,7 +60,7 @@ export class EditRecipe extends Component {
     render() {
         const { data } = this.state;
 
-        const { name, ingredients, directions } = stringifyRecipe(data);
+        const { name, imageURL, ingredients, directions } = stringifyRecipe(data);
         const outputDirections = data.get('directions').map((direction, index) => {
             return (
                 <li key={index}> {direction}</li>
@@ -91,6 +91,12 @@ export class EditRecipe extends Component {
                         defaultValue={name}
                         onChange={this.handleChange}
                         id="name"
+                        style={styling} />
+                    <TextField
+                        floatingLabelText="Image URL"
+                        onChange={this.handleChange}
+                        defaultValue={imageURL}
+                        id="imageURL"
                         style={styling} />
                     <TextField
                         floatingLabelText="Ingredients"

@@ -47,7 +47,8 @@ class AddRecipe extends Component {
                 created_date: moment().format('MMMM Do, YYYY'),
                 name: '',
                 ingredients: [],
-                directions: []
+                directions: [],
+                imageURL: ''
             })
         };
     }
@@ -112,6 +113,11 @@ class AddRecipe extends Component {
                         floatingLabelText="New Recipe Name"
                         onChange={this.handleChange}
                         id="name"
+                        style={styling} />
+                    <TextField
+                        floatingLabelText="Image URL"
+                        onChange={this.handleChange}
+                        id="imageURL"
                         style={styling} />
                     <TextField
                         floatingLabelText="Ingredients"

@@ -91,6 +91,9 @@ const format = (property) => {
     if (property === 'name') {
         return R.compose(presentation, R.trim);
     }
+    if (property === 'imageURL') {
+        return R.trim;
+    }
     return false;
 };
 
