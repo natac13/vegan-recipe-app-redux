@@ -132,6 +132,8 @@ export const stringifyRecipe = (recipe) => {
     };
 };
 
+export const lineify = R.replace(/(;)/g, '$1\n');
+
 /*===================================================
 =            Database Related Functions             =
 ===================================================*/

@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
 
 import format, {
-    stringifyRecipe
+    stringifyRecipe,
+    lineify
 } from '../../js/format';
 
 /*** Components ***/
@@ -60,7 +61,12 @@ export class EditRecipe extends Component {
     render() {
         const { data } = this.state;
         // get string version to use as default values on the input fields
-        const { name, imageURL, ingredients, directions } = stringifyRecipe(data);
+        let { name, imageURL, ingredients, directions } = stringifyRecipe(data);
+
+        directions = lineify(directions);
+        ingredients = lineify(ingredients);
+
+
 
         return (
             <div className={style.wrapper}>
