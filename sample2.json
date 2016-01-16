@@ -4,13 +4,22 @@
             "name": "Avocado Salad Dressing",
             "created_date": "September 2015",
             "ingredients": "avocado: 2; lemon juice: 1.5 tablespoon; Maple syrup: 1 tablespoon ",
-            "directions": "Add all ingredients to blender; Blend"
+            "directions": "Add all ingredients to blender; Blend",
+            "imageURL": ""
         },
         "pasta_&_veggies": {
             "name": "Pasta & Veggies",
             "created_date": "Sept 2015",
             "ingredients": "Red Pepper: 2; Celery: 2; Onion: 2; basil: 1 tablspoon",
-            "directions": "Saute red pepper, celery and onion in water first; turn on high"
+            "directions": "Saute red pepper, celery and onion in water first; turn on high",
+            "imageURL": "http://res.cloudinary.com/dxmist0g2/image/upload/c_scale,w_300,h_400,r_10/v1452953806/PastaVeggies.png"
+        },
+        "oatmeal_&_bananas": {
+            "name": "Oatmeal & Bananas",
+            "created_date": "Sept 2015",
+            "ingredients": "Oatmeal: 3-4 scoops (1/3 cup); Water: 2-3 bottles; Cinnamon: cover oatmeal Bananas: 4-5",
+            "directions": "Put oatmeal and water in pot; Put cinnamon on top; Turn over on medium; Stir half way through; Enjoy 3-4 bowls with placing banana in bowl and covering with hot oatmeal!",
+            "imageURL": "http://res.cloudinary.com/dxmist0g2/image/upload/c_scale,h_400,r_10,w_300/a_-90/v1452953807/OatmealBanana.png"
         }
     }
 }

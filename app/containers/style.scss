@@ -1,8 +1,5 @@
-@import "~normalize.css";
-
-$primary-color: #F4FFBD;
-$primary-bg: #E4DED1;
-$text: #005869;
+@import '~normalize.css';
+@import '~../scss/variables';
 
 body {
   font-family: 'Roboto', sans-serif;

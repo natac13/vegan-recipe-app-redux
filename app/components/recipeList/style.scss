@@ -1,9 +1,4 @@
-$primary-bg: #E4DED1;
-$whiter-bg: #fff;
-$separator: #9CC268;
-$line-a: #E6F7FF;
-$line-b: #E6FFF2;
-$recipe-link: #CE06CE;
+@import '~../../scss/variables';
 
 @keyframes tilt {
   0% {

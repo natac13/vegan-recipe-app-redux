@@ -1,0 +1,58 @@
+@import '~../../scss/variables';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .intro {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 80%;
+    padding: 2em;
+    justify-content: space-around;
+    border-bottom: 5px dashed darken($primary-color, 30%);
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      flex: 0 1 auto;
+      align-self: flex-end;
+    }
+
+    .image {
+      flex: 0 1 auto;
+
+
+    }
+  }
+
+  .content {
+      display: flex;
+      flex-direction: row;
+      width: 70%;
+      justify-content: space-between;
+
+      .ingredients,
+      .directions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 40%;
+      }
+
+      .ingredient {
+
+      }
+
+      .direction {
+        margin: 5px;
+
+        &:before {
+          content: '-';
+          margin-right: 1em;
+        }
+      }
+  }
+
+}
