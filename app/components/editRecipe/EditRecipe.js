@@ -16,6 +16,7 @@ import * as ActionCreators from '../../actions/';
 
 /*** styling ***/
 import style from './style';
+import * as colors from '../../scss/colors';
 
 export class EditRecipe extends Component {
     constructor(props) {
@@ -61,50 +62,58 @@ export class EditRecipe extends Component {
         // get string version to use as default values on the input fields
         const { name, imageURL, ingredients, directions } = stringifyRecipe(data);
 
-        /*** override inline style ***/
-        const styling = {
-            width: '100%'
-        };
-
         return (
             <div className={style.wrapper}>
-                <form
+                <div
                     role="form"
                     className={style.recipeInput}
-                    ref="recipeUpdate">
+                    ref="recipeForm">
                     <TextField
-                        floatingLabelText="Name"
+                        floatingLabelText="New Recipe Name"
                         defaultValue={name}
                         onChange={this.handleChange}
                         id="name"
-                        style={styling} />
+                        fullWidth={true}
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}} />
                     <TextField
                         floatingLabelText="Image URL"
-                        onChange={this.handleChange}
                         defaultValue={imageURL}
+                        onChange={this.handleChange}
                         id="imageURL"
-                        style={styling} />
+                        fullWidth={true}
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}} />
                     <TextField
                         floatingLabelText="Ingredients"
                         defaultValue={ingredients}
                         onChange={this.handleChange}
                         id="ingredients"
-                        style={styling} />
+                        fullWidth={true}
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}}
+                        multiLine={true}
+                        rows={3}
+                        rowsMax={8} />
                     <TextField
                         floatingLabelText="Directions"
                         defaultValue={directions}
                         onChange={this.handleChange}
                         id="directions"
-                        style={styling} />
-                    {/*<button
-                        type="button"
-                        onClick={this.handleSubmit}
-                        className={style.submit}>
-                        Submit Changes</button>*/}
+                        fullWidth={true}
+                        underlineFocusStyle={{borderColor: colors.text}}
+                        floatingLabelStyle={{color: colors.text}}
+                        inputStyle={{color: colors.inputText}}
+                        multiLine={true}
+                        rows={3}
+                        rowsMax={4} />
                     <Button
                         onClick={this.handleSubmit}
-                        label="Submit Changes" />
-                </form>
+                        label="Add New Recipe!" />
+                </div>
                 <LivePreview
                     className={style.livePreview}
                     name={name}

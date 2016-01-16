@@ -77,7 +77,6 @@ class AddRecipe extends Component {
             - Stop the addRecipeFirebase action if there is no name value!
 
          */
-        // console.log(this.state.data);
         this.props.actions.addRecipe(newRecipe);
         this.props.actions.pushPath(`/recipes/${snakedNameOf(newRecipe)}`);
     }
@@ -91,13 +90,9 @@ class AddRecipe extends Component {
         const name = data.get('name');
 
 
-        /*** override inline style ***/
-        const styling = {
-            width: '100%'
-        };
         return (
             <div className={style.wrapper}>
-                <form
+                <div
                     role="form"
                     className={style.recipeInput}
                     ref="recipeForm">
@@ -105,7 +100,7 @@ class AddRecipe extends Component {
                         floatingLabelText="New Recipe Name"
                         onChange={this.handleChange}
                         id="name"
-                        fullWidth="true"
+                        fullWidth={true}
                         underlineFocusStyle={{borderColor: colors.text}}
                         floatingLabelStyle={{color: colors.text}}
                         inputStyle={{color: colors.inputText}} />
@@ -113,7 +108,7 @@ class AddRecipe extends Component {
                         floatingLabelText="Image URL"
                         onChange={this.handleChange}
                         id="imageURL"
-                        fullWidth="true"
+                        fullWidth={true}
                         underlineFocusStyle={{borderColor: colors.text}}
                         floatingLabelStyle={{color: colors.text}}
                         inputStyle={{color: colors.inputText}} />
@@ -121,27 +116,28 @@ class AddRecipe extends Component {
                         floatingLabelText="Ingredients"
                         onChange={this.handleChange}
                         id="ingredients"
-                        fullWidth="true"
+                        fullWidth={true}
                         underlineFocusStyle={{borderColor: colors.text}}
                         floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}} />
+                        inputStyle={{color: colors.inputText}}
+                        multiLine={true}
+                        rows={3}
+                        rowsMax={8} />
                     <TextField
                         floatingLabelText="Directions"
                         onChange={this.handleChange}
                         id="directions"
-                        fullWidth="true"
+                        fullWidth={true}
                         underlineFocusStyle={{borderColor: colors.text}}
                         floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}} />
+                        inputStyle={{color: colors.inputText}}
+                        multiLine={true}
+                        rows={3}
+                        rowsMax={4} />
                     <Button
                         onClick={this.handleSubmit}
                         label="Add New Recipe!" />
-                    {/*<button
-                        type="button"
-                        onClick={this.handleSubmit}
-                        className={style.submit}>
-                        Submit</button>*/}
-                </form>
+                </div>
                 <LivePreview
                     className={style.livePreview}
                     name={name}
