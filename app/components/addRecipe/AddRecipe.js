@@ -5,6 +5,7 @@ import moment from 'moment';
 import uuid from 'node-uuid';
 
 import format from '../../js/format';
+import { snakedNameOf } from '../../js/core_helpers';
 
 /*** Components ***/
 const TextField = require('material-ui/lib/text-field');
@@ -41,10 +42,11 @@ class AddRecipe extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        const thisMonth = moment().format('MMMM YYYY');
         this.state = {
             data: fromJS({
                 id: uuid.v4(),
-                created_date: moment().format('MMMM Do, YYYY'),
+                created_date: thisMonth,
                 name: '',
                 ingredients: [],
                 directions: [],
@@ -66,6 +68,7 @@ class AddRecipe extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        const newRecipe = this.state.data;
         /**
 
             TODO:
@@ -74,8 +77,8 @@ class AddRecipe extends Component {
 
          */
         // console.log(this.state.data);
-        this.props.actions.addRecipe(this.state.data);
-        this.props.actions.pushPath('/recipes');
+        this.props.actions.addRecipe(newRecipe);
+        this.props.actions.pushPath(`/recipes/${snakedNameOf(newRecipe)}`);
     }
 
     componentDidUpdate() {

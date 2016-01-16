@@ -53,8 +53,7 @@ export class EditRecipe extends Component {
 
          */
         this.props.actions.updateRecipe(this.state.data, this.props.recipeList.get(key));
-        // pushPath to recipe/:the name of recipe
-        // this.props.actions.pushPath('/');
+        this.props.actions.pushPath(`/recipes/${key}`);
     }
 
     render() {
