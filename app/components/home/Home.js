@@ -57,23 +57,24 @@ export class Home extends Component{
     }
 
     render(){
-        const { pushPath } = this.props.actions;
+        const { push } = this.props.actions;
+        console.log(this.props)
         const nav1 = {
             label: 'Add New Recipe',
             onClick() {
-                pushPath('/addnew')
+                push('/addnew')
             }
         }
         const nav2 = {
             label: 'See Recipe List',
             onClick() {
-                pushPath('/recipes');
+                push('/recipes');
             }
         }
         const nav3 = {
             label: 'Login',
             onClick() {
-                pushPath('/login')
+                push('/login')
             }
         }
         return (

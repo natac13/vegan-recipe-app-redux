@@ -55,7 +55,7 @@ export class EditRecipe extends Component {
 
          */
         this.props.actions.updateRecipe(this.state.data, this.props.recipeList.get(key));
-        this.props.actions.pushPath(`/recipes/${key}`);
+        this.props.actions.push(`/recipes/${key}`);
     }
 
     render() {

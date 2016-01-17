@@ -78,7 +78,7 @@ class AddRecipe extends Component {
 
          */
         this.props.actions.addRecipe(newRecipe);
-        this.props.actions.pushPath(`/recipes/${snakedNameOf(newRecipe)}`);
+        this.props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
     }
 
     componentDidUpdate() {

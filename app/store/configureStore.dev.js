@@ -7,9 +7,17 @@ import firebaseMiddleware from '../middlewares/firebaseMiddleware';
 import rootReducer from '../reducers/';
 
 
+import { createHistory } from 'history';
+import { syncHistory, routeReducer } from 'redux-simple-router';
+
+export const history = createHistory();
+// Sync dispatched route actions to the history
+const reduxRouterMiddleware = syncHistory(history);
+
 const loggerMiddleware = logger();
 
 const createStoreWithMiddleware = applyMiddleware(
+    reduxRouterMiddleware,
     thunkMiddleware,
     firebaseMiddleware,
     loggerMiddleware
