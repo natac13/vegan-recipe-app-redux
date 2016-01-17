@@ -11,20 +11,17 @@ const TextField = require('material-ui/lib/text-field');
 import LivePreview from '../livePreview/';
 import Button from '../home/linkButton/';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../../actions/';
-
 /*** styling ***/
 import style from './style';
 import * as colors from '../../scss/colors';
 
-export class EditRecipe extends Component {
+export default class EditRecipe extends Component {
     constructor(props) {
+        console.log(props)
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        const { key } = props.routeParams;
+        const { key } = props.params;
         this.state = {
             data: props.recipeList.get(key)
         };
@@ -118,7 +115,7 @@ export class EditRecipe extends Component {
                         rowsMax={4} />
                     <Button
                         onClick={this.handleSubmit}
-                        label="Add New Recipe!" />
+                        label="Update Recipe" />
                 </div>
                 <LivePreview
                     className={style.livePreview}
@@ -132,25 +129,3 @@ export class EditRecipe extends Component {
     }
 
 }
-
-function mapStateToProps(state) {
-    const { recipeList, asyncRequest, routing } = state;
-    return {
-        recipeList,
-        asyncRequest,
-        routing
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(ActionCreators, dispatch),
-        dispatch
-    };
-}
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(EditRecipe);

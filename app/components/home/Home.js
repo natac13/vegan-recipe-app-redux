@@ -10,40 +10,11 @@ import PhotoBanner from './photoBanner/';
 /*** Styling ***/
 import style from './style.scss';
 
-/*==============================================
-=            Connection to Redux setup            =
-==============================================*/
-
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../../actions/';
-
-
-function mapStateToProps(state) {
-    const { routing, recipeList, asyncRequest } = state;
-    return {
-        routing,
-        asyncRequest,
-        recipeList
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(ActionCreators, dispatch),
-        dispatch
-    }
-}
-
-
-/*=====  End of Connect to Redux setup  ======*/
-
-
-
-export class Home extends Component{
+export default class Home extends Component{
 
     constructor(props) {
         super(props);
+        console.log(props);
 
     }
     shouldComponentUpdate = shouldPureComponentUpdate;
@@ -58,7 +29,6 @@ export class Home extends Component{
 
     render(){
         const { push } = this.props.actions;
-        console.log(this.props)
         const nav1 = {
             label: 'Add New Recipe',
             onClick() {
@@ -87,7 +57,3 @@ export class Home extends Component{
     }
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Home);
