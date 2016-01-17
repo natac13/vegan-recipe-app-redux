@@ -8,7 +8,9 @@ import {
     BUILD_LIST
 } from '../constants/';
 
-export { pushPath } from 'redux-simple-router';
+// export { routeActions } from 'redux-simple-router';
+import { routeActions } from 'redux-simple-router';
+export const { push } = routeActions;
 
 export function addRecipe(recipe) {
     return {

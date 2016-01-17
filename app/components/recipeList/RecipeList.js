@@ -7,32 +7,10 @@ import ListItem from './ListItem';
 /*** Styling ***/
 import style from './style.scss';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../../actions/';
-
-
-function mapStateToProps(state) {
-    const { routing, recipeList, asyncRequest } = state;
-    return {
-        recipeList,
-        asyncRequest,
-        routing
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(ActionCreators, dispatch),
-        dispatch
-    };
-}
-
-
-export class RecipeList extends Component {
+export default class RecipeList extends Component {
 
     static propTypes = {
-        recipeList: ImmutablePropTypes.map.isRequired
+        recipeList: ImmutablePropTypes.map
     };
 
     constructor(props) {
@@ -64,7 +42,7 @@ export class RecipeList extends Component {
                     directions={directions}
                     ingredients={ingredients}
                     created_date={created_date}
-                    link={this.props.actions.pushPath}
+                    link={this.props.actions.push}
                     key={id || index} />
             );
         });
@@ -78,10 +56,3 @@ export class RecipeList extends Component {
         );
     }
 }
-
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(RecipeList);

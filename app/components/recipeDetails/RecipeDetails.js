@@ -6,21 +6,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../../actions/';
 
-export const RecipeDetails = (props) => {
-    const { key } = props.routeParams;
+const RecipeDetails = (props) => {
+    const { key } = props.params;
     const recipe = props.recipeList.get(key);
     const name = recipe.get('name');
     const createdDate = recipe.get('created_date');
-    const directions = recipe.get('directions').map(direction => {
+    const directions = recipe.get('directions').map((direction, index) => {
         return (
-            <p className={style.direction}>
+            <p className={style.direction} key={index}>
                 {direction}
             </p>
         );
     });
-    const ingredients = recipe.get('ingredients').map(ingredient => {
+    const ingredients = recipe.get('ingredients').map((ingredient, index) => {
         return (
-            <p className={style.ingredient}>
+            <p className={style.ingredient} key={index}>
                 {ingredient.get('amount')} - {ingredient.get('item')}
             </p>
         );
@@ -58,28 +58,4 @@ export const RecipeDetails = (props) => {
     )
 }
 
-
-
-function mapStateToProps(state) {
-    const { recipeList, asyncRequest, routing } = state;
-    return {
-        recipeList,
-        asyncRequest,
-        routing
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(ActionCreators, dispatch),
-        dispatch
-    };
-}
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(RecipeDetails);
-
-
+export default RecipeDetails;

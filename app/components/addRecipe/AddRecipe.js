@@ -12,32 +12,11 @@ const TextField = require('material-ui/lib/text-field');
 import LivePreview from '../livePreview/';
 import Button from '../home/linkButton/';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../../actions/';
-
 /*** styling ***/
 import style from './style';
 import * as colors from '../../scss/colors';
 
-
-function mapStateToProps(state) {
-    const { recipeList, asyncRequest, routing } = state;
-    return {
-        recipeList,
-        asyncRequest,
-        routing
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(ActionCreators, dispatch),
-        dispatch
-    };
-}
-
-class AddRecipe extends Component {
+export default class AddRecipe extends Component {
 
     constructor(props) {
         super(props);
@@ -78,7 +57,7 @@ class AddRecipe extends Component {
 
          */
         this.props.actions.addRecipe(newRecipe);
-        this.props.actions.pushPath(`/recipes/${snakedNameOf(newRecipe)}`);
+        this.props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
     }
 
     componentDidUpdate() {
@@ -143,16 +122,7 @@ class AddRecipe extends Component {
                     name={name}
                     directions={data.get('directions')}
                     ingredients={data.get('ingredients')} />
-
-
             </div>
         );
     }
 }
-
-
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AddRecipe);

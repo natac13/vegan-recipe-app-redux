@@ -2,10 +2,9 @@ import React             from 'react';
 import { render }        from 'react-dom';
 import Router            from 'react-router';
 import { Provider }      from 'react-redux';
-import { createHistory } from 'history';
 import routes            from './config/routes';
 
-import { syncReduxAndRouter } from 'redux-simple-router';
+
 
 import configureStore from './store/configureStore';
 const store = configureStore();
@@ -24,9 +23,9 @@ installDevTools(Immutable);
 
 
 const rootElement = document.getElementById('root');
-const history = createHistory();
+import { history } from './store/configureStore';
 
-syncReduxAndRouter(history, store);
+
 
 /*=====================================
 =            gh-pages Hack            =
@@ -38,9 +37,9 @@ syncReduxAndRouter(history, store);
  * I guessed at just using pushPath to reset the URL which works but I do think
  * there has to be a better way. However I got this working.
  */
-import { pushPath } from './actions/';
+import { push } from './actions/';
 // console.log(store.getState());
-store.dispatch(pushPath('/'));
+store.dispatch(push('/'));
 // console.log(store.getState());
 
 
