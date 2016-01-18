@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
 
+
 import moment from 'moment';
 import uuid from 'node-uuid';
 
@@ -11,6 +12,7 @@ import { snakedNameOf } from '../../js/core_helpers';
 const TextField = require('material-ui/lib/text-field');
 import LivePreview from '../livePreview/';
 import Button from '../home/linkButton/';
+import InputForm from '../inputForm';
 
 /*** styling ***/
 import style from './style';
@@ -49,6 +51,7 @@ export default class AddRecipe extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const newRecipe = this.state.data;
+
         /**
 
             TODO:
@@ -59,6 +62,8 @@ export default class AddRecipe extends Component {
         this.props.actions.addRecipe(newRecipe);
         this.props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
     }
+
+
 
     componentDidUpdate() {
         // console.log(this.props);
@@ -71,52 +76,10 @@ export default class AddRecipe extends Component {
 
         return (
             <div className={style.wrapper}>
-                <div
-                    role="form"
-                    className={style.recipeInput}
-                    ref="recipeForm">
-                    <TextField
-                        floatingLabelText="New Recipe Name"
-                        onChange={this.handleChange}
-                        id="name"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}} />
-                    <TextField
-                        floatingLabelText="Image URL"
-                        onChange={this.handleChange}
-                        id="imageURL"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}} />
-                    <TextField
-                        floatingLabelText="Ingredients"
-                        onChange={this.handleChange}
-                        id="ingredients"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}}
-                        multiLine={true}
-                        rows={3}
-                        rowsMax={8} />
-                    <TextField
-                        floatingLabelText="Directions"
-                        onChange={this.handleChange}
-                        id="directions"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}}
-                        multiLine={true}
-                        rows={3}
-                        rowsMax={4} />
-                    <Button
-                        onClick={this.handleSubmit}
-                        label="Add New Recipe!" />
-                </div>
+                <InputForm
+                    handleChange={this.handleChange}
+                    handleSubmit={this.handleSubmit}
+                    submitText="Add New Recipe!" />
                 <LivePreview
                     className={style.livePreview}
                     name={name}

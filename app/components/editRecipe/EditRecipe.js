@@ -10,6 +10,7 @@ import format, {
 const TextField = require('material-ui/lib/text-field');
 import LivePreview from '../livePreview/';
 import Button from '../home/linkButton/';
+import InputForm from '../inputForm/';
 
 /*** styling ***/
 import style from './style';
@@ -67,56 +68,14 @@ export default class EditRecipe extends Component {
 
         return (
             <div className={style.wrapper}>
-                <div
-                    role="form"
-                    className={style.recipeInput}
-                    ref="recipeForm">
-                    <TextField
-                        floatingLabelText="New Recipe Name"
-                        defaultValue={name}
-                        onChange={this.handleChange}
-                        id="name"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}} />
-                    <TextField
-                        floatingLabelText="Image URL"
-                        defaultValue={imageURL}
-                        onChange={this.handleChange}
-                        id="imageURL"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}} />
-                    <TextField
-                        floatingLabelText="Ingredients"
-                        defaultValue={ingredients}
-                        onChange={this.handleChange}
-                        id="ingredients"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}}
-                        multiLine={true}
-                        rows={3}
-                        rowsMax={8} />
-                    <TextField
-                        floatingLabelText="Directions"
-                        defaultValue={directions}
-                        onChange={this.handleChange}
-                        id="directions"
-                        fullWidth={true}
-                        underlineFocusStyle={{borderColor: colors.text}}
-                        floatingLabelStyle={{color: colors.text}}
-                        inputStyle={{color: colors.inputText}}
-                        multiLine={true}
-                        rows={3}
-                        rowsMax={4} />
-                    <Button
-                        onClick={this.handleSubmit}
-                        label="Update Recipe" />
-                </div>
+                <InputForm
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    submitText="Update Recipe"
+                    name={name}
+                    imageURL={imageURL}
+                    ingredients={ingredients}
+                    directions={directions} />
                 <LivePreview
                     className={style.livePreview}
                     name={name}

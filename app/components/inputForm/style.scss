@@ -1,0 +1,33 @@
+.recipeInput {
+  align-items: center;
+  display: flex;
+  flex: 1 450px;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 10px;
+  align-self: flex-start;
+  padding: 1em;
+}
+
+
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+
+  .submit {
+    flex: 2 100%;
+  }
+
+  .clear {
+    flex: 2 100%;
+  }
+}
+
+
+.textarea {
+  textarea {
+    color: #513D1F !important;
+  }
+}
