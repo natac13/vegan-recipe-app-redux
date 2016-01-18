@@ -1,13 +1,54 @@
-.recipeInput {
-  align-items: center;
+@import '~../../scss/variables';
+$clear: #BF2E2E;
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    color: $clear;
+  }
+  50% {
+    transform: rotate(300deg);
+    color: darken($clear, 15%);
+  }
+  100% {
+    transform: rotate(10deg);
+    color: $clear;
+  }
+}
+
+.recipeForm {
+  align-items: stretch;
   display: flex;
-  flex: 1 450px;
+  flex: 1 50vh;
   flex-direction: column;
-  justify-content: space-around;
   margin-right: 10px;
   align-self: flex-start;
   padding: 1em;
+
+  .inputField {
+    display: flex;
+    align-items: baseline;
+
+    .close {
+      color: $text;
+      transition: 0.7 ease-in;
+
+      &:hover {
+        animation: spin 3s infinite cubic-bezier(.79,0,.25,1);
+      }
+
+      &:active {
+        animation: none;
+        color: lighten($text, 25%);
+      }
+    }
+
+    .closeIcon {
+      background: url('../../assets/ic_clear_black_18px.svg') center;
+    }
+  }
 }
+
 
 
 .buttonGroup {

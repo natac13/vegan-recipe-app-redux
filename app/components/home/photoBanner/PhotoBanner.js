@@ -1,27 +1,24 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 import style from './style.scss';
 
-export default class PhotoBanner extends Component {
-    constructor(props) {
-        super(props);
-    }
+const PhotoBanner = (props) => {
 
-    render() {
-        return (
-            <div className={style.photoBanner}>
-                <div className={style.bananas}>
-
-                </div>
-                <div className={style.oatmealBananas}>
-
-                </div>
-                <div className={style.bigRiceSalad}>
-
-                </div>
+    return (
+        <div className={style.photoBanner}>
+            <div className={style.bananas}>
 
             </div>
-        );
-    }
+            <div className={style.oatmealBananas}>
+
+            </div>
+            <div className={style.bigRiceSalad}>
+
+            </div>
+
+        </div>
+    );
 }
+
+export default PhotoBanner;
 

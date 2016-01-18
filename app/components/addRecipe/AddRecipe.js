@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { fromJS, Map } from 'immutable';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
 
 import moment from 'moment';
@@ -36,6 +37,8 @@ export default class AddRecipe extends Component {
             })
         };
     }
+
+    shouldComponentUpdate = shouldPureComponentUpdate;
 
     handleChange(event) {
         let { id: property, value } = event.target;

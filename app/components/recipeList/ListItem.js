@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 import { snakeCase } from '../../js/core_helpers';
 
 const RaisedButton = require('material-ui/lib/raised-button');
@@ -13,6 +14,8 @@ export default class ListItem extends Component {
             visible: false
         };
     }
+
+    shouldComponentUpdate = shouldPureComponentUpdate;
 
     switchVisiblitiy()  {
         this.setState({

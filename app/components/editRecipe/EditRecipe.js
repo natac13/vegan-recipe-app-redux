@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 import { fromJS, Map } from 'immutable';
 
 import format, {
     stringifyRecipe,
     lineify
 } from '../../js/format';
+
+import { snakedNameOf } from '../../js/core_helpers';
 
 /*** Components ***/
 const TextField = require('material-ui/lib/text-field');
@@ -28,9 +31,7 @@ export default class EditRecipe extends Component {
         };
     }
 
-    componentWillMount() {
-
-    }
+    shouldComponentUpdate = shouldPureComponentUpdate;
 
     handleChange(event) {
         let { id: property, value } = event.target;
@@ -43,8 +44,9 @@ export default class EditRecipe extends Component {
     }
 
     handleSubmit(event) {
-        const { key } = this.props.routeParams;
+        const { key } = this.props.params;
         event.preventDefault();
+        const updatedRecipe = this.state.data;
         /**
 
             TODO:
@@ -52,8 +54,8 @@ export default class EditRecipe extends Component {
             - Stop the addRecipeFirebase action if there is no name value!
 
          */
-        this.props.actions.updateRecipe(this.state.data, this.props.recipeList.get(key));
-        this.props.actions.push(`/recipes/${key}`);
+        this.props.actions.updateRecipe(updatedRecipe, this.props.recipeList.get(key));
+        this.props.actions.push(`/recipes/${snakedNameOf(updatedRecipe)}`);
     }
 
     render() {
