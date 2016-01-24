@@ -44,9 +44,9 @@ import { history } from './store/configureStore';
  * there has to be a better way. However I got this working.
  */
 import { push } from './actions/';
-// console.log(store.getState());
-// store.dispatch(push('/'));
-// console.log(store.getState());
+console.log(store.getState());
+store.dispatch(push('/'));
+console.log(store.getState());
 
 
 /*=====  End of gh-pages Hack  ======*/
