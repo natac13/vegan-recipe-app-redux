@@ -3,7 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import style from './style';
 
-const LivePreview = ( { name, directions, ingredients }) => {
+const LivePreview = ( { name, created_date, directions, ingredients, imageURL }) => {
     const outputDirections = directions.map((direction, index) => {
         return (
             <li key={index}> {direction}</li>
@@ -19,6 +19,8 @@ const LivePreview = ( { name, directions, ingredients }) => {
     return (
         <div className={style.livePreview}>
             <p className={style.name}>Name: {name}</p>
+            <p className={style.createDate}> Created On: {created_date} </p>
+            <p className={style.url}> ImageURL: {imageURL}</p>
             Ingredients
             <ul className={style.ingredientsList}>
                 {outputIngredients}

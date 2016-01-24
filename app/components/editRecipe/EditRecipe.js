@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import { fromJS, Map, List } from 'immutable';
+import moment from 'moment';
 
 import format, {
     stringifyRecipe,
@@ -21,7 +22,6 @@ import * as colors from '../../scss/colors';
 
 export default class EditRecipe extends Component {
     constructor(props) {
-        console.log(props);
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,14 +34,21 @@ export default class EditRecipe extends Component {
 
     shouldComponentUpdate = shouldPureComponentUpdate;
 
-    handleChange(event) {
-        let { id: property, value } = event.target;
-        const data = format(property)(value);
+    handleChange(event, date) {
+        if (event === null) {
+            this.setState({
+                data: this.state.data.set('created_date', moment(date).format('MMMM DD, YYYY'))
+            });
+        } else {
+            let { id: property, value } = event.target;
+            const data = format(property)(value);
 
 
-        this.setState({
-            data: this.state.data.set(property, data)
-        });
+            this.setState({
+                data: this.state.data.set(property, data)
+            });
+
+        }
     }
 
     handleSubmit(event) {
@@ -88,11 +95,16 @@ export default class EditRecipe extends Component {
     render() {
         const { data } = this.state;
         // get string version to use as default values on the input fields
-        let { name, imageURL, ingredients, directions } = stringifyRecipe(data);
+        let {
+                name,
+                created_date,
+                imageURL,
+                ingredients,
+                directions
+            } = stringifyRecipe(data);
 
         directions = lineify(directions);
         ingredients = lineify(ingredients);
-
 
         return (
             <div className={style.wrapper}>
@@ -102,12 +114,15 @@ export default class EditRecipe extends Component {
                     handleClear={this.handleClear}
                     submitText="Update Recipe"
                     name={name}
+                    created_date={created_date}
                     imageURL={imageURL}
                     ingredients={ingredients}
                     directions={directions} />
                 <LivePreview
                     className={style.livePreview}
                     name={name}
+                    created_date={created_date}
+                    imageURL={data.get('imageURL')}
                     directions={data.get('directions')}
                     ingredients={data.get('ingredients')} />
 

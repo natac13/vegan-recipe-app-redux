@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import R from 'ramda';
 
 import LinkButton from '../linkButton/';
 
@@ -23,14 +22,14 @@ const Navbar = ( { nav1, nav2, nav3, nav4 } ) => {
                             label={nav4.label}
                             onClick={nav4.onClick}/>}
         </div>
-    )
+    );
 };
 
 Navbar.propTypes = {
     nav1: PropTypes.object,
     nav2: PropTypes.object,
     nav3: PropTypes.object,
-    nav4: PropTypes.object,
-}
+    nav4: PropTypes.object
+};
 
 export default Navbar;

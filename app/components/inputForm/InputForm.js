@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import R from 'ramda';
+import moment from 'moment';
 
-const TextField = require('material-ui/lib/text-field');
+import TextField from 'material-ui/lib/text-field';
+import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import Button from '../home/linkButton/';
 
 
@@ -25,7 +27,7 @@ export default class InputForm extends Component {
     };
 
     static defaultProps = {
-        handleChange: (e) => console.log(e),
+        handleChange: (e) => {if (e) { console.log(e); }},
         handleClear: () => console.log('Giving the field from dataset this function should clear the state property.'),
         name: '',
         imageURL: '',
@@ -64,13 +66,28 @@ export default class InputForm extends Component {
         clearAll(fields);
     }
 
+    dateChange(event, date) {
+
+    }
+
+    formatData(date) {
+        const dateFormatted = moment(date).format('MMMM DD, YYYY');
+        return dateFormatted;
+    }
+
     render() {
         const { handleChange, handleSubmit, submitText } = this.props;
-        const { name, imageURL, directions, ingredients } = this.props;
+        const {
+            name,
+            imageURL,
+            directions,
+            ingredients
+        } = this.props;
         return (
             <div
                 role="form"
                 className={style.recipeForm}>
+
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="New Recipe Name"
@@ -86,9 +103,18 @@ export default class InputForm extends Component {
                     className={'material-icons ' + style.close}
                     data-field="name"
                     onClick={this.clearOne}>
-                    clear
+                    remove_circle_outline
                 </i>
             </div>
+
+            <div className={style.inputField}>
+                <DatePicker
+                hintText="Data Created"
+                id="created_date"
+                onChange={handleChange}
+                formatDate={this.formatData} />
+            </div>
+
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="Image URL"
@@ -104,9 +130,10 @@ export default class InputForm extends Component {
                     className={'material-icons ' + style.close}
                     data-field="imageURL"
                     onClick={this.clearOne}>
-                    clear
+                    remove_circle_outline
                 </i>
             </div>
+
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="Ingredients"
@@ -125,9 +152,10 @@ export default class InputForm extends Component {
                     className={'material-icons ' + style.close}
                     data-field="ingredients"
                     onClick={this.clearOne}>
-                    clear
+                    remove_circle_outline
                 </i>
             </div>
+
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="Directions"
@@ -146,17 +174,21 @@ export default class InputForm extends Component {
                     className={'material-icons ' + style.close}
                     data-field="directions"
                     onClick={this.clearOne}>
-                    clear
+                    remove_circle_outline
                 </i>
             </div>
+
             <div className={style.buttonGroup}>
                 <Button
                     onClick={handleSubmit}
-                    label={submitText} />
+                    label={submitText}
+                    icon="add_circle_outline" />
                 <Button
                     onClick={this.clear}
-                    label="Clear All Fields" />
+                    label="Clear All Fields"
+                    icon="undo" />
             </div>
+
         </div>
         );
     }

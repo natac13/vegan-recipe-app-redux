@@ -5,9 +5,17 @@ import { Provider }      from 'react-redux';
 import routes            from './config/routes';
 
 
-
 import configureStore from './store/configureStore';
 const store = configureStore();
+
+/*===============================================
+=            Material-ui requirement            =
+===============================================*/
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+/*=====  End of Material-ui requirement  ======*/
 
 
 /*===========================================
@@ -21,10 +29,8 @@ installDevTools(Immutable);
 /*=====  End of Immutable Dev tools  ======*/
 
 
-
 const rootElement = document.getElementById('root');
 import { history } from './store/configureStore';
-
 
 
 /*=====================================

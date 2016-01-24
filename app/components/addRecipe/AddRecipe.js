@@ -28,11 +28,11 @@ export default class AddRecipe extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear  = this.handleClear.bind(this);
 
-        const thisMonth = moment().format('MMMM YYYY');
+        const defaultDate = moment().format('MMMM DD, YYYY');
         this.state = {
             data: fromJS({
                 id: uuid.v4(),
-                created_date: thisMonth,
+                created_date: defaultDate,
                 name: '',
                 ingredients: [],
                 directions: [],
@@ -43,15 +43,22 @@ export default class AddRecipe extends Component {
 
     shouldComponentUpdate = shouldPureComponentUpdate;
 
-    handleChange(event) {
-        let { id: property, value } = event.target;
-        let formatter = format(property);
-        const data = formatter(value);
+    handleChange(event, date) {
+        if (event === null) {
+            this.setState({
+                data: this.state.data.set('created_date', moment(date).format('MMMM DD, YYYY'))
+            });
+        } else {
+            let { id: property, value } = event.target;
+            let formatter = format(property);
+            const data = formatter(value);
 
 
-        this.setState({
-            data: this.state.data.set(property, data)
-        });
+            this.setState({
+                data: this.state.data.set(property, data)
+            });
+
+        }
     }
 
     handleSubmit(event) {
@@ -91,7 +98,7 @@ export default class AddRecipe extends Component {
         const { data } = this.state;
         const name = data.get('name');
 
-
+        console.log(this.state)
         return (
             <div className={style.wrapper}>
                 <InputForm
@@ -102,6 +109,8 @@ export default class AddRecipe extends Component {
                 <LivePreview
                     className={style.livePreview}
                     name={name}
+                    created_date={data.get('created_date')}
+                    imageURL={data.get('imageURL')}
                     directions={data.get('directions')}
                     ingredients={data.get('ingredients')} />
             </div>
