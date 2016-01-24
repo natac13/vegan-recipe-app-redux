@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
-import { fromJS, Map } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 
 import format, {
     stringifyRecipe,
@@ -21,10 +21,11 @@ import * as colors from '../../scss/colors';
 
 export default class EditRecipe extends Component {
     constructor(props) {
-        console.log(props)
+        console.log(props);
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClear  = this.handleClear.bind(this);
         const { key } = props.params;
         this.state = {
             data: props.recipeList.get(key)
@@ -58,6 +59,32 @@ export default class EditRecipe extends Component {
         this.props.actions.push(`/recipes/${snakedNameOf(updatedRecipe)}`);
     }
 
+    handleClear(field) {
+        if (field === 'all') {
+            this.setState({
+                data: fromJS({
+                    id: '',
+                    created_date: '',
+                    name: '',
+                    ingredients: [],
+                    directions: [],
+                    imageURL: ''
+                })
+            });
+            return true;
+        }
+        if (field === 'directions' || field === 'ingredients') {
+            this.setState({
+                data: this.state.data.set(field, List())
+            });
+        } else {
+            this.setState({
+                data: this.state.data.set(field, '')
+            });
+
+        }
+    }
+
     render() {
         const { data } = this.state;
         // get string version to use as default values on the input fields
@@ -67,12 +94,12 @@ export default class EditRecipe extends Component {
         ingredients = lineify(ingredients);
 
 
-
         return (
             <div className={style.wrapper}>
                 <InputForm
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
+                    handleClear={this.handleClear}
                     submitText="Update Recipe"
                     name={name}
                     imageURL={imageURL}

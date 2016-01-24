@@ -15,6 +15,7 @@ export default class InputForm extends Component {
     static propTypes = {
         handleChange: PropTypes.func.isRequired,
         handleSubmit: PropTypes.func.isRequired,
+        handleClear: PropTypes.func,
         name: PropTypes.string,
         imageURL: PropTypes.string,
         ingredients: PropTypes.string,
@@ -25,6 +26,7 @@ export default class InputForm extends Component {
 
     static defaultProps = {
         handleChange: (e) => console.log(e),
+        handleClear: () => console.log('Giving the field from dataset this function should clear the state property.'),
         name: '',
         imageURL: '',
         ingredients: '',
@@ -37,14 +39,17 @@ export default class InputForm extends Component {
         super(props);
         this.clear = this.clear.bind(this);
         this.clearOne = this.clearOne.bind(this);
+        console.log(props);
     }
 
     shouldComponentUpdate = shouldPureComponentUpdate;
 
     clearOne(event) {
         // field is the corresponding input field to clear
-        const { field } = event.target.dataset
+        const { field } = event.target.dataset;
         this.refs[field].clearValue();
+        // clearing parent state for livePreview to change.
+        this.props.handleClear(field);
     }
 
 
@@ -54,7 +59,9 @@ export default class InputForm extends Component {
         const clearAll = R.map(ref => {
             if(!!ref) ref.clearValue();
         });
-        clearAll(fields)
+
+        this.props.handleClear('all');
+        clearAll(fields);
     }
 
     render() {
@@ -72,11 +79,11 @@ export default class InputForm extends Component {
                     ref="name"
                     id="name"
                     fullWidth={true}
-                    underlineFocusStyle={{borderColor: colors.text}}
-                    floatingLabelStyle={{color: colors.text}}
-                    inputStyle={{color: colors.inputText}} />
+                    underlineFocusStyle={{ borderColor: colors.text }}
+                    floatingLabelStyle={{ color: colors.text }}
+                    inputStyle={{ color: colors.inputText }} />
                 <i
-                    className={"material-icons " + style.close}
+                    className={'material-icons ' + style.close}
                     data-field="name"
                     onClick={this.clearOne}>
                     clear
@@ -90,11 +97,11 @@ export default class InputForm extends Component {
                     ref="imageURL"
                     id="imageURL"
                     fullWidth={true}
-                    underlineFocusStyle={{borderColor: colors.text}}
-                    floatingLabelStyle={{color: colors.text}}
-                    inputStyle={{color: colors.inputText}} />
+                    underlineFocusStyle={{ borderColor: colors.text }}
+                    floatingLabelStyle={{ color: colors.text }}
+                    inputStyle={{ color: colors.inputText } } />
                 <i
-                    className={"material-icons " + style.close}
+                    className={'material-icons ' + style.close}
                     data-field="imageURL"
                     onClick={this.clearOne}>
                     clear
@@ -108,14 +115,14 @@ export default class InputForm extends Component {
                     ref="ingredients"
                     id="ingredients"
                     fullWidth={true}
-                    underlineFocusStyle={{borderColor: colors.text}}
-                    floatingLabelStyle={{color: colors.text}}
-                    inputStyle={{color: colors.inputText}}
+                    underlineFocusStyle={{ borderColor: colors.text }}
+                    floatingLabelStyle={{ color: colors.text }}
+                    inputStyle={{ color: colors.inputText }}
                     multiLine={true}
                     rows={3}
                     rowsMax={8} />
                 <i
-                    className={"material-icons " + style.close}
+                    className={'material-icons ' + style.close}
                     data-field="ingredients"
                     onClick={this.clearOne}>
                     clear
@@ -129,14 +136,14 @@ export default class InputForm extends Component {
                     ref="directions"
                     id="directions"
                     fullWidth={true}
-                    underlineFocusStyle={{borderColor: colors.text}}
-                    floatingLabelStyle={{color: colors.text}}
-                    inputStyle={{color: colors.inputText}}
+                    underlineFocusStyle={{ borderColor: colors.text }}
+                    floatingLabelStyle={{ color: colors.text }}
+                    inputStyle={{ color: colors.inputText }}
                     multiLine={true}
                     rows={3}
                     rowsMax={4} />
                 <i
-                    className={"material-icons " + style.close}
+                    className={'material-icons ' + style.close}
                     data-field="directions"
                     onClick={this.clearOne}>
                     clear

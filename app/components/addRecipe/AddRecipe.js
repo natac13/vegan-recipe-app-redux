@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { fromJS, Map } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
 
@@ -23,8 +23,11 @@ export default class AddRecipe extends Component {
 
     constructor(props) {
         super(props);
+        /*** bind functions ***/
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClear  = this.handleClear.bind(this);
+
         const thisMonth = moment().format('MMMM YYYY');
         this.state = {
             data: fromJS({
@@ -66,6 +69,18 @@ export default class AddRecipe extends Component {
         this.props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
     }
 
+    handleClear(field) {
+        if (field === 'directions' || field === 'ingredients') {
+            this.setState({
+                data: this.state.data.set(field, List())
+            });
+        } else {
+            this.setState({
+                data: this.state.data.set(field, '')
+            });
+
+        }
+    }
 
 
     componentDidUpdate() {
@@ -82,7 +97,8 @@ export default class AddRecipe extends Component {
                 <InputForm
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
-                    submitText="Add New Recipe!" />
+                    submitText="Add New Recipe!"
+                    handleClear={this.handleClear} />
                 <LivePreview
                     className={style.livePreview}
                     name={name}

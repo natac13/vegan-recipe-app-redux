@@ -18,7 +18,7 @@ const replace = R.curry((regex, func, string) => {
  * \b word boundary
  * \d{3} 3 digits
  * \s? optional space
- * [f|c] an f or a c
+ * [f|c] f or c
  * \b word boundary
  * ig - ignorecase and global
  * @type {RegExp}
