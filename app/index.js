@@ -45,7 +45,7 @@ import { history } from './store/configureStore';
  */
 import { push } from './actions/';
 // console.log(store.getState());
-store.dispatch(push('/'));
+// store.dispatch(push('/'));
 // console.log(store.getState());
 
 
