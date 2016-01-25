@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { routeReducer }    from 'redux-simple-router';
+import { reducer as formReducer } from 'redux-form';
 
 import recipeList   from './recipeList';
 import asyncRequest from './asyncRequest';
@@ -11,8 +12,10 @@ const rootReducer = combineReducers(Object.assign(
         asyncRequest
     },
     {
-        routing: routeReducer
+        routing: routeReducer,
+        form: formReducer
     }
+
 ));
 
 export default rootReducer;
