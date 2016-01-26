@@ -2,10 +2,11 @@ import React, { PropTypes } from 'react';
 
 import style from './style.scss';
 
-const LinkButton = ({ onClick, label, icon }) => {
+const LinkButton = ({ onClick, label, icon, disabled }) => {
     return (
         <button
             onClick={onClick}
+            disabled={disabled}
             className={style.linkButton}>
             {label}
             {!icon ? null :

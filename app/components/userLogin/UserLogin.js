@@ -29,21 +29,6 @@ class UserLogin extends Component {
         this.handleGoogle = this.handleGoogle.bind(this);
     }
 
-
-    handleSubmit(event) {
-        event.preventDefault();
-        const { fields: { username, password } } = this.props;
-        fp.authWithPassword({
-            email: username.value,
-            password: password.value
-        }, { remember: 'sessionOnly' })
-            .then((authData) => {
-                console.log('Admin login good');
-                console.log(authData);
-            });
-
-    }
-
     handleGoogle(event) {
         event.preventDefault();
         fp.authWithOAuthPopup('google', { remember: 'sessionOnly' })
@@ -52,8 +37,21 @@ class UserLogin extends Component {
                 console.log(authData);
             });
     }
+
+    handleSubmit(values, dispatch) {
+        const { username, password } = values;
+        const { login } = this.props.actions;
+
+        dispatch(login(values));
+
+    }
     render() {
-        const { fields: { username, password } } = this.props;
+        const {
+            fields: { username, password },
+            handleSubmit,
+            submitting,
+            resetForm
+        } = this.props;
         return (
             <form
                 className={style.wrapper}
@@ -76,11 +74,17 @@ class UserLogin extends Component {
                 onChange={this.handleChange}
                 />
                 <Button
-                    onClick={this.handleSubmit}
-                    label="Login" />
+                    onClick={handleSubmit(this.handleSubmit)}
+                    label="Login"
+                    disabled={submitting} />
                 <Button
                     onClick={this.handleGoogle}
-                    label="Login with Google" />
+                    label="Login with Google"
+                    disabled={submitting} />
+                <Button
+                    onClick={resetForm}
+                    label="Clear Form"
+                    disabled={submitting} />
             </form>
         );
     }

@@ -5,7 +5,8 @@ import {
     UPDATE_RECIPE_NAME,
     UPDATE_RECIPE_DIRECTIONS,
     UPDATE_RECIPE_INGREDIENTS,
-    BUILD_LIST
+    BUILD_LIST,
+    LOGIN
 } from '../constants/';
 
 import {
@@ -48,10 +49,8 @@ const list = fp.child('recipeList');
 /*=====  End of Firebase Connection  ======*/
 
 
-
 const firebaseMiddleware = ({ dispatch, getState }) => next => {
     let firebaseRecipeList = {};
-
 
 
     return action => {
@@ -69,10 +68,10 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
             return list.then(
                 snap => {
                     dispatch(successfulRequest());
-                    return next({...action, recipeList: snap.val()});
+                    return next({ ...action, recipeList: snap.val() });
                 },
                 error => {
-                    dispach(failedRequest());
+                    dispatch(failedRequest());
                 });
         }
         else if (action.type === ADD_RECIPE) {
@@ -116,6 +115,18 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                 err => console.log(err, 'Error updaing the recipe to Firebase')
             );
 
+            return next(action);
+        } else if (action.type == LOGIN) {
+            // this action is where I started with redux-actions and FSA
+            const { username, password } = action.payload;
+            fp.authWithPassword({
+                email: username,
+                password
+            }, { remember: 'sessionOnly' })
+                .then((authData) => {
+                    console.log('Admin login good');
+                    console.log(authData);
+                });
             return next(action);
         }
 
