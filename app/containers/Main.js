@@ -22,7 +22,7 @@ export class Main extends Component {
         const childrenWithStoreProp = React.Children.map(
             this.props.children,
             (child) => {
-                return React.cloneElement(child, {...this.props});
+                return React.cloneElement(child, { ...this.props });
             });
         return (
             <div>

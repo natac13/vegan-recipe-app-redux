@@ -19,6 +19,7 @@ export default class InputForm extends Component {
         handleSubmit: PropTypes.func.isRequired,
         handleClear: PropTypes.func,
         name: PropTypes.string,
+        'created_date': PropTypes.string,
         imageURL: PropTypes.string,
         ingredients: PropTypes.string,
         directions: PropTypes.string,
@@ -30,6 +31,7 @@ export default class InputForm extends Component {
         handleChange: (e) => {if (e) { console.log(e); }},
         handleClear: () => console.log('Giving the field from dataset this function should clear the state property.'),
         name: '',
+        'created_date': '',
         imageURL: '',
         ingredients: '',
         directions: '',
@@ -76,13 +78,19 @@ export default class InputForm extends Component {
     }
 
     render() {
-        const { handleChange, handleSubmit, submitText } = this.props;
-        const {
-            name,
-            imageURL,
-            directions,
-            ingredients
+        const { handleChange, submitText } = this.props;
+        // const {
+        //     name,
+        //     imageURL,
+        //     directions,
+        //     ingredients
+        // } = this.props;
+        const { fields: { name, created_date, imageURL, directions, ingredients },
+            handleSubmit,
+            submitting,
+            resetForm
         } = this.props;
+
         return (
             <div
                 role="form"
@@ -91,8 +99,7 @@ export default class InputForm extends Component {
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="New Recipe Name"
-                    onChange={handleChange}
-                    defaultValue={name}
+                    {...name}
                     ref="name"
                     id="name"
                     fullWidth={true}
@@ -118,8 +125,7 @@ export default class InputForm extends Component {
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="Image URL"
-                    onChange={handleChange}
-                    defaultValue={imageURL}
+                    {...imageURL}
                     ref="imageURL"
                     id="imageURL"
                     fullWidth={true}
@@ -137,8 +143,7 @@ export default class InputForm extends Component {
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="Ingredients"
-                    onChange={handleChange}
-                    defaultValue={ingredients}
+                    {...ingredients}
                     ref="ingredients"
                     id="ingredients"
                     fullWidth={true}
@@ -159,8 +164,7 @@ export default class InputForm extends Component {
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="Directions"
-                    onChange={handleChange}
-                    defaultValue={directions}
+                    {...directions}
                     ref="directions"
                     id="directions"
                     fullWidth={true}
@@ -180,13 +184,15 @@ export default class InputForm extends Component {
 
             <div className={style.buttonGroup}>
                 <Button
-                    onClick={handleSubmit}
+                    onClick={handleSubmit()}
                     label={submitText}
-                    icon="add_circle_outline" />
+                    icon="add_circle_outline"
+                    disabled={submitting} />
                 <Button
-                    onClick={this.clear}
+                    onClick={resetForm}
                     label="Clear All Fields"
-                    icon="undo" />
+                    icon="undo"
+                    disabled={submitting} />
             </div>
 
         </div>

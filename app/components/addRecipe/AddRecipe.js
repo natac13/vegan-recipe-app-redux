@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { fromJS, Map, List } from 'immutable';
 import shouldPureComponentUpdate from 'react-pure-render/function';
+import { reduxForm } from 'redux-form';
 
 
 import moment from 'moment';
@@ -19,7 +20,7 @@ import InputForm from '../inputForm';
 import style from './style';
 import * as colors from '../../scss/colors';
 
-export default class AddRecipe extends Component {
+class AddRecipe extends Component {
 
     constructor(props) {
         super(props);
@@ -27,6 +28,7 @@ export default class AddRecipe extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear  = this.handleClear.bind(this);
+        this.x = this.x.bind(this);
 
         const defaultDate = moment().format('MMMM DD, YYYY');
         this.state = {
@@ -94,26 +96,48 @@ export default class AddRecipe extends Component {
         // console.log(this.props);
     }
 
+    x(values, dispatch) {
+        console.log(values);
+        const { name, created_date, imageURL, ingredients, directions } = values;
+        console.log(format('name')(name))
+        const recipe = {
+            name: format('name')(name),
+            imageURL: format('imageURL')(!imageURL ? '' : imageURL),
+            ingredients: format('ingredients')(ingredients),
+            directions: format('directions')(directions)
+        };
+        console.log(recipe);
+    }
+
     render() {
         const { data } = this.state;
-        const name = data.get('name');
+        // const name = data.get('name');
+        const { fields: { name, created_date, imageURL, directions, ingredients },
+            handleSubmit,
+            submitting,
+            resetForm
+        } = this.props;
 
-        console.log(this.state)
         return (
             <div className={style.wrapper}>
                 <InputForm
                     handleChange={this.handleChange}
-                    handleSubmit={this.handleSubmit}
                     submitText="Add New Recipe!"
-                    handleClear={this.handleClear} />
+                    handleClear={this.handleClear}
+                    { ...this.props }
+                    handleSubmit={handleSubmit.bind(null, this.x)} />
                 <LivePreview
                     className={style.livePreview}
-                    name={name}
-                    created_date={data.get('created_date')}
-                    imageURL={data.get('imageURL')}
-                    directions={data.get('directions')}
-                    ingredients={data.get('ingredients')} />
+                    name={format('name')(!name.value ? '' : name.value)}
+                    imageURL={format('imageURL')(!imageURL.value ? '' : imageURL.value)}
+                    directions={format('directions')(!directions.value ? '' : directions.value)}
+                    ingredients={format('ingredients')(!ingredients.value ? '' : ingredients.value)} />
             </div>
         );
     }
 }
+
+export default reduxForm({
+    form: 'addRecipe',
+    fields: ['name', 'created_date', 'imageURL', 'directions', 'ingredients']
+})(AddRecipe);
