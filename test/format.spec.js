@@ -9,16 +9,17 @@ import format, {
     stringifyRecipe
 } from '../app/js/format';
 
-describe('The formatting function', () => {
-    describe('The capitalize function', () => {
-        it('should take in a word and return the same word capitalized', () => {
-            const word = 'natac';
-            const capWord = capitalize(word);
-            expect(capWord).to.equal('Natac');
-        });
+describe('The capitalize function', () => {
+    it('should take in a word and return the same word capitalized', () => {
+        const word = 'natac';
+        const capWord = capitalize(word);
+        expect(capWord).to.equal('Natac');
     });
+});
+
+describe('The format function', () => {
     describe('Directions', () => {
-        it('should provide a function that will split a string on a comma and return an Immutable-List', () => {
+        it('should provide a function that will split a string on a semicolon and return an Immutable-List', () => {
         const property = 'directions';
         const value = 'peel potatoes; wash them; cut; boil in water';
         const formatter = format(property);
@@ -56,7 +57,7 @@ describe('The formatting function', () => {
     });
 
     describe('The ingredients', () => {
-        it('should provide a function that will split on comma first then colon to build a List of Maps', () => {
+        it('should provide a function that will split on semicolon first then colon to build a List of Maps', () => {
             const property = 'ingredients';
             const value = 'bananas: 2; oatmeal: 3 scoops';
             const formatter = format(property);
