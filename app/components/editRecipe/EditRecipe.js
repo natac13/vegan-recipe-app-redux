@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import { fromJS, Map, List } from 'immutable';
+import { reduxForm } from 'redux-form';
 import moment from 'moment';
+
 
 import format, {
     stringifyRecipe,
@@ -20,7 +22,7 @@ import InputForm from '../inputForm/';
 import style from './style';
 import * as colors from '../../scss/colors';
 
-export default class EditRecipe extends Component {
+class EditRecipe extends Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -92,6 +94,10 @@ export default class EditRecipe extends Component {
         }
     }
 
+    onSubmit(value, dispatch) {
+
+    }
+
     render() {
         const { data } = this.state;
         // get string version to use as default values on the input fields
@@ -109,7 +115,6 @@ export default class EditRecipe extends Component {
         return (
             <div className={style.wrapper}>
                 <InputForm
-                    handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     handleClear={this.handleClear}
                     submitText="Update Recipe"
@@ -117,7 +122,9 @@ export default class EditRecipe extends Component {
                     created_date={created_date}
                     imageURL={imageURL}
                     ingredients={ingredients}
-                    directions={directions} />
+                    directions={directions}
+                    {...this.props}
+                    handleSubmit={this.props.handleSubmit.bind(null, this.onSubmit.bind(this))} />
                 <LivePreview
                     className={style.livePreview}
                     name={name}
@@ -132,3 +139,8 @@ export default class EditRecipe extends Component {
     }
 
 }
+
+export default reduxForm({
+    form: 'editRecipe',
+    fields: ['name', 'created_date', 'imageURL', 'directions', 'ingredients']
+})(EditRecipe);

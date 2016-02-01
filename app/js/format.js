@@ -1,4 +1,5 @@
 import R from 'ramda';
+import moment from 'moment';
 import { List, Map, fromJS } from 'immutable';
 /**
  * capitalize :: String a -> a
@@ -134,6 +135,24 @@ export const stringifyRecipe = (recipe) => {
 
 export const lineify = R.replace(/(;)/g, '$1\n');
 
+export const formatDate = (date) => {
+    const dateFormatted = moment(new Date(date)).format('MMMM DD, YYYY');
+    return dateFormatted;
+};
+
+export const handlePreview = (fields) => {
+    const { name, created_date, imageURL, directions, ingredients } = fields;
+    const defaultDate = moment().format('MMMM DD, YYYY');
+    const finalDate = created_date.value || defaultDate;
+    return {
+        name: format('name')(!name.value ? '' : name.value),
+        created_date: formatDate(finalDate),
+        imageURL: format('imageURL')(!imageURL.value ? '' : imageURL.value),
+        directions: format('directions')(!directions.value ? '' : directions.value),
+        ingredients: format('ingredients')(!ingredients.value ? '' : ingredients.value)
+    };
+};
+
 /*===================================================
 =            Database Related Functions             =
 ===================================================*/
@@ -161,7 +180,7 @@ export const convertFirebaseData = R.compose(fromJS,
  * @return {object}        same recipe as input but the directions, and
  * ingredients are in the proper array form
  */
-export function properRecipeFormat({...recipe, name, directions, ingredients}) {
+export function properRecipeFormat({ ...recipe, name, directions, ingredients }) {
     if (!!name) {
         name        = format('name')(name);
         directions  = !!directions ? format('directions')(directions)   : [];

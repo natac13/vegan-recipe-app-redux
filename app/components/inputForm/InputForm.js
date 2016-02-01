@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 import R from 'ramda';
-import moment from 'moment';
 
 import TextField from 'material-ui/lib/text-field';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
@@ -19,7 +18,7 @@ export default class InputForm extends Component {
         handleSubmit: PropTypes.func.isRequired,
         handleClear: PropTypes.func,
         name: PropTypes.string,
-        'created_date': PropTypes.string,
+        created_date: PropTypes.string,
         imageURL: PropTypes.string,
         ingredients: PropTypes.string,
         directions: PropTypes.string,
@@ -31,7 +30,7 @@ export default class InputForm extends Component {
         handleChange: (e) => {if (e) { console.log(e); }},
         handleClear: () => console.log('Giving the field from dataset this function should clear the state property.'),
         name: '',
-        'created_date': '',
+        created_date: '',
         imageURL: '',
         ingredients: '',
         directions: '',
@@ -68,17 +67,8 @@ export default class InputForm extends Component {
         clearAll(fields);
     }
 
-    dateChange(event, date) {
-
-    }
-
-    formatData(date) {
-        const dateFormatted = moment(date).format('MMMM DD, YYYY');
-        return dateFormatted;
-    }
-
     render() {
-        const { handleChange, submitText } = this.props;
+        const { submitText } = this.props;
         // const {
         //     name,
         //     imageURL,
@@ -118,8 +108,8 @@ export default class InputForm extends Component {
                 <DatePicker
                 hintText="Data Created"
                 id="created_date"
-                onChange={handleChange}
-                formatDate={this.formatData} />
+                value={created_date.value}
+                onChange={(_, value) => created_date.onChange(value)} />
             </div>
 
             <div className={style.inputField}>
