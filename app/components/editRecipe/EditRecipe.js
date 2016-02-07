@@ -6,6 +6,8 @@ import moment from 'moment';
 
 
 import format, {
+    formatDate,
+    handlePreview,
     stringifyRecipe,
     lineify
 } from '../../js/format';
@@ -25,113 +27,53 @@ import * as colors from '../../scss/colors';
 class EditRecipe extends Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear  = this.handleClear.bind(this);
         const { key } = props.params;
-        this.state = {
-            data: props.recipeList.get(key)
-        };
+        const recipeToEdit = props.recipeList.get(key);
+
+        this.props.initializeForm(stringifyRecipe(recipeToEdit));
     }
 
     shouldComponentUpdate = shouldPureComponentUpdate;
 
-    handleChange(event, date) {
-        if (event === null) {
-            this.setState({
-                data: this.state.data.set('created_date', moment(date).format('MMMM DD, YYYY'))
-            });
-        } else {
-            let { id: property, value } = event.target;
-            const data = format(property)(value);
 
-
-            this.setState({
-                data: this.state.data.set(property, data)
-            });
-
-        }
-    }
-
-    handleSubmit(event) {
+    onSubmit(values, dispatch) {
+        const { name, created_date, imageURL, ingredients, directions } = values;
+        const finalDate = !created_date ? '' : created_date.value;
         const { key } = this.props.params;
-        event.preventDefault();
-        const updatedRecipe = this.state.data;
-        /**
-
-            TODO:
-            - add validation
-            - Stop the addRecipeFirebase action if there is no name value!
-
-         */
+        console.log(key);
+        const updatedRecipe = fromJS({
+            name: format('name')(name),
+            created_date: formatDate(finalDate),
+            imageURL: format('imageURL')(!imageURL ? '' : imageURL),
+            ingredients: format('ingredients')(ingredients),
+            directions: format('directions')(directions)
+        });
         this.props.actions.updateRecipe(updatedRecipe, this.props.recipeList.get(key));
         this.props.actions.push(`/recipes/${snakedNameOf(updatedRecipe)}`);
     }
 
     handleClear(field) {
-        if (field === 'all') {
-            this.setState({
-                data: fromJS({
-                    id: '',
-                    created_date: '',
-                    name: '',
-                    ingredients: [],
-                    directions: [],
-                    imageURL: ''
-                })
-            });
-            return true;
-        }
-        if (field === 'directions' || field === 'ingredients') {
-            this.setState({
-                data: this.state.data.set(field, List())
-            });
-        } else {
-            this.setState({
-                data: this.state.data.set(field, '')
-            });
-
-        }
+        const input = this.props.fields[field];
+        console.log(input)
+        input.setValue('')
     }
 
-    onSubmit(value, dispatch) {
-
-    }
 
     render() {
-        const { data } = this.state;
-        // get string version to use as default values on the input fields
-        let {
-                name,
-                created_date,
-                imageURL,
-                ingredients,
-                directions
-            } = stringifyRecipe(data);
+        const { fields, handleSubmit } = this.props;
 
-        directions = lineify(directions);
-        ingredients = lineify(ingredients);
 
         return (
             <div className={style.wrapper}>
                 <InputForm
-                    handleChange={this.handleChange}
                     handleClear={this.handleClear}
                     submitText="Update Recipe"
-                    name={name}
-                    created_date={created_date}
-                    imageURL={imageURL}
-                    ingredients={ingredients}
-                    directions={directions}
                     {...this.props}
-                    handleSubmit={this.props.handleSubmit.bind(null, this.onSubmit.bind(this))} />
+                    handleSubmit={handleSubmit.bind(null, this.onSubmit.bind(this))} />
                 <LivePreview
                     className={style.livePreview}
-                    name={name}
-                    created_date={created_date}
-                    imageURL={data.get('imageURL')}
-                    directions={data.get('directions')}
-                    ingredients={data.get('ingredients')} />
+                    { ...handlePreview(fields) } />
 
 
             </div>

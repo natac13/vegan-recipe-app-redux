@@ -1,10 +1,12 @@
 import express from 'express';
 import path    from 'path';
-
+import bodyParser from 'body-parser';
+import cloudinary from 'cloudinary';
 
 /*** Webpack imports ***/
 import webpack  from 'webpack';
 import config   from './webpack.config.js';
+import fs from 'fs';
 
 import webpackMiddleware    from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -23,15 +25,34 @@ const webpackOptions = {
     }
 };
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-const port = isDevelopment ? 3023 : process.env.PORT;
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(webpackMiddleware(compiler, webpackOptions));
 app.use(webpackHotMiddleware(compiler));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-app.listen(port, 'localhost', function() {
-    console.log('Listening on Port ' + port);
+import R from 'ramda';
+app.all('/img', (req, res) => {
+
+    const { name, imageUrl } = req.body;
+    const configFile = require('./cloudinary.config.json');
+    console.log(req.body)
+    cloudinary.config(configFile);
+    const options = {
+        public_id: name,
+        format: 'png'
+    };
+
+    cloudinary.uploader.upload(imageUrl, (result) => console.log(result), options)
+    // const buffer = reader.readAsDataURL(file);
+
+
+    // fs.writeFile('./TESTEST', JSON.stringify(req.body), function(){
+    //     console.log('file done')
+    // })
 });
+
+module.exports = app;

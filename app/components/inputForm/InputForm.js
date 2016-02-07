@@ -13,30 +13,6 @@ import style from './style';
 
 
 export default class InputForm extends Component {
-    static propTypes = {
-        handleChange: PropTypes.func.isRequired,
-        handleSubmit: PropTypes.func.isRequired,
-        handleClear: PropTypes.func,
-        name: PropTypes.string,
-        created_date: PropTypes.string,
-        imageURL: PropTypes.string,
-        ingredients: PropTypes.string,
-        directions: PropTypes.string,
-        submitText: PropTypes.string
-
-    };
-
-    static defaultProps = {
-        handleChange: (e) => {if (e) { console.log(e); }},
-        handleClear: () => console.log('Giving the field from dataset this function should clear the state property.'),
-        name: '',
-        created_date: '',
-        imageURL: '',
-        ingredients: '',
-        directions: '',
-        submitText: 'Submit'
-
-    };
 
     constructor(props) {
         super(props);
@@ -50,7 +26,7 @@ export default class InputForm extends Component {
     clearOne(event) {
         // field is the corresponding input field to clear
         const { field } = event.target.dataset;
-        this.refs[field].clearValue();
+        // this.refs[field].clearValue();
         // clearing parent state for livePreview to change.
         this.props.handleClear(field);
     }
@@ -69,22 +45,38 @@ export default class InputForm extends Component {
 
     render() {
         const { submitText } = this.props;
-        // const {
-        //     name,
-        //     imageURL,
-        //     directions,
-        //     ingredients
-        // } = this.props;
-        const { fields: { name, created_date, imageURL, directions, ingredients },
+        const { fields: { name, created_date, imageURL, directions, ingredients, img },
             handleSubmit,
             submitting,
             resetForm
         } = this.props;
 
         return (
-            <div
+            <form
                 role="form"
+                encType="multipart/form-data"
                 className={style.recipeForm}>
+
+            <div className={style.inputField}>
+                <TextField
+                    { ...img }
+                    value={null}
+                    onChange={(event) => {
+                        console.log(event.target.files[0])
+                    }}
+                    id="img"
+                    type="file"
+                    fullWidth={true}
+                    underlineFocusStyle={{ borderColor: colors.text }}
+                    floatingLabelStyle={{ color: colors.text }}
+                    inputStyle={{ color: colors.inputText }} />
+                <i
+                    className={'material-icons ' + style.close}
+                    data-field="img"
+                    onClick={this.clearOne}>
+                    remove_circle_outline
+                </i>
+            </div>
 
             <div className={style.inputField}>
                 <TextField
@@ -134,6 +126,7 @@ export default class InputForm extends Component {
                 <TextField
                     floatingLabelText="Ingredients"
                     {...ingredients}
+                    value={ingredients.value}
                     ref="ingredients"
                     id="ingredients"
                     fullWidth={true}
@@ -155,6 +148,7 @@ export default class InputForm extends Component {
                 <TextField
                     floatingLabelText="Directions"
                     {...directions}
+                    value={directions.value}
                     ref="directions"
                     id="directions"
                     fullWidth={true}
@@ -180,12 +174,12 @@ export default class InputForm extends Component {
                     disabled={submitting} />
                 <Button
                     onClick={resetForm}
-                    label="Clear All Fields"
+                    label="Reset"
                     icon="undo"
                     disabled={submitting} />
             </div>
 
-        </div>
+        </form>
         );
     }
 }
