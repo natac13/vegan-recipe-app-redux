@@ -27,32 +27,28 @@ const webpackOptions = {
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(webpackMiddleware(compiler, webpackOptions));
 app.use(webpackHotMiddleware(compiler));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-import R from 'ramda';
 app.all('/img', (req, res) => {
 
     const { name, imageUrl } = req.body;
     const configFile = require('./cloudinary.config.json');
-    console.log(req.body)
     cloudinary.config(configFile);
     const options = {
         public_id: name,
         format: 'png'
     };
 
-    cloudinary.uploader.upload(imageUrl, (result) => console.log(result), options)
-    // const buffer = reader.readAsDataURL(file);
-
-
-    // fs.writeFile('./TESTEST', JSON.stringify(req.body), function(){
-    //     console.log('file done')
-    // })
+    cloudinary.uploader.upload(
+        imageUrl,
+        (result) => console.log(result),
+        options
+    );
 });
 
 module.exports = app;

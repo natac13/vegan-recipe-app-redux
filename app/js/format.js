@@ -141,17 +141,32 @@ export const formatDate = (date) => {
 };
 
 export const handlePreview = (fields) => {
-    const { name, created_date, imageURL, directions, ingredients } = fields;
+    const { name, created_date, directions, ingredients } = fields;
     const defaultDate = moment().format('MMMM DD, YYYY');
     const finalDate = created_date.value || defaultDate;
     return {
         name: format('name')(!name.value ? '' : name.value),
         created_date: formatDate(finalDate),
-        imageURL: format('imageURL')(!imageURL.value ? '' : imageURL.value),
-        directions: format('directions')(!directions.value ? '' : directions.value),
-        ingredients: format('ingredients')(!ingredients.value ? '' : ingredients.value)
+        directions: format('directions')
+                            (!directions.value ? '' : directions.value),
+        ingredients: format('ingredients')
+                            (!ingredients.value ? '' : ingredients.value)
     };
 };
+
+/**
+ * dropExtension :: String a -> String b
+ * Takes in a string and will drop any characters after the last '.' in the
+ * string, to return a new string
+ * @param String
+ * @return String
+ */
+export const dropExtension = R.compose(
+        R.join('.'),
+        R.slice(0, -1),
+        R.split('.')
+    );
+
 
 /*===================================================
 =            Database Related Functions             =

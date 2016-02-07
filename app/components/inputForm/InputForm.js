@@ -18,7 +18,6 @@ export default class InputForm extends Component {
         super(props);
         this.clear = this.clear.bind(this);
         this.clearOne = this.clearOne.bind(this);
-        console.log(props);
     }
 
     shouldComponentUpdate = shouldPureComponentUpdate;
@@ -45,7 +44,14 @@ export default class InputForm extends Component {
 
     render() {
         const { submitText } = this.props;
-        const { fields: { name, created_date, imageURL, directions, ingredients, img },
+        const { fields: {
+                name,
+                created_date,
+                imageURL,
+                directions,
+                ingredients,
+                img
+            },
             handleSubmit,
             submitting,
             resetForm
@@ -56,27 +62,6 @@ export default class InputForm extends Component {
                 role="form"
                 encType="multipart/form-data"
                 className={style.recipeForm}>
-
-            <div className={style.inputField}>
-                <TextField
-                    { ...img }
-                    value={null}
-                    onChange={(event) => {
-                        console.log(event.target.files[0])
-                    }}
-                    id="img"
-                    type="file"
-                    fullWidth={true}
-                    underlineFocusStyle={{ borderColor: colors.text }}
-                    floatingLabelStyle={{ color: colors.text }}
-                    inputStyle={{ color: colors.inputText }} />
-                <i
-                    className={'material-icons ' + style.close}
-                    data-field="img"
-                    onClick={this.clearOne}>
-                    remove_circle_outline
-                </i>
-            </div>
 
             <div className={style.inputField}>
                 <TextField
@@ -106,17 +91,17 @@ export default class InputForm extends Component {
 
             <div className={style.inputField}>
                 <TextField
-                    floatingLabelText="Image URL"
-                    {...imageURL}
-                    ref="imageURL"
-                    id="imageURL"
+                    { ...img }
+                    value={null}
+                    id="img"
+                    type="file"
                     fullWidth={true}
                     underlineFocusStyle={{ borderColor: colors.text }}
                     floatingLabelStyle={{ color: colors.text }}
-                    inputStyle={{ color: colors.inputText } } />
+                    inputStyle={{ color: colors.inputText }} />
                 <i
                     className={'material-icons ' + style.close}
-                    data-field="imageURL"
+                    data-field="img"
                     onClick={this.clearOne}>
                     remove_circle_outline
                 </i>

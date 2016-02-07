@@ -9,7 +9,8 @@ import uuid from 'node-uuid';
 
 import format, {
     formatDate,
-    handlePreview
+    handlePreview,
+    dropExtension
 } from '../../js/format';
 import { snakedNameOf } from '../../js/core_helpers';
 
@@ -23,30 +24,42 @@ import axios from 'axios';
 const AddRecipe = (props) => {
 
     const onSubmit = (values, dispatch) => {
-        const { name, created_date, imageURL, ingredients, directions } = values;
-        const file = values.img[0];
+        const { name, created_date, img, ingredients, directions } = values;
+        /*====================================
+        =            Image upload            =
+        ====================================*/
+
+        const file = img[0];
         const reader = new FileReader;
+        const fileName = dropExtension(file.name);
         reader.onload = () => {
             axios.post('/img', {
                 imageUrl: reader.result,
-                name: file.name
+                name: fileName
             });
         };
         reader.readAsDataURL(file);
 
-        const defaultDate = moment().format('MMMM DD, YYYY');
-        const finalDate = !created_date ? defaultDate : created_date.value;
+        const cloudinaryUrl = 'http://res.cloudinary.com/dxmist0g2/image/upload/';
+
+
+        /*=====  End of Image upload  ======*/
+        /*** Create date ***/
+        const defaultDate = moment();
+        const finalDate = formatDate(!created_date ?
+                                        defaultDate : created_date
+                                    );
 
         const newRecipe = fromJS({
             name: format('name')(!name ? '' : name),
             id: uuid.v4(),
-            created_date: formatDate(finalDate),
-            imageURL: format('imageURL')(!imageURL ? '' : imageURL),
+            created_date: finalDate,
+            imageURL: `${cloudinaryUrl}${fileName}`,
             ingredients: format('ingredients')(!ingredients ? '' : ingredients),
             directions: format('directions')(!directions ? '' : directions)
         });
-        // props.actions.addRecipe(newRecipe);
-        // props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
+        props.actions.addRecipe(newRecipe);
+        props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
     };
 
     const { fields, handleSubmit } = props;
@@ -66,5 +79,12 @@ const AddRecipe = (props) => {
 
 export default reduxForm({
     form: 'addRecipe',
-    fields: ['name', 'created_date', 'imageURL', 'directions', 'ingredients', 'img']
+    fields: [
+        'name',
+        'created_date',
+        'imageURL',
+        'directions',
+        'ingredients',
+        'img'
+    ]
 })(AddRecipe);

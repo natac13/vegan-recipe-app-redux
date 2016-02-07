@@ -6,7 +6,8 @@ import format, {
     normalizeTemperature,
     tempFixer,
     presentation,
-    stringifyRecipe
+    stringifyRecipe,
+    dropExtension
 } from '../app/js/format';
 
 describe('The capitalize function', () => {
@@ -259,3 +260,22 @@ describe('stringifyRecipe', () => {
 
 /*=====  End of List -> String   ======*/
 
+describe('Drop extension', () => {
+    it('should drop the extension of test.js', () => {
+        const state = 'test.js';
+        const nextState = dropExtension(state);
+        expect(nextState).to.equal('test');
+    });
+
+    it('should handle a file name with words separated by a \'.\'', () => {
+        const state = 'core.test.js';
+        const nextState = dropExtension(state);
+        expect(nextState).to.equal('core.test');
+    });
+
+    it('should handle an extreme test of \'core.test.and.ONCE.again.scss\'', () => {
+        const state = 'core.test.and.ONCE.again.scss';
+        const nextState = dropExtension(state);
+        expect(nextState).to.equal('core.test.and.ONCE.again');
+    });
+});

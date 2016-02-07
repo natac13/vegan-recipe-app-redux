@@ -20,7 +20,7 @@ const LivePreview = ( { name, created_date, directions, ingredients, imageURL })
         <div className={style.livePreview}>
             <p className={style.name}>Name: {name}</p>
             <p className={style.createDate}> Created On: {created_date} </p>
-            <p className={style.url}> ImageURL: {imageURL}</p>
+            {!!imageURL && <p className={style.url}> ImageURL: {imageURL}</p>}
             Ingredients
             <ul className={style.ingredientsList}>
                 {outputIngredients}

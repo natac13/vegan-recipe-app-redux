@@ -55,7 +55,7 @@ const RecipeDetails = (props) => {
 
 
         </div>
-    )
-}
+    );
+};
 
 export default RecipeDetails;
