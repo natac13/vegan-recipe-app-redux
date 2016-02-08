@@ -8,8 +8,6 @@ const webpack  = require('webpack');
 const config   = require('./webpack.config.js');
 const fs = require('fs');
 
-const webpackMiddleware    = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
 
 var app = express();
 
@@ -30,6 +28,8 @@ const staticPath = path.join(__dirname, 'build');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 if (!isProduction) {
+    const webpackMiddleware    = require('webpack-dev-middleware');
+    const webpackHotMiddleware = require('webpack-hot-middleware');
     app.use(webpackMiddleware(compiler, webpackOptions));
     app.use(webpackHotMiddleware(compiler));
 
