@@ -39,7 +39,7 @@ if (!isProduction) {
 
 } else {
     app.use(express.static(staticPath))
-        .get('/', (req, res) => {
+        .get('*', (req, res) => {
             res.sendFile('index.html', {
                 root: staticPath
             });
