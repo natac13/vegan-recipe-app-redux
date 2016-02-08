@@ -40,9 +40,7 @@ if (!isProduction) {
 } else {
     app.use(express.static(staticPath))
         .get('*', (req, res) => {
-            res.sendFile('index.html', {
-                root: staticPath
-            });
+            res.sendFile(path.join(staticPath, 'index.html'));
         });
 
 }
