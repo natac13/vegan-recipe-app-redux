@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const app = require('../../server.js');
+const app = require('../server.js');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
