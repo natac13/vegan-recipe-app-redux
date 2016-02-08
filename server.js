@@ -1,15 +1,15 @@
-import express from 'express';
-import path    from 'path';
-import bodyParser from 'body-parser';
-import cloudinary from 'cloudinary';
+const express = require('express');
+const path    = require('path');
+const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary');
 
 /*** Webpack imports ***/
-import webpack  from 'webpack';
-import config   from './webpack.config.js';
-import fs from 'fs';
+const webpack  = require('webpack');
+const config   = require('./webpack.config.js');
+const fs = require('fs');
 
-import webpackMiddleware    from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+const webpackMiddleware    = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 
 let app = express();
 
@@ -25,7 +25,6 @@ const webpackOptions = {
     }
 };
 const isProduction = process.env.NODE_ENV === 'production';
-const isDevelopment = process.env.NODE_ENV !== 'production';
 const staticPath = path.join(__dirname, 'build');
 
 app.use(bodyParser.json());
@@ -65,7 +64,4 @@ app.all('/img', (req, res) => {
     );
 });
 
-const port = isDevelopment ? 3023 : process.env.PORT;
-app.listen(port, 'localhost', () => {
-    console.log('Listening on Port ' + port);
-});
+module.exports = app;

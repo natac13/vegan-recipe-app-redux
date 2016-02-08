@@ -4,7 +4,7 @@
   "description": "An app to store vegan recipes",
   "main": "server.js",
   "scripts": {
-    "start": "babel-node ./server.js",
+    "start": "babel-node bin/www.js",
     "clean": "rimraf build/",
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ignore-styles --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
@@ -13,7 +13,11 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "lint": "eslint app/",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "heroku": "git push heroku master",
+    "preheroku": "npm run build",
+    "firebase": "firebase deploy",
+    "prefirebase": "npm run build"
   },
   "repository": {
     "type": "git",
