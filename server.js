@@ -24,16 +24,30 @@ const webpackOptions = {
         colors: true
     }
 };
-
+const isProduction = process.env.NODE_ENV === 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const staticPath = path.join(__dirname, 'build');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(webpackMiddleware(compiler, webpackOptions));
-app.use(webpackHotMiddleware(compiler));
+if (!isProduction) {
+    app.use(webpackMiddleware(compiler, webpackOptions));
+    app.use(webpackHotMiddleware(compiler));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'index.html'));
+    });
+
+} else {
+    app.use(express.static(staticPath))
+        .get('/', (req, res) => {
+            res.sendFile('index.html', {
+                root: staticPath
+            });
+        });
+
+}
+
 app.all('/img', (req, res) => {
 
     const { name, imageUrl } = req.body;
@@ -51,4 +65,7 @@ app.all('/img', (req, res) => {
     );
 });
 
-module.exports = app;
+const port = isDevelopment ? 3023 : process.env.PORT;
+app.listen(port, 'localhost', () => {
+    console.log('Listening on Port ' + port);
+});

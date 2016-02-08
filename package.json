@@ -4,11 +4,10 @@
   "description": "An app to store vegan recipes",
   "main": "server.js",
   "scripts": {
-    "start": "babel-node bin/www",
+    "start": "babel-node ./server.js",
     "clean": "rimraf build/",
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-core/register --recursive --require ignore-styles --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
-    "postinstall": "webpack -p --config ./webpack.production.config.js --progress --colors",
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.production.config.js --progress --color",
     "predeploy": "npm run build",
@@ -31,6 +30,10 @@
   ],
   "author": "Sean Campbell <sean.campbell13@gmail.com> (http://seancampbellnatac.com)",
   "license": "MIT",
+  "engines": {
+    "node": "5.0.0",
+    "npm": "3.7.0"
+  },
   "dependencies": {
     "axios": "0.9.1",
     "babel": "6.3.13",

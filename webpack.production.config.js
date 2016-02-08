@@ -1,13 +1,10 @@
 'use strict';
 
-
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-
 
 var buildPath = path.join(__dirname, 'build');
 var entry = path.join(__dirname, 'app', 'index.js');
@@ -49,15 +46,15 @@ module.exports = {
             {
                 test: /\.(jpe?g|png|gif)$/,
                 loaders: [
-                            'file?hash=sha512&digest=hex&name=[name]_[hash].[ext]',
-                            'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                        ]
+                    'file?hash=sha512&digest=hex&name=[name]_[hash].[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                ]
             }
         ]
     },
     postcss: [autoprefixer],
     plugins: [
-        new ExtractTextPlugin('style.css', {allChunk: true}),
+        new ExtractTextPlugin('style.css', { allChunk: true }),
         new HtmlWebpackPlugin({
             template: './app/index.html'
         }),
@@ -69,8 +66,8 @@ module.exports = {
             }
         }),
         new webpack.DefinePlugin({
-                'process.env': {
-                    'NODE_ENV': JSON.stringify('production')
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
             }
         })
     ]
