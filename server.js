@@ -47,20 +47,20 @@ if (!isProduction) {
 
 app.all('/img', (req, res) => {
     console.log('post request inside')
-    // const name = req.body.name;
-    // const imageUrl = req.body.imageUrl;
-    // const configFile = require('./cloudinary.config.json');
-    // cloudinary.config(configFile);
-    // const options = {
-    //     public_id: name,
-    //     format: 'png'
-    // };
+    const name = req.body.name;
+    const imageUrl = req.body.imageUrl;
+    const configFile = require('./cloudinary.config.json');
+    cloudinary.config(configFile);
+    const options = {
+        public_id: name,
+        format: 'png'
+    };
 
-    // cloudinary.uploader.upload(
-    //     imageUrl,
-    //     (result) => console.log(result),
-    //     options
-    // );
+    cloudinary.uploader.upload(
+        imageUrl,
+        (result) => console.log(result),
+        options
+    );
 
 });
 
