@@ -11,7 +11,7 @@ const fs = require('fs');
 const webpackMiddleware    = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
-let app = express();
+var app = express();
 
 const compiler = webpack(config);
 const webpackOptions = {
