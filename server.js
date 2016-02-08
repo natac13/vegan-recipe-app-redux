@@ -49,7 +49,8 @@ if (!isProduction) {
 
 app.all('/img', (req, res) => {
 
-    const { name, imageUrl } = req.body;
+    const name = req.body.name;
+    const imageUrl = req.body.imageUrl
     const configFile = require('./cloudinary.config.json');
     cloudinary.config(configFile);
     const options = {
