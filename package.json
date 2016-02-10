@@ -15,7 +15,7 @@
     "lint": "eslint app/",
     "commit": "git-cz",
     "heroku": "git push heroku master",
-    "preheroku": "npm run build && npm run commit"
+    "preheroku": "npm run build"
   },
   "repository": {
     "type": "git",

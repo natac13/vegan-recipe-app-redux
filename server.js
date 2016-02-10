@@ -25,8 +25,8 @@ const webpackOptions = {
 const isProduction = process.env.NODE_ENV === 'production';
 const staticPath = path.join(__dirname, 'build');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 if (!isProduction) {
     const webpackMiddleware    = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
