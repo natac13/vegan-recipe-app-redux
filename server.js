@@ -46,18 +46,17 @@ if (!isProduction) {
 }
 
 app.all('/img', (req, res) => {
-    console.log('post request inside')
+    console.log('post request inside12212121')
     const name = req.body.name;
     const imageUrl = req.body.imageUrl;
-    const configFile = require('./cloudinary.config.json');
-    cloudinary.config(configFile);
     const options = {
         public_id: name,
-        format: 'png'
+        cloud_name: 'dxmist0g2'
     };
 
-    cloudinary.uploader.upload(
+    cloudinary.uploader.unsigned_upload(
         imageUrl,
+        'normal',
         (result) => console.log(result),
         options
     );
