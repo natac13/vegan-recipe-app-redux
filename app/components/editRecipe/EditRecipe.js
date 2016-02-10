@@ -28,21 +28,24 @@ import * as colors from '../../scss/colors';
 class EditRecipe extends Component {
     constructor(props) {
         super(props);
-        this.handleClear  = this.handleClear.bind(this);
-        const { key } = props.params;
-        const recipeToEdit = props.recipeList.get(key);
+        this.onSubmit = this.onSubmit.bind(this);
 
+    }
+
+    componentWillMount() {
+        const {
+            params: { key }
+        } = this.props;
+        const recipeToEdit = this.props.recipeList.get(key);
         this.props.initializeForm(stringifyRecipe(recipeToEdit));
     }
 
     shouldComponentUpdate = shouldPureComponentUpdate;
 
-
     onSubmit(values, dispatch) {
         const {
             name,
             created_date,
-            imageURL,
             img,
             ingredients,
             directions } = values;
@@ -53,59 +56,48 @@ class EditRecipe extends Component {
         if(!!img) {
             const file = img[0];
             const reader = new FileReader;
-            fileName = dropExtension(file.name);
+            const cloudinaryUrl = 'http://res.cloudinary.com/dxmist0g2/image/upload/c_scale,h_400,r_10,w_500/';
+            fileName = `${cloudinaryUrl}${dropExtension(file.name)}`;
             reader.onload = () => {
                 axios.post('/img', {
                     imageUrl: reader.result,
-                    name: fileName
+                    name: dropExtension(file.name)
                 });
             };
             reader.readAsDataURL(file);
 
         }
 
-        const cloudinaryUrl = 'http://res.cloudinary.com/dxmist0g2/image/upload/';
-
-
         /*=====  End of Image upload  ======*/
 
         const finalDate = formatDate(!created_date ? moment() : created_date);
-        const { key } = this.props.params;
 
         const updatedRecipe = fromJS({
             name: format('name')(name),
             created_date: finalDate,
-            imageURL: !img ? imageURL : `${cloudinaryUrl}${fileName}`,
-            ingredients: format('ingredients')(ingredients),
-            directions: format('directions')(directions)
+            imageURL: fileName,
+            ingredients: format('ingredients')(!ingredients ? '' : ingredients),
+            directions: format('directions')(!directions ? '' : directions)
         });
+        const { key } = this.props.params;
         this.props.actions.updateRecipe(
                 updatedRecipe,
                 this.props.recipeList.get(key)
             );
-        this.props.actions.push(`/recipes/${snakedNameOf(updatedRecipe)}`);
-    }
+        setTimeout(() => {
+            this.props.actions.push(`/recipes/${snakedNameOf(updatedRecipe)}`);
 
-    handleClear(field) {
-        const input = this.props.fields[field];
-        input.setValue('');
+        }, 1000);
     }
-
 
     render() {
-        const { fields, handleSubmit } = this.props;
-
-
+        const { handleSubmit, fields } = this.props;
         return (
             <div className={style.wrapper}>
                 <InputForm
-                    handleClear={this.handleClear}
                     submitText="Update Recipe"
                     {...this.props}
-                    handleSubmit={handleSubmit.bind(
-                            null,
-                            this.onSubmit.bind(this)
-                        )} />
+                    handleSubmit={handleSubmit.bind(null, this.onSubmit)} />
                 <LivePreview
                     className={style.livePreview}
                     { ...handlePreview(fields) } />
@@ -113,6 +105,7 @@ class EditRecipe extends Component {
 
             </div>
         );
+
     }
 
 }

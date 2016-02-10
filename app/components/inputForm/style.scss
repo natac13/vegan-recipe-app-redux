@@ -1,20 +1,5 @@
 @import '~../../scss/variables';
-$clear: #BF2E2E;
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-    color: $clear;
-  }
-  50% {
-    transform: rotate(300deg);
-    color: darken($clear, 15%);
-  }
-  100% {
-    transform: rotate(10deg);
-    color: $clear;
-  }
-}
 
 .recipeForm {
   align-items: stretch;
@@ -28,20 +13,6 @@ $clear: #BF2E2E;
   .inputField {
     display: flex;
     align-items: baseline;
-
-    .close {
-      color: $text;
-      transition: 0.7 ease-in;
-
-      &:hover {
-        animation: spin 3s infinite cubic-bezier(.79,0,.25,1);
-      }
-
-      &:active {
-        animation: none;
-        color: lighten($text, 25%);
-      }
-    }
   }
 }
 

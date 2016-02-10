@@ -10,7 +10,7 @@ import format, {
     dropExtension
 } from '../app/js/format';
 
-describe('The capitalize function', () => {
+describe('Capitalize', () => {
     it('should take in a word and return the same word capitalized', () => {
         const word = 'natac';
         const capWord = capitalize(word);
@@ -18,7 +18,7 @@ describe('The capitalize function', () => {
     });
 });
 
-describe('The format function', () => {
+describe('Main format function', () => {
     describe('Directions', () => {
         it('should provide a function that will split a string on a semicolon and return an Immutable-List', () => {
         const property = 'directions';
@@ -133,68 +133,68 @@ describe('The format function', () => {
         });
     });
 
-    /*========================================
-    =            Helper functions            =
-    ========================================*/
-
-    describe('Formating helpers', () => {
-        describe('normalizeTemperature function', () => {
-            it('should take in a string 375F and return a formatted temperature of 375\u00B0F', () => {
-                const state = '375F';
-                const nextState = normalizeTemperature(state);
-                expect(nextState).to.equal('375\u00B0F');
-            });
-
-            it('should take 375 f and return 375\u00B0F', () => {
-                const state = '375 f';
-                const nextState = normalizeTemperature(state);
-                expect(nextState).to.equal('375\u00B0F');
-            });
-
-            it('should be able to handle Celsius as well; 350c to 350\u00B0C', () => {
-                const state = '350c';
-                const nextState = normalizeTemperature(state);
-                expect(nextState).to.equal('350\u00B0C');
-            })
-        });
-
-        describe('tempFixer which is the normalizeTemperature as a function waiting on the string to be given; can use to R.compose()', () => {
-            it('should be a function', () => {
-                expect(tempFixer).to.be.instanceof(Function);
-            });
-
-            it('should take in a string with a temperature value somewhere and normalize it', () => {
-                const state = 'set oven to 375 f and wait';
-                const nextState = tempFixer(state);
-                expect(nextState).to.equal('set oven to 375\u00B0F and wait')
-            });
-
-            it('should handle temperature at the end of strings', () => {
-                const state = 'oven 275c';
-                const nextState = tempFixer(state);
-                expect(nextState).to.equal('oven 275\u00B0C')
-            })
-
-            it('should take in "turn oven to 350f" and return "turn oven to 350\u00B0F"', () => {
-                const state = 'turn oven to 350f';
-                const nextState = tempFixer(state);
-                expect(nextState).to.equal('turn oven to 350\u00B0F')
-            })
-        });
-
-        describe('presentation function', () => {
-            it('should take in a string and make presentable by trimming, capitalizing and normalizing the temp', () => {
-                const state = 'turn oven to 350f';
-                const nextState = presentation(state);
-                expect(nextState).to.equal('Turn oven to 350\u00B0F')
-            });
-        });
-    });
-
-
-    /*=====  End of Helper functions  ======*/
 
 });
+
+/*========================================
+=            Helper functions            =
+========================================*/
+describe('Formating helpers', () => {
+    describe('normalizeTemperature function', () => {
+        it('should take in a string 375F and return a formatted temperature of 375\u00B0F', () => {
+            const state = '375F';
+            const nextState = normalizeTemperature(state);
+            expect(nextState).to.equal('375\u00B0F');
+        });
+
+        it('should take 375 f and return 375\u00B0F', () => {
+            const state = '375 f';
+            const nextState = normalizeTemperature(state);
+            expect(nextState).to.equal('375\u00B0F');
+        });
+
+        it('should be able to handle Celsius as well; 350c to 350\u00B0C', () => {
+            const state = '350c';
+            const nextState = normalizeTemperature(state);
+            expect(nextState).to.equal('350\u00B0C');
+        })
+    });
+
+    describe('tempFixer which is the normalizeTemperature as a function waiting on the string to be given; can use to R.compose()', () => {
+        it('should be a function', () => {
+            expect(tempFixer).to.be.instanceof(Function);
+        });
+
+        it('should take in a string with a temperature value somewhere and normalize it', () => {
+            const state = 'set oven to 375 f and wait';
+            const nextState = tempFixer(state);
+            expect(nextState).to.equal('set oven to 375\u00B0F and wait')
+        });
+
+        it('should handle temperature at the end of strings', () => {
+            const state = 'oven 275c';
+            const nextState = tempFixer(state);
+            expect(nextState).to.equal('oven 275\u00B0C')
+        })
+
+        it('should take in "turn oven to 350f" and return "turn oven to 350\u00B0F"', () => {
+            const state = 'turn oven to 350f';
+            const nextState = tempFixer(state);
+            expect(nextState).to.equal('turn oven to 350\u00B0F')
+        })
+    });
+
+    describe('presentation function', () => {
+        it('should take in a string and make presentable by trimming, capitalizing and normalizing the temp', () => {
+            const state = 'turn oven to 350f';
+            const nextState = presentation(state);
+            expect(nextState).to.equal('Turn oven to 350\u00B0F')
+        });
+    });
+});
+
+
+/*=====  End of Helper functions  ======*/
 
 
 /*=======================================
