@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Map } from 'immutable';
 import { reduxForm } from 'redux-form';
 
-import Button from '../home/linkButton';
+import Button from '../linkButton';
 import TextField from 'material-ui/lib/text-field';
 
 import style from './style';

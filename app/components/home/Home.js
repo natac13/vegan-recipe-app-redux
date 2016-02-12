@@ -3,8 +3,8 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 
 /*** Components ***/
 
-import Navbar      from './navbar/';
-import PhotoBanner from './photoBanner/';
+import Navbar      from '../navbar/';
+import PhotoBanner from '../photoBanner/';
 
 /*** Styling ***/
 import style from './style.scss';

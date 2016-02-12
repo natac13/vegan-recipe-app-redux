@@ -19,7 +19,7 @@ import { snakedNameOf } from '../../js/core_helpers';
 /*** Components ***/
 const TextField = require('material-ui/lib/text-field');
 import LivePreview from '../livePreview/';
-import Button from '../home/linkButton/';
+import Button from '../linkButton/';
 import InputForm from '../inputForm/';
 
 /*** styling ***/

@@ -3,7 +3,7 @@ import R from 'ramda';
 
 import TextField from 'material-ui/lib/text-field';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
-import Button from '../home/linkButton/';
+import Button from '../linkButton/';
 import Icon from 'react-fa';
 
 /*** styling ***/
