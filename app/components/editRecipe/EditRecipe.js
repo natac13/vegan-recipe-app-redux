@@ -83,16 +83,30 @@ class EditRecipe extends Component {
                 ingredients: format('ingredients')(!ingredients ? '' : ingredients),
                 directions: format('directions')(!directions ? '' : directions)
             });
-            const { key } = this.props.params;
-            this.props.actions.recipeUpdate(
+            const {
+                params: { key },
+                actions: { recipeUpdate },
+                recipeList
+            } = this.props;
+            const DBPromise = recipeUpdate(
                     updatedRecipe,
-                    this.props.recipeList.get(key)
+                    recipeList.get(key)
                 );
-            setTimeout(() => {
-                resolve();
-                this.props.actions.push(`/recipes/${snakedNameOf(updatedRecipe)}`);
-
-            }, 1000);
+            DBPromise.then((action) => {
+                setTimeout(() => {
+                    if (!action.error) {
+                        resolve();
+                        this.props.actions.push(
+                            `/recipes/${snakedNameOf(updatedRecipe)}`
+                        );
+                    } else {
+                        reject({
+                            name: 'Need to be logged in to update recipes',
+                            _error: 'Database'
+                        });
+                    }
+                }, 600);
+            });
         });
     }
 

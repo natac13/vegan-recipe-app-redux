@@ -39,7 +39,7 @@ const InputForm = (props) => {
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="New Recipe Name"
-                    errorText={submitFailed ? errors.name : null}
+                    errorText={submitFailed && error == 'validation'? errors.name : null}
                     {...name}
                     id="name"
                     fullWidth={true}

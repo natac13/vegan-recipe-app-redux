@@ -16,8 +16,8 @@ const reduxRouterMiddleware = syncHistory(history);
 const loggerMiddleware = logger();
 
 const createStoreWithMiddleware = applyMiddleware(
-    firebaseMiddleware,
     reduxRouterMiddleware,
+    firebaseMiddleware,
     loggerMiddleware
 )(createStore);
 

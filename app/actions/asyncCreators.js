@@ -12,15 +12,18 @@ export function dbRequest() {
     };
 }
 
-export function failedRequest() {
+export function failedRequest(err) {
     return {
-        type: REQUEST_FAILED
+        type: REQUEST_FAILED,
+        payload: err || {},
+        error: true
     };
 }
 
 export function successfulRequest() {
     return {
-        type: REQUEST_SUCCESSFUL
+        type: REQUEST_SUCCESSFUL,
+        error: false
     };
 }
 

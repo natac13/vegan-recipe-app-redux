@@ -42,7 +42,10 @@ class UserLogin extends Component {
         const { username, password } = values;
         const { login } = this.props.actions;
 
-        login(values);
+        const action = login(values);
+        action.then((data) => {
+            console.log(data)
+        })
 
     }
     render() {

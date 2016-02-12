@@ -88,17 +88,14 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
             // Send to Firebase
             return recipeDBPath.set(recipe).then(
                 function addSuccessful() {
-                    console.log('fb success');
                     // once successful continue the action to be added
                     return next(action);
                 },
-                function addFailure(err) {
-                    console.log(err, 'Error adding the recipe to Firebase');
+                function addFailure(error) {
                     // if there was an error I will not continue with recipeAdd
-                    // but instead send an error action.
-                    dispatch(failedRequest());
-                    // dispatch(routeActions.push('/recipes'))
-                    return next(action);
+                    // but instead dispatch a failedRequest action, passing in
+                    // the error object.
+                    return dispatch(failedRequest(error));
                 }
             );
 
@@ -122,28 +119,29 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
             let recipe = stringifyRecipe(newRecipe);
             return recipeDBPath.set(recipe).then(
                 function updateSuccessful() {
-                    console.log('fb success');
                     return next(action);
                 },
-                function updateFailure(err) {
-                    console.log(err, 'Error updating the recipe to Firebase');
-                    dispatch(failedRequest());
-                    return next(action);
+                function updateFailure(error) {
+                    return dispatch(failedRequest(error));
                 }
             );
 
         } else if (action.type == LOGIN) {
             // this action is where I started with redux-actions and FSA
             const { username, password } = action.payload;
-            fp.authWithPassword({
+            return fp.authWithPassword({
                 email: username,
                 password
             }, { remember: 'sessionOnly' })
                 .then((authData) => {
                     console.log('Admin login good');
                     console.log(authData);
+                    return {
+                        type: 'test',
+                        authData
+                    }
                 });
-            return next(action);
+
         } else {
             const nextState = next(action);
             return nextState;

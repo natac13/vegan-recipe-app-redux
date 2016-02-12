@@ -12,8 +12,8 @@ export const history = createHistory();
 const reduxRouterMiddleware = syncHistory(history);
 
 const createStoreWithMiddleware = applyMiddleware(
-    firebaseMiddleware,
-    reduxRouterMiddleware
+    reduxRouterMiddleware,
+    firebaseMiddleware
 )(createStore);
 
 export default function configureStore(initialState) {

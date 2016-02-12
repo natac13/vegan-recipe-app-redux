@@ -30,8 +30,8 @@ const AddRecipe = (props) => {
             const { name, created_date, img, ingredients, directions } = values;
             if (!name) {
                 const err = {
-                    name: 'There needs to be a name', // props.error
-                    _error: 'Failed to save recipe'   // props.errors.name
+                    name: 'There needs to be a name', // props.errors.name
+                    _error: 'validation'   // props.error
                 };
                 reject(err);
             }
@@ -72,16 +72,30 @@ const AddRecipe = (props) => {
                 ingredients: format('ingredients')(!ingredients ? '' : ingredients),
                 directions: format('directions')(!directions ? '' : directions)
             });
-            const action = props.actions.recipeAdd(newRecipe);
-            console.log(action);
-            /*
-            Setting a delay to the redirect to give time to cloudinary to upload
-            image. This is not fool proof and should look at async rendering React.
+
+            /**
+             * DBPromise is being returned from the custom Firebase middleware.
+             * It will be either the addSuccessful or addFailure promise.
+             * The action param is the returned value from that promise. Which
+             * is either the next(action) or the dispatch(failedRequest(err))
+             * @type {promise}
              */
-            setTimeout(() => {
-                resolve();
-                props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
-            }, 1000);
+            const DBPromise = props.actions.recipeAdd(newRecipe);
+            DBPromise.then((action) => {
+                console.log(action);
+                setTimeout(() => {
+                    if (action.error) {
+                        reject({
+                            name: 'Need to be logged in to add recipes',
+                            _error: 'Database'
+                        });
+                    } else {
+                        resolve();
+                        props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
+                    }
+
+                }, 600)
+            });
         });
     };
 
