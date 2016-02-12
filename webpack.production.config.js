@@ -26,7 +26,6 @@ module.exports = {
         loaders: [
             {
                 test: /\.jsx?$/,
-                include: path.join(__dirname, 'app'),
                 exclude: /(node_modules)/,
                 loader: 'babel',
                 query: {
@@ -35,8 +34,15 @@ module.exports = {
                 }
             },
             {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract('style', 'css')
+            },
+            {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
+                loader: ExtractTextPlugin.extract(
+                    'style',
+                    'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
+                )
 
             },
             {
@@ -44,11 +50,23 @@ module.exports = {
                 loader: 'json'
             },
             {
+                test: /\.node$/,
+                loader: 'node-loader'
+            },
+            {
                 test: /\.(jpe?g|png|gif)$/,
                 loaders: [
                     'file?hash=sha512&digest=hex&name=[name]_[hash].[ext]',
                     'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
                 ]
+            },
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url-loader?limit=10000&minetype=application/font-woff'
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader'
             }
         ]
     },

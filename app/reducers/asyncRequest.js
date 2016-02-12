@@ -8,7 +8,8 @@ import {
     DB_REQUEST,
     SELECT_CATEGORY,
     FAILED_REQUEST,
-    SUCCESSFUL_REQUEST
+    SUCCESSFUL_REQUEST,
+    RESET
 } from '../constants/';
 
 const initialState = fromJS({
@@ -28,9 +29,10 @@ const noSuccess    = boolUpdater('success', false);
 const failedData   = boolUpdater('didFail', true);
 const noFail       = boolUpdater('didFail', false);
 
-export const request = R.compose(fetchingData, noFail, noSuccess);
-export const success = R.compose(noFetching, noFail, didSucceed);
-export const failed  = R.compose(failedData, noFetching, noSuccess);
+export const request  = R.compose(fetchingData, noFail, noSuccess);
+export const success  = R.compose(noFetching, noFail, didSucceed);
+export const failed   = R.compose(failedData, noFetching, noSuccess);
+
 
 const asyncRequest = (state=initialState, action) => {
     switch (action.type) {
@@ -40,6 +42,8 @@ const asyncRequest = (state=initialState, action) => {
             return failed(state);
         case SUCCESSFUL_REQUEST:
             return success(state);
+        case RESET:
+            return initialState;
         default:
             return state;
     }

@@ -4,14 +4,14 @@ import R from 'ramda';
 import TextField from 'material-ui/lib/text-field';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import Button from '../home/linkButton/';
-
+import Icon from 'react-fa';
 
 /*** styling ***/
 import * as colors from '../../scss/colors';
 import style from './style';
 
 const InputForm = (props) => {
-
+    console.log(props);
     const { fields: {
             name,
             created_date,
@@ -23,8 +23,12 @@ const InputForm = (props) => {
         submitting,    // redux-form
         resetForm,     // redux-form
         onSubmit,      // add/edit Recipe Component
-        submitText     // add/edit Recipe Component
+        submitText,    // add/edit Recipe Component
+        error,         // String
+        errors,        // Object with a name property
+        submitFailed   // boolean
     } = props;
+
 
     return (
         <form
@@ -35,6 +39,7 @@ const InputForm = (props) => {
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="New Recipe Name"
+                    errorText={submitFailed ? errors.name : null}
                     {...name}
                     id="name"
                     fullWidth={true}
@@ -98,12 +103,12 @@ const InputForm = (props) => {
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
                     label={submitText}
-                    icon="fa fa-paper-plane"
+                    icon={submitting ? <Icon spin name="cog" /> : <Icon name="paper-plane"/> }
                     disabled={submitting} />
                 <Button
                     onClick={resetForm}
                     label="Reset"
-                    icon="fa fa-undo"
+                    icon={<Icon name="undo"/> }
                     disabled={submitting} />
             </div>
         </form>

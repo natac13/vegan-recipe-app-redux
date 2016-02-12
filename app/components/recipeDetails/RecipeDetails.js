@@ -2,14 +2,27 @@ import React, { PropTypes } from 'react';
 
 import style from './style.scss';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as ActionCreators from '../../actions/';
+/**
+
+    TODO:
+    - Need to change this component to a real react component not just function
+    I believe this will fix the errors I get about cannot update state during a
+    state change.
+
+ */
 
 const RecipeDetails = (props) => {
+    console.log(props);
     const { key } = props.params;
     const recipe = props.recipeList.get(key);
     const name = recipe.get('name');
+    if (props.asyncRequest.get('didFail')) {
+        props.actions.deleteRecipe(name);
+        // props.actions.push('/recipes');
+        props.actions.resetAsync();
+    }
+    console.log(props);
+
     const createdDate = recipe.get('created_date');
     const directions = recipe.get('directions').map((direction, index) => {
         return (

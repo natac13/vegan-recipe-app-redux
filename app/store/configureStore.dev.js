@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
 /*** Middlewares ***/
-import thunkMiddleware  from 'redux-thunk';
 import logger from 'redux-logger';
 import firebaseMiddleware from '../middlewares/firebaseMiddleware';
 /*** Reducer ***/
@@ -17,9 +16,8 @@ const reduxRouterMiddleware = syncHistory(history);
 const loggerMiddleware = logger();
 
 const createStoreWithMiddleware = applyMiddleware(
-    reduxRouterMiddleware,
-    thunkMiddleware,
     firebaseMiddleware,
+    reduxRouterMiddleware,
     loggerMiddleware
 )(createStore);
 

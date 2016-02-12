@@ -11,16 +11,15 @@ const LinkButton = ({ onClick, label, icon, disabled, type }) => {
             className={style.linkButton}>
             {label}
 
-            {!icon ? null :
-                <i className={`${icon} ${style.icon}`}/>
-            }
+            {!!icon &&
+                <span className={style.icon}>{icon}</span>}
         </button>
     );
 };
 
 LinkButton.propTypes = {
     label: PropTypes.string.isRequired,
-    icon: PropTypes.string,
+    icon: PropTypes.node,
     onClick: PropTypes.func,
     type: PropTypes.string
 };

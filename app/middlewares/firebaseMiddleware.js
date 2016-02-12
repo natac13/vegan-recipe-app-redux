@@ -1,3 +1,4 @@
+import { routeActions } from 'redux-simple-router';
 import {
     ADD_RECIPE,
     DELETE_RECIPE,
@@ -13,7 +14,7 @@ import {
     dbRequest,
     failedRequest,
     successfulRequest
-} from '../actions/asyncCreators';
+} from '../actions/';
 
 /*==================================
 =            Formatting            =
@@ -85,13 +86,22 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
             const snakedName = snakeCase(recipe.name);
             const recipeDBPath = list.child(snakedName);
             // Send to Firebase
-            recipeDBPath.set(recipe).then(
-                () => console.log('fb success'),
-                err => console.log(err, 'Error adding the recipe to Firebase')
+            return recipeDBPath.set(recipe).then(
+                function addSuccessful() {
+                    console.log('fb success');
+                    // once successful continue the action to be added
+                    return next(action);
+                },
+                function addFailure(err) {
+                    console.log(err, 'Error adding the recipe to Firebase');
+                    // if there was an error I will not continue with addRecipe
+                    // but instead send an error action.
+                    dispatch(failedRequest());
+                    // dispatch(routeActions.push('/recipes'))
+                    return next(action);
+                }
             );
 
-            // Continue flow to the reducer so the recipe is added to the store.
-            return next(action);
         }
         else if (action.type == UPDATE_RECIPE) {
             const { newRecipe, oldRecipe } = action;
@@ -110,12 +120,18 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
             const recipeDBPath = list.child(snakedName);
             // Send to Firebase
             let recipe = stringifyRecipe(newRecipe);
-            recipeDBPath.set(recipe).then(
-                () => console.log('fb success'),
-                err => console.log(err, 'Error updaing the recipe to Firebase')
+            return recipeDBPath.set(recipe).then(
+                function updateSuccessful() {
+                    console.log('fb success');
+                    return next(action);
+                },
+                function updateFailure(err) {
+                    console.log(err, 'Error updating the recipe to Firebase');
+                    dispatch(failedRequest());
+                    return next(action);
+                }
             );
 
-            return next(action);
         } else if (action.type == LOGIN) {
             // this action is where I started with redux-actions and FSA
             const { username, password } = action.payload;
@@ -128,10 +144,12 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                     console.log(authData);
                 });
             return next(action);
+        } else {
+            const nextState = next(action);
+            return nextState;
+
         }
 
-        const nextState = next(action);
-        return nextState;
     };
 };
 

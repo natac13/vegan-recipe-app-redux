@@ -2,7 +2,8 @@ import {
     DB_REQUEST,
     FAILED_REQUEST,
     SUCCESSFUL_REQUEST,
-    SELECT_CATEGORY
+    SELECT_CATEGORY,
+    RESET
 } from '../constants/';
 
 export function dbRequest() {
@@ -11,7 +12,7 @@ export function dbRequest() {
     };
 }
 
-export function faildedRequest() {
+export function failedRequest() {
     return {
         type: FAILED_REQUEST
     };
@@ -23,3 +24,8 @@ export function successfulRequest() {
     };
 }
 
+export function resetAsync() {
+    return {
+        type: RESET
+    };
+}

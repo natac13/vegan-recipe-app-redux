@@ -33,6 +33,11 @@ $text: #513D1F;
     letter-spacing: 3px;
   }
 
+  &[disabled] {
+    background: #afa52a;
+    color: #333
+  }
+
   .icon {
     margin-left: 0.5em;
     padding: 0;
