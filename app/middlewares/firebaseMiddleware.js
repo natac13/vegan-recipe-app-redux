@@ -1,12 +1,12 @@
 import { routeActions } from 'redux-simple-router';
 import {
-    ADD_RECIPE,
-    DELETE_RECIPE,
-    UPDATE_RECIPE,
-    UPDATE_RECIPE_NAME,
-    UPDATE_RECIPE_DIRECTIONS,
-    UPDATE_RECIPE_INGREDIENTS,
-    BUILD_LIST,
+    RECIPE_ADD,
+    RECIPE_DELETE,
+    RECIPE_UPDATE,
+    RECIPE_UPDATE_NAME,
+    RECIPE_UPDATE_DIRECTIONS,
+    RECIPE_UPDATE_INGREDIENTS,
+    LIST_BUILD,
     LOGIN
 } from '../constants/';
 
@@ -56,7 +56,7 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
 
     return action => {
         /*
-        When I call the buildList action from RecipeList.js the middleware will
+        When I call the listBuild action from RecipeList.js the middleware will
         intercept and create the actions signature that I first had. ~~Because I
         dispatch the same action.type the I need to check action.recipeList
         is undefined or I get an infinite loop~~ Instead just call next which is
@@ -64,7 +64,7 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
         middleware chain to the store/reducer. The dispatch will start the
         cycle from the beginner forcing me into the check with undefined.
          */
-        if (action.type === BUILD_LIST) {
+        if (action.type === LIST_BUILD) {
             dispatch(dbRequest());
             return list.then(
                 snap => {
@@ -75,7 +75,7 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                     dispatch(failedRequest());
                 });
         }
-        else if (action.type === ADD_RECIPE) {
+        else if (action.type === RECIPE_ADD) {
             /*
             Recipe is from the AddRecipe Component state which is an immutable
             data structure.
@@ -94,7 +94,7 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                 },
                 function addFailure(err) {
                     console.log(err, 'Error adding the recipe to Firebase');
-                    // if there was an error I will not continue with addRecipe
+                    // if there was an error I will not continue with recipeAdd
                     // but instead send an error action.
                     dispatch(failedRequest());
                     // dispatch(routeActions.push('/recipes'))
@@ -103,7 +103,7 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
             );
 
         }
-        else if (action.type == UPDATE_RECIPE) {
+        else if (action.type == RECIPE_UPDATE) {
             const { newRecipe, oldRecipe } = action;
             /*
             Check if the recipe name has been changed from the original. This is

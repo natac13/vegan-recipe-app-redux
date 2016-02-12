@@ -3,11 +3,11 @@ import { expect }    from 'chai';
 import moment from 'moment'
 
 import {
-    addRecipe,
-    deleteRecipe,
-    updateRecipeName,
-    updateRecipeDirections,
-    updateRecipeIngredients,
+    recipeAdd,
+    recipeDelete,
+    recipeUpdateName,
+    recipeUpdateDirections,
+    recipeUpdateIngredients,
     recipeExtras
 } from '../app/js/core';
 
@@ -15,7 +15,7 @@ describe('Application Logic', () => {
     describe('The recipe list. The state variable in these tests.', () => {
 
 /*** Adding a Recipe to the list ***/
-        describe('Adding a recipe to the list with addRecipe() from js/core.js', () => {
+        describe('Adding a recipe to the list with recipeAdd() from js/core.js', () => {
             it('should take a recipe map and add to the state map; key is snaked_cased version of name', () => {
                 const state = Map();
                 const recipe = Map({
@@ -23,7 +23,7 @@ describe('Application Logic', () => {
                     directions: List.of('peel', 'boil'),
                     ingredients: List.of(Map({item:'Potatoes', amount: 3}))
                 });
-                const nextState = addRecipe(state, recipe);
+                const nextState = recipeAdd(state, recipe);
                 expect(nextState).to.contain.keys(fromJS({
                     mashed_potatoes: {
                         name: 'Mashed Potatoes',
@@ -40,7 +40,7 @@ describe('Application Logic', () => {
                     directions: ['peel', 'boil'],
                     ingredients: [{ item:'Potatoes', amount: 3 }]
                 };
-                const nextState = addRecipe(state, recipe);
+                const nextState = recipeAdd(state, recipe);
                 expect(nextState).to.contain.keys(fromJS({
                     mashed_potatoes: {
                         name: 'Mashed Potatoes',
@@ -57,7 +57,7 @@ describe('Application Logic', () => {
             //         directions: List.of('peel', 'boil'),
             //         ingredients: List.of(Map({item:'Potatoes', amount: 3}))
             //     });
-            //     const nextState = addRecipe(state, recipe);
+            //     const nextState = recipeAdd(state, recipe);
             //     expect(nextState.get('mashed_potatoes')).to.contain.key('id');
             // });
 
@@ -69,7 +69,7 @@ describe('Application Logic', () => {
             //         ingredients: [{ item:'Potatoes', amount: 3 }]
             //     };
             //     const date = moment().format('MMMM Do, YYYY')
-            //     const nextState = addRecipe(state, recipe);
+            //     const nextState = recipeAdd(state, recipe);
             //     expect(nextState.get('mashed_potatoes')).to.contain.key('created_date');
             //     expect(nextState.getIn(['mashed_potatoes', 'created_date'])).to.equal(date);
             // });
@@ -81,7 +81,7 @@ describe('Application Logic', () => {
             //         directions: ['peel', 'boil'],
             //         ingredients: [{ item:'Potatoes', amount: 3 }]
             //     };
-            //     const nextState = addRecipe(state, recipe);
+            //     const nextState = recipeAdd(state, recipe);
             //     expect(nextState).to.equal(fromJS({
             //         mashed_potatoes: {
             //             name: 'Mashed Potatoes',
@@ -96,14 +96,14 @@ describe('Application Logic', () => {
         });
 
 /*** Deleting a Recipe from the list ***/
-        describe('Deleting a recipe from the list with deleteRecipe() from core.js', () => {
+        describe('Deleting a recipe from the list with recipeDelete() from core.js', () => {
             it('should return a recipe list Map with the recipe which got deleted not present', () => {
                 const state = Map({
                     mashed_potatoes: Map(),
                     oatmeal_and_bananas: Map()
                 });
                 const recipeName = 'mashed_potatoes';
-                const nextState = deleteRecipe(state, recipeName);
+                const nextState = recipeDelete(state, recipeName);
                 expect(nextState).to.equal(Map({
                     oatmeal_and_bananas: Map()
                 }));
@@ -115,7 +115,7 @@ describe('Application Logic', () => {
                     oatmeal_and_bananas: Map()
                 });
                 const recipeName = 'Mashed Potatoes';
-                const nextState = deleteRecipe(state, recipeName);
+                const nextState = recipeDelete(state, recipeName);
                 expect(nextState).to.equal(Map({
                     oatmeal_and_bananas: Map()
                 }));
@@ -140,7 +140,7 @@ describe('Application Logic', () => {
                     });
                     const oldName = 'Oatmeal and Bananas';
                     const newName = 'Oatmeal Banana';
-                    const nextState = updateRecipeName(state, oldName, newName);
+                    const nextState = recipeUpdateName(state, oldName, newName);
 
                     expect(nextState).to.equal(fromJS({
                         mashed_potatoes: {
@@ -164,7 +164,7 @@ describe('Application Logic', () => {
 
                     const oldName = 'Salad';
                     const newName = 'Lunch Salad';
-                    const nextState = updateRecipeName(state, oldName, newName);
+                    const nextState = recipeUpdateName(state, oldName, newName);
                     expect(nextState.size).to.equal(2);
                     expect(nextState).to.not.include.key('salad');
                     expect(nextState).to.not.include.key('lunch_salad');
@@ -187,7 +187,7 @@ describe('Application Logic', () => {
                         'Cook!',
                         'Enjoy'
                     ];
-                    const nextState = updateRecipeDirections(state, directions);
+                    const nextState = recipeUpdateDirections(state, directions);
                     expect(nextState.get('directions').size).to.equal(4);
                     expect(nextState.get('directions')).to.equal(List.of(
                         'Pour oats into pot',

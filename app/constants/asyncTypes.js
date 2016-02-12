@@ -1,5 +1,5 @@
-export const DB_REQUEST    = 'DB_REQUEST';
+export const REQUEST_DB    = 'REQUEST_DB';
 export const SELECT_CATEGORY    = 'SELECT_CATEGORY';
-export const FAILED_REQUEST     = 'FAILED_REQUEST';
-export const SUCCESSFUL_REQUEST = 'SUCCESSFUL_REQUEST';
+export const REQUEST_FAILED     = 'REQUEST_FAILED';
+export const REQUEST_SUCCESSFUL = 'REQUEST_SUCCESSFUL';
 export const RESET = 'RESET';

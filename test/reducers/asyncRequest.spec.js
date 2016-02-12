@@ -71,9 +71,9 @@ describe('The async Reducer', () => {
             expect(state.get('success')).to.be.false;
 
         })
-        it('should handle DB_REQUEST', () => {
+        it('should handle REQUEST_DB', () => {
             const action = {
-                type: 'DB_REQUEST'
+                type: 'REQUEST_DB'
             }
             const state = reducer(undefined, action);
             expect(state.get('fetching')).to.be.true;
@@ -81,14 +81,14 @@ describe('The async Reducer', () => {
             expect(state.get('success')).to.be.false;
         });
 
-        it('should after fetching change to failed if there was a failed action call, FAILED_REQUEST', () => {
+        it('should after fetching change to failed if there was a failed action call, REQUEST_FAILED', () => {
             const initialState = Map({
                 fetching: true,
                 didFail: false,
                 success: false
             });
             const action = {
-                type: 'FAILED_REQUEST'
+                type: 'REQUEST_FAILED'
             };
             const nextState = reducer(initialState, action);
             expect(nextState.get('fetching')).to.be.false;

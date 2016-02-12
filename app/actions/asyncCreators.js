@@ -1,26 +1,26 @@
 import {
-    DB_REQUEST,
-    FAILED_REQUEST,
-    SUCCESSFUL_REQUEST,
+    REQUEST_DB,
+    REQUEST_FAILED,
+    REQUEST_SUCCESSFUL,
     SELECT_CATEGORY,
     RESET
 } from '../constants/';
 
 export function dbRequest() {
     return {
-        type: DB_REQUEST
+        type: REQUEST_DB
     };
 }
 
 export function failedRequest() {
     return {
-        type: FAILED_REQUEST
+        type: REQUEST_FAILED
     };
 }
 
 export function successfulRequest() {
     return {
-        type: SUCCESSFUL_REQUEST
+        type: REQUEST_SUCCESSFUL
     };
 }
 

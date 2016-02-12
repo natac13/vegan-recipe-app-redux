@@ -84,7 +84,7 @@ class EditRecipe extends Component {
                 directions: format('directions')(!directions ? '' : directions)
             });
             const { key } = this.props.params;
-            this.props.actions.updateRecipe(
+            this.props.actions.recipeUpdate(
                     updatedRecipe,
                     this.props.recipeList.get(key)
                 );

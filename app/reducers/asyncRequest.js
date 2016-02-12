@@ -5,10 +5,10 @@ import {
 } from '../js/immunurry';
 
 import {
-    DB_REQUEST,
+    REQUEST_DB,
     SELECT_CATEGORY,
-    FAILED_REQUEST,
-    SUCCESSFUL_REQUEST,
+    REQUEST_FAILED,
+    REQUEST_SUCCESSFUL,
     RESET
 } from '../constants/';
 
@@ -36,11 +36,11 @@ export const failed   = R.compose(failedData, noFetching, noSuccess);
 
 const asyncRequest = (state=initialState, action) => {
     switch (action.type) {
-        case DB_REQUEST:
+        case REQUEST_DB:
             return request(state);
-        case FAILED_REQUEST:
+        case REQUEST_FAILED:
             return failed(state);
-        case SUCCESSFUL_REQUEST:
+        case REQUEST_SUCCESSFUL:
             return success(state);
         case RESET:
             return initialState;

@@ -10,9 +10,9 @@ describe('The Recipe List Reducer', () => {
 /*======================================
 =            Adding Recipes            =
 ======================================*/
-    describe('Should handle ADD_RECIPE', () => {
+    describe('Should handle RECIPE_ADD', () => {
         it('should have an initial state built in', () => {
-            const action = actions.addRecipe(Map({name: 'Oatmeal Banana'}));
+            const action = actions.recipeAdd(Map({name: 'Oatmeal Banana'}));
             const nextState = reducer(undefined, action);
             expect(nextState.size).to.equal(1);
             expect(nextState).to.include.key(Map({
@@ -20,23 +20,23 @@ describe('The Recipe List Reducer', () => {
             }));
         });
 
-        it('should handle the ADD_RECIPE action by adding the recipe to the recipeList Map', () => {
+        it('should handle the RECIPE_ADD action by adding the recipe to the recipeList Map', () => {
             const state = Map({
                 mashed_potatoes: Map({name: 'Mashed Potatoes'})
             });
-            const action = actions.addRecipe(Map({name: 'Oatmeal Banana'}));
+            const action = actions.recipeAdd(Map({name: 'Oatmeal Banana'}));
             const nextState = reducer(state, action);
             expect(nextState.size).to.equal(2);
             expect(nextState).to.include.keys(['oatmeal_banana', 'mashed_potatoes']);
         });
 
-        it('should handle a series of ADD_RECIPE actions by being used as the callback function of reduce', () => {
+        it('should handle a series of RECIPE_ADD actions by being used as the callback function of reduce', () => {
             const state = Map();
             const stateActions = [
-                actions.addRecipe(Map({name: 'Oatmeal Banana'})),
-                actions.addRecipe(Map({name: 'Mashed Potatoes'})),
-                actions.addRecipe(Map({name: 'Lunch Salad'})),
-                actions.addRecipe(Map({name: 'Bean Burrito'})),
+                actions.recipeAdd(Map({name: 'Oatmeal Banana'})),
+                actions.recipeAdd(Map({name: 'Mashed Potatoes'})),
+                actions.recipeAdd(Map({name: 'Lunch Salad'})),
+                actions.recipeAdd(Map({name: 'Bean Burrito'})),
 
             ];
             const jumpToState = R.reduce(reducer, state);
@@ -56,7 +56,7 @@ describe('The Recipe List Reducer', () => {
                 oatmeal_banana: Map({name: 'Oatmeal Banana'})
             });
             const action = {
-                type: types.DELETE_RECIPE,
+                type: types.RECIPE_DELETE,
                 recipeName: 'Mashed Potatoes'
             };
             const nextState = reducer(state, action);
@@ -70,7 +70,7 @@ describe('The Recipe List Reducer', () => {
                 oatmeal_banana: Map({name: 'Oatmeal Banana'})
             });
             const action = {
-                type: types.DELETE_RECIPE,
+                type: types.RECIPE_DELETE,
                 recipeName: 'Lunch Salad'
             };
             const nextState = reducer(state, action);
@@ -85,13 +85,13 @@ describe('The Recipe List Reducer', () => {
 ==============================================*/
 
     describe('The Updating the recipe', () => {
-        it('should handle UPDATE_RECIPE_NAME', () => {
+        it('should handle RECIPE_UPDATE_NAME', () => {
             const state = Map({
                 mashed_potatoes: Map({name: 'Mashed Potatoes'}),
                 oatmeal_and_bananas: Map({name: 'Oatmeal and Bananas'})
             });
             const action = {
-                type: types.UPDATE_RECIPE_NAME,
+                type: types.RECIPE_UPDATE_NAME,
                 oldName: 'Oatmeal and Bananas',
                 newName: 'Oatmeal Banana'
             };
@@ -100,7 +100,7 @@ describe('The Recipe List Reducer', () => {
             expect(nextState).to.include.key('oatmeal_banana');
         });
 
-        it('should handle UPDATE_RECIPE_DIRECTIONS', () => {
+        it('should handle RECIPE_UPDATE_DIRECTIONS', () => {
             const state = Map({
                 mashed_potatoes: Map({
                     name: 'Mashed Potatoes',
@@ -110,7 +110,7 @@ describe('The Recipe List Reducer', () => {
             });
             const recipeName = 'Mashed Potatoes';
             const directions = ['Peel', 'Cut up', 'Boil in water'];
-            const action = actions.updateRecipeDirections(recipeName, directions);
+            const action = actions.recipeUpdateDirections(recipeName, directions);
             const nextState = reducer(state, action);
 
             expect(nextState.size).to.equal(1);
@@ -119,7 +119,7 @@ describe('The Recipe List Reducer', () => {
             expect(stateDirections).to.include('Cut up');
         });
 
-        it('should handle UPDATE_RECIPE_INGREDIENTS', () => {
+        it('should handle RECIPE_UPDATE_INGREDIENTS', () => {
             const state = Map({
                 mashed_potatoes: Map({
                     name: 'Mashed Potatoes',
@@ -135,7 +135,7 @@ describe('The Recipe List Reducer', () => {
                 Map({item: 'potatoes', amount: 4}),
                 Map({item: 'water', amount: 3})
             );
-            const action = actions.updateIngredients(recipeName, ingredients);
+            const action = actions.recipeUpdateIngredients(recipeName, ingredients);
             const nextState = reducer(state, action);
             expect(nextState.size).to.equal(1);
             expect(nextState.getIn(['mashed_potatoes', 'ingredients'])).to.equal(ingredients)

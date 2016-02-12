@@ -72,7 +72,7 @@ const AddRecipe = (props) => {
                 ingredients: format('ingredients')(!ingredients ? '' : ingredients),
                 directions: format('directions')(!directions ? '' : directions)
             });
-            const action = props.actions.addRecipe(newRecipe);
+            const action = props.actions.recipeAdd(newRecipe);
             console.log(action);
             /*
             Setting a delay to the redirect to give time to cloudinary to upload

@@ -1,58 +1,58 @@
 import {
-    ADD_RECIPE,
-    DELETE_RECIPE,
-    UPDATE_RECIPE,
-    UPDATE_RECIPE_NAME,
-    UPDATE_RECIPE_DIRECTIONS,
-    UPDATE_RECIPE_INGREDIENTS,
-    BUILD_LIST
+    RECIPE_ADD,
+    RECIPE_DELETE,
+    RECIPE_UPDATE,
+    RECIPE_UPDATE_NAME,
+    RECIPE_UPDATE_DIRECTIONS,
+    RECIPE_UPDATE_INGREDIENTS,
+    LIST_BUILD
 } from '../constants/';
 
 // export { routeActions } from 'redux-simple-router';
 import { routeActions } from 'redux-simple-router';
 export const { push } = routeActions;
 
-export function addRecipe(recipe) {
+export function recipeAdd(recipe) {
     return {
-        type: ADD_RECIPE,
+        type: RECIPE_ADD,
         recipe
     };
 }
 
-export function deleteRecipe(recipeName) {
+export function recipeDelete(recipeName) {
     return {
-        type: DELETE_RECIPE,
+        type: RECIPE_DELETE,
         recipeName
     };
 }
 
-export function updateRecipe(newRecipe, oldRecipe) {
+export function recipeUpdate(newRecipe, oldRecipe) {
     return {
-        type: UPDATE_RECIPE,
+        type: RECIPE_UPDATE,
         newRecipe,
         oldRecipe
-    }
+    };
 }
 
-export function updateRecipeName(oldName, newName) {
+export function recipeUpdateName(oldName, newName) {
     return {
-        type: UPDATE_RECIPE_NAME,
+        type: RECIPE_UPDATE_NAME,
         oldName,
         newName
     };
 }
 
-export function updateRecipeDirections(recipeName, directions) {
+export function recipeUpdateDirections(recipeName, directions) {
     return {
-        type: UPDATE_RECIPE_DIRECTIONS,
+        type: RECIPE_UPDATE_DIRECTIONS,
         recipeName,
         directions
     };
 }
 
-export function updateIngredients(recipeName, ingredients) {
+export function recipeUpdateIngredients(recipeName, ingredients) {
     return {
-        type: UPDATE_RECIPE_INGREDIENTS,
+        type: RECIPE_UPDATE_INGREDIENTS,
         recipeName,
         ingredients
     };
@@ -69,9 +69,9 @@ export function updateIngredients(recipeName, ingredients) {
  *                             ingredients are strings
  * @return {object}
  */
-export function buildList(recipeList) {
+export function listBuild(recipeList) {
     return {
-        type: BUILD_LIST,
+        type: LIST_BUILD,
         recipeList
     };
 }
@@ -89,9 +89,9 @@ export function buildList(recipeList) {
 =            MongoDb            =
 ===============================*/
 
-// export function buildList(recipeList) {
+// export function listBuild(recipeList) {
 //     return {
-//         type: types.BUILD_LIST,
+//         type: types.LIST_BUILD,
 //         recipeList
 //     }
 // }
@@ -108,7 +108,7 @@ export function buildList(recipeList) {
 // export function getFullRecipeList() {
 //     return function(dispatch, getState) {
 //         return fetchFromMongo().then(
-//             docs => dispatch(buildList(docs)),
+//             docs => dispatch(listBuild(docs)),
 //             error => dispatch(showError(error))
 //         );
 //     };

@@ -37,7 +37,7 @@ export function recipeExtras(recipe) {
  * key of the recipe list Map
  * should have a name, directions and ingredients property from user.
  */
-export function addRecipe(state, recipe) {
+export function recipeAdd(state, recipe) {
     // buff
     // recipe = recipeExtras(recipe);
     recipe = fromJS(recipe);
@@ -54,17 +54,17 @@ export function addRecipe(state, recipe) {
  * @param  {string} recipeName typed from the user
  * @return {immutable map}
  */
-export function deleteRecipe(state, recipeName) {
+export function recipeDelete(state, recipeName) {
     const snakedName = snakeCase(recipeName);
 
     return state.delete(snakedName);
 }
 
-export function updateRecipe(state, oldRecipe, newRecipe) {
+export function recipeUpdate(state, oldRecipe, newRecipe) {
     // delete the old recipe
-    state = deleteRecipe(state, oldRecipe.get('name'));
+    state = recipeDelete(state, oldRecipe.get('name'));
     // add new recipe??
-    return addRecipe(state, newRecipe);
+    return recipeAdd(state, newRecipe);
 }
 
 /**
@@ -76,7 +76,7 @@ export function updateRecipe(state, oldRecipe, newRecipe) {
  * @param  {string} newName from the user the new name from the recipe
  * @return {immutable Map}
  */
-export function updateRecipeName(state, oldName, newName) {
+export function recipeUpdateName(state, oldName, newName) {
     const oldSnakedName = snakeCase(oldName);
     const newSnakedName = snakeCase(newName);
 
@@ -97,7 +97,7 @@ export function updateRecipeName(state, oldName, newName) {
  * @param  {array} directions new set of directions from the user
  * @return {immutable Map} recipe Map
  */
-export function updateRecipeDirections(recipe, directions) {
+export function recipeUpdateDirections(recipe, directions) {
     return recipe.update('directions', () => List(directions));
 }
 
@@ -108,7 +108,7 @@ export function updateRecipeDirections(recipe, directions) {
  * @param  {array} ingredients  an array of ingredient objects {item: , amount}
  * @return {immutable Map}  recipe Map
  */
-export function updateRecipeIngredients(recipe, ingredients) {
+export function recipeUpdateIngredients(recipe, ingredients) {
     return recipe.update('ingredients', () => fromJS(ingredients));
 }
 

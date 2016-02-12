@@ -29,7 +29,7 @@ describe('The Redux Store', () => {
             ingredients: List()
         });
 
-        store.dispatch(actions.addRecipe(recipe));
+        store.dispatch(actions.recipeAdd(recipe));
         const { recipeList } = store.getState();
         expect(recipeList.size).to.equal(1);
         expect(recipeList).to.include.key('oatmeal_and_bananas');
@@ -49,8 +49,8 @@ describe('The Redux Store', () => {
             ingredients: List()
         })
 
-        store.dispatch(actions.addRecipe(recipe1));
-        store.dispatch(actions.addRecipe(recipe2));
+        store.dispatch(actions.recipeAdd(recipe1));
+        store.dispatch(actions.recipeAdd(recipe2));
         const { recipeList } = store.getState();
         expect(recipeList.size).to.equal(2);
         expect(recipeList).to.include.keys(['oatmeal_and_bananas', 'mashed_potatoes']);
@@ -67,7 +67,7 @@ describe('The Redux Store', () => {
                 {item: 'id field', amount: -1}
             ]
         };
-            store.dispatch(actions.addRecipe(recipe));
+            store.dispatch(actions.recipeAdd(recipe));
             const { recipeList } = store.getState();
             expect(recipeList.get('test_id')).to.be.instanceof(Map);
             expect(recipeList.hasIn(['test_id', 'id'])).to.be.false;
@@ -83,7 +83,7 @@ describe('The Redux Store', () => {
             id: uuid.v4(),
             created_date: moment().format('MMMM Do, YYYY'),
         }
-        store.dispatch(actions.addRecipe(recipe));
+        store.dispatch(actions.recipeAdd(recipe));
         const { recipeList } = store.getState();
         expect(recipeList.get('add_id')).to.be.ok;
         expect(recipeList.hasIn(['add_id', 'id'])).to.be.true;

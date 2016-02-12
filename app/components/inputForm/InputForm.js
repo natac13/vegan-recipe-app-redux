@@ -103,7 +103,11 @@ const InputForm = (props) => {
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
                     label={submitText}
-                    icon={submitting ? <Icon spin name="cog" /> : <Icon name="paper-plane"/> }
+                    icon={
+                        submitting ?
+                        <Icon spin name="cog" /> :
+                        <Icon name="paper-plane"/>
+                    }
                     disabled={submitting} />
                 <Button
                     onClick={resetForm}

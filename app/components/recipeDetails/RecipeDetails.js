@@ -17,7 +17,7 @@ const RecipeDetails = (props) => {
     const recipe = props.recipeList.get(key);
     const name = recipe.get('name');
     if (props.asyncRequest.get('didFail')) {
-        props.actions.deleteRecipe(name);
+        props.actions.recipeDelete(name);
         // props.actions.push('/recipes');
         props.actions.resetAsync();
     }

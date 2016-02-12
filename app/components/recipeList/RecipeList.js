@@ -23,7 +23,7 @@ export default class RecipeList extends Component {
         if(!!this.props.actions && this.props.recipeList.size === 0) {
             console.log('FIREBASE SEARCH');
             // let snapshotPromise = this.props.actions.getRecipeListFirebase();
-            this.props.actions.buildList();
+            this.props.actions.listBuild();
         }
     }
 

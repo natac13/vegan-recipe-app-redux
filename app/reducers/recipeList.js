@@ -1,21 +1,21 @@
 import { fromJS, Map } from 'immutable';
 import {
-    ADD_RECIPE,
-    DELETE_RECIPE,
-    UPDATE_RECIPE,
-    UPDATE_RECIPE_NAME,
-    UPDATE_RECIPE_DIRECTIONS,
-    UPDATE_RECIPE_INGREDIENTS,
-    BUILD_LIST
+    RECIPE_ADD,
+    RECIPE_DELETE,
+    RECIPE_UPDATE,
+    RECIPE_UPDATE_NAME,
+    RECIPE_UPDATE_DIRECTIONS,
+    RECIPE_UPDATE_INGREDIENTS,
+    LIST_BUILD
 } from '../constants/';
 
 import {
-    addRecipe,
-    deleteRecipe,
-    updateRecipe,
-    updateRecipeName,
-    updateRecipeDirections,
-    updateRecipeIngredients
+    recipeAdd,
+    recipeDelete,
+    recipeUpdate,
+    recipeUpdateName,
+    recipeUpdateDirections,
+    recipeUpdateIngredients
 } from '../js/core';
 
 import { convertFirebaseData } from '../js/format';
@@ -27,23 +27,23 @@ var initialState = require('../../sample');
 
 const recipeList = (state = Map(), action) => {
     switch (action.type) {
-        case ADD_RECIPE:
-            return addRecipe(state, action.recipe);
-        case DELETE_RECIPE:
-            return deleteRecipe(state, action.recipeName);
-        case UPDATE_RECIPE:
-            return updateRecipe(state, action.oldRecipe, action.newRecipe);
-        case UPDATE_RECIPE_NAME:
-            return updateRecipeName(state, action.oldName, action.newName);
-        case UPDATE_RECIPE_DIRECTIONS:
+        case RECIPE_ADD:
+            return recipeAdd(state, action.recipe);
+        case RECIPE_DELETE:
+            return recipeDelete(state, action.recipeName);
+        case RECIPE_UPDATE:
+            return recipeUpdate(state, action.oldRecipe, action.newRecipe);
+        case RECIPE_UPDATE_NAME:
+            return recipeUpdateName(state, action.oldName, action.newName);
+        case RECIPE_UPDATE_DIRECTIONS:
             return state.update(snakeCase(action.recipeName), (recipe) => {
-                return updateRecipeDirections(recipe, action.directions);
+                return recipeUpdateDirections(recipe, action.directions);
             });
-        case UPDATE_RECIPE_INGREDIENTS:
+        case RECIPE_UPDATE_INGREDIENTS:
             return state.update(snakeCase(action.recipeName), (recipe) => {
-                return updateRecipeIngredients(recipe, action.ingredients);
+                return recipeUpdateIngredients(recipe, action.ingredients);
             });
-        case BUILD_LIST:
+        case LIST_BUILD:
             return state.merge(convertFirebaseData(action.recipeList));
         default:
             return state;
