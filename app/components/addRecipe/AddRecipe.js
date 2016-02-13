@@ -38,22 +38,22 @@ const AddRecipe = (props) => {
             /*====================================
             =            Image upload            =
             ====================================*/
-            let fileName = '';
-            if (img) {
-                // Send the image file to the server if added by user.
-                const cloudinaryUrl = 'http://res.cloudinary.com/dxmist0g2/image/upload/c_scale,h_400,r_10,w_500/';
-                const file = img[0];
-                const reader = new FileReader;
-                fileName = `${cloudinaryUrl}${dropExtension(file.name)}`;
-                reader.onload = () => {
-                    axios.post('/img', {
-                        imageUrl: reader.result,
-                        name: dropExtension(file.name)
-                    });
-                };
-                reader.readAsDataURL(file);
+            // let fileName = '';
+            // if (img) {
+            //     // Send the image file to the server if added by user.
+            //     const cloudinaryUrl = 'http://res.cloudinary.com/dxmist0g2/image/upload/c_scale,h_400,r_10,w_500/';
+            //     const file = img[0];
+            //     const reader = new FileReader;
+            //     fileName = `${cloudinaryUrl}${dropExtension(file.name)}`;
+            //     reader.onload = () => {
+            //         axios.post('/img', {
+            //             imageUrl: reader.result,
+            //             name: dropExtension(file.name)
+            //         });
+            //     };
+            //     reader.readAsDataURL(file);
 
-            }
+            // }
 
             /*=====  End of Image upload  ======*/
 
@@ -68,7 +68,7 @@ const AddRecipe = (props) => {
                 name: format('name')(!name ? '' : name),
                 id: uuid.v4(),
                 created_date: finalDate,
-                imageURL: fileName, // empty if no img uploaded
+                imageURL: img, // empty if no img uploaded
                 ingredients: format('ingredients')(!ingredients ? '' : ingredients),
                 directions: format('directions')(!directions ? '' : directions)
             });

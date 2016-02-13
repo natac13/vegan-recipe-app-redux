@@ -3,15 +3,15 @@ import R from 'ramda';
 
 import TextField from 'material-ui/lib/text-field';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
-import Button from '../linkButton/';
 import Icon from 'react-fa';
+import Dropzone from 'react-dropzone';
 
+import Button from '../linkButton/';
 /*** styling ***/
 import * as colors from '../../scss/colors';
 import style from './style';
 
 const InputForm = (props) => {
-    console.log(props);
     const { fields: {
             name,
             created_date,
@@ -58,8 +58,24 @@ const InputForm = (props) => {
 
             <div className={style.inputField}>
                 <TextField
-                    { ...img }
                     value={null}
+                    onChange={(file) => {
+                        file.preventDefault();
+                        // spread files into an array
+                        const files = [ ...file.target.files ];
+                        const imgFile = files[0];
+                        const reader = new FileReader;
+                        const fileName = file.name;
+                        // when the reader has loaded then I will call the
+                        // redux form img.onChange function.
+                        // I had to remove the {...img} from this input, since
+                        // the onBlur function will change the imageURI back to
+                        // the actual File object.
+                        reader.onload = () => {
+                            img.onChange(reader.result);
+                        };
+                        reader.readAsDataURL(imgFile);
+                    }}
                     id="img"
                     type="file"
                     fullWidth={true}
@@ -67,7 +83,14 @@ const InputForm = (props) => {
                     floatingLabelStyle={{ color: colors.text }}
                     inputStyle={{ color: colors.inputText }} />
             </div>
-
+{/*            <div className={style.inputField}>
+                <Dropzone
+                    onDrop={ (filesToUpload, event) => {
+                        console.log(filesToUpload);
+                    }}>
+                    <div>Try dropping some files here, or click to select files to upload.</div>
+                </Dropzone>
+            </div>*/}
             <div className={style.inputField}>
                 <TextField
                     floatingLabelText="Ingredients"

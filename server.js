@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const path    = require('path');
 const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary');
@@ -25,14 +26,24 @@ const webpackOptions = {
 const isProduction = process.env.NODE_ENV === 'production';
 const staticPath = path.join(__dirname, 'build');
 
+// compress all responses
+app.use(compression());
+
+// set higher transfer limits
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+
+// Check if running in production
 if (!isProduction) {
+    // use the webpackmiddleware to serve up the transpiled files
     const webpackMiddleware    = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
     app.use(webpackMiddleware(compiler, webpackOptions));
     app.use(webpackHotMiddleware(compiler));
 
+    // send the index.html at the root of the project.
+    // Reason is that it looks for the bundle.js and stylesheet in the build
+    // folder, where the index.html in app/ just looks at the same level.
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'index.html'));
     });
@@ -46,7 +57,6 @@ if (!isProduction) {
 }
 
 app.all('/img', (req, res) => {
-    console.log('post request inside12212121')
     const name = req.body.name;
     const imageUrl = req.body.imageUrl;
     const options = {
