@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import { routeReducer }    from 'redux-simple-router';
 import { reducer as formReducer } from 'redux-form';
+import { mergeAll } from 'ramda';
 
 import recipeList   from './recipeList';
 import asyncRequest from './asyncRequest';
 
-const rootReducer = combineReducers(Object.assign(
+const rootReducer = combineReducers(mergeAll([
     {},
     {
         recipeList,
@@ -16,6 +17,6 @@ const rootReducer = combineReducers(Object.assign(
         form: formReducer
     }
 
-));
+]));
 
 export default rootReducer;

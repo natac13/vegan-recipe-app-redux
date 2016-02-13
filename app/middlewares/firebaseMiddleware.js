@@ -1,4 +1,3 @@
-import { routeActions } from 'redux-simple-router';
 import {
     RECIPE_ADD,
     RECIPE_DELETE,
@@ -7,13 +6,19 @@ import {
     RECIPE_UPDATE_DIRECTIONS,
     RECIPE_UPDATE_INGREDIENTS,
     LIST_BUILD,
-    LOGIN
+    LOGIN,
+    LOGOUT,
+    LOGIN_ADMIN,
+    LOGOUT_ADMIN
 } from '../constants/';
 
 import {
     dbRequest,
     failedRequest,
-    successfulRequest
+    successfulRequest,
+    push,
+    login,
+    logout
 } from '../actions/';
 
 /*==================================
@@ -32,6 +37,7 @@ import {
 
 import {
     stringifyRecipe,
+    authToUser,
     properRecipeFormat
 } from '../js/format';
 
@@ -67,12 +73,12 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
         if (action.type === LIST_BUILD) {
             dispatch(dbRequest());
             return list.then(
-                snap => {
+                function listSuccessful(snap)  {
                     dispatch(successfulRequest());
                     return next({ ...action, recipeList: snap.val() });
                 },
-                error => {
-                    dispatch(failedRequest());
+                function listFialure(error) {
+                    dispatch(failedRequest(error));
                 });
         }
         else if (action.type === RECIPE_ADD) {
@@ -126,20 +132,40 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
                 }
             );
 
-        } else if (action.type == LOGIN) {
+        } else if (action.type === LOGIN_ADMIN) {
             // this action is where I started with redux-actions and FSA
             const { username, password } = action.payload;
             return fp.authWithPassword({
                 email: username,
                 password
-            }, { remember: 'sessionOnly' })
-                .then((authData) => {
-                    console.log('Admin login good');
-                    console.log(authData);
-                    return {
-                        type: 'test',
-                        authData
-                    }
+            }, { remember: 'sessionOnly' }).then(
+                function loginSuccess(authData) {
+                    const user = authToUser(authData);
+                    return next({
+                        ...action,
+                        payload: user
+                    });
+                },
+                function loginFailure(error) {
+                    return dispatch(failedRequest(error));
+                });
+
+        } else if (action.type === LOGIN) {
+            return fp.authWithOAuthPopup(
+                'google',
+                { remember: 'sessionOnly' }
+            )
+            .then(
+                function loginSuccess(authData) {
+
+                    const user = authToUser(authData);
+                    return next({
+                        ...action,
+                        payload: user
+                    });
+                },
+                function loginFailure(error) {
+                    return dispatch(failedRequest(error));
                 });
 
         } else {

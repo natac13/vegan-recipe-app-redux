@@ -82,7 +82,6 @@ const AddRecipe = (props) => {
              */
             const DBPromise = props.actions.recipeAdd(newRecipe);
             DBPromise.then((action) => {
-                console.log(action);
                 setTimeout(() => {
                     if (action.error) {
                         reject({
@@ -94,7 +93,7 @@ const AddRecipe = (props) => {
                         props.actions.push(`/recipes/${snakedNameOf(newRecipe)}`);
                     }
 
-                }, 600)
+                }, 600); // simulate latency
             });
         });
     };

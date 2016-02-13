@@ -228,10 +228,30 @@ export const handlePreview = (fields) => {
  * @return String
  */
 export const dropExtension = R.compose(
-        R.join('.'),
-        R.slice(0, -1),
-        R.split('.')
-    );
+    R.join('.'),
+    R.slice(0, -1),
+    R.split('.')
+);
+
+export const dropEmail = R.compose(
+    R.join(''),
+    R.slice(0, -1),
+    R.split('@')
+);
+
+export const authToUser = (authData) => {
+    const { provider } = authData;
+    if (provider === 'password') {
+        return {
+            name: dropEmail(authData[provider].email),
+            imageUrl: authData[provider].profileImageURL
+        };
+    }
+    return {
+        name: authData[provider].displayName,
+        imageUrl: authData[provider].profileImageURL
+    };
+};
 
 
 /*===================================================

@@ -94,18 +94,18 @@ class EditRecipe extends Component {
                 );
             DBPromise.then((action) => {
                 setTimeout(() => {
-                    if (!action.error) {
-                        resolve();
-                        this.props.actions.push(
-                            `/recipes/${snakedNameOf(updatedRecipe)}`
-                        );
-                    } else {
+                    if (action.error) {
                         reject({
                             name: 'Need to be logged in to update recipes',
                             _error: 'Database'
                         });
+                    } else {
+                        resolve();
+                        this.props.actions.push(
+                            `/recipes/${snakedNameOf(updatedRecipe)}`
+                        );
                     }
-                }, 600);
+                }, 600); // simulate latency
             });
         });
     }
