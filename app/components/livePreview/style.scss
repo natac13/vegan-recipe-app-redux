@@ -41,6 +41,10 @@ $disabled: #efefef;
 
 .name {
   margin-top: 0;
+  align-self: center;
+  position: relative;
+  top: -10em;
+  left: -8em;
 }
 
 .ingredientsList {
@@ -49,6 +53,26 @@ $disabled: #efefef;
     font-size: 1em;
     line-height: 1.25em;
   }
+}
+
+
+.img {
+  width: 150px;
+  height: 150px;
+  order: -1;
+  border-radius: 50%;
+  box-shadow: 0 0 15px $shade;
+  align-self: flex-start;
+  padding: 0.5em;
+  border-radius: 5px;
+  padding-bottom: 1.75em;
+  /* padding-right: 0.75em; */
+  top: -50px;
+  position: relative;
+  background: white;
+  transform: rotate(-13deg);
+  /* transform: rotateY(10deg) rotateZ(-13deg); */
+  transform: rotate3d(-13deg,0,5deg);
 }
 
 
