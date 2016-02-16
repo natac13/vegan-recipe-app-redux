@@ -1,0 +1,45 @@
+@import '~modularscale-sass/stylesheets/modular-scale';
+@import '~./variables';
+
+body {
+  // @include baseline-grid(24);
+  font-size: ms(0);
+  width: 100vw;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+h1 {
+  line-height: 1em;
+  font-size: ms(5);
+
+}
+
+h2 {
+  line-height: 1em;
+  font-size: ms(4);
+}
+
+h3 {
+  line-height: 1.2em;
+  font-size: ms(3);
+}
+
+h4 {
+  line-height: 1.2em;
+  font-size: ms(2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+@media (min-width:20em) { /* smartphones, iPhone, portrait 480x320 phones */ }
+@media (min-width:30.063em) { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+@media (min-width:40.063em) { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+@media (min-width:60.063em) { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:64.063em) { /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:80.063em) { /* hi-res laptops and desktops */ }

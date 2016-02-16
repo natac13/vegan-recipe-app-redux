@@ -1,6 +1,26 @@
+@import '~modularscale-sass/stylesheets/modular-scale';
+
+// modular scale setup
+$ms-base: 1em;
+$ms-ratio: 1.25;
+$ms--3: ms(-3);
+$ms--2: ms(-2);
+$ms--1: ms(-1);
+$ms-0: ms(0);
+$ms-1: ms(1);
+$ms-2: ms(2);
+$ms-3: ms(3);
+$ms-4: ms(4);
+$ms-5: ms(5);
+$ms-6: ms(6);
+
+
+
 // main
-$primary-color: #F4FFBD;
-$text: #005869;
+$primary-color: #FFFD98;
+$secondary-color: #DEBF40;
+$accent-color: #654597;
+
 
 // recipeList
 $whiter-bg: #fff;
@@ -9,3 +29,36 @@ $separator: #9CC268;
 $line-a: #E6F7FF;
 $line-b: #E6FFF2;
 $recipe-link: #CE06CE;
+
+
+// text colors
+$primary-text: #005869;
+$secondary-text: #513D1F;
+$error-text: #E65C5C;
+
+
+
+// Vertical rhythm check
+@mixin baseline-grid( $line-height:24 ) {
+
+  position: relative;
+
+  &:after {
+    position: absolute;
+    width: auto;
+    height: auto;
+    z-index: 9999;
+    content: '';
+    display: block;
+    pointer-event: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url(http://basehold.it/image.php?height=#{$line-height}) repeat top left;
+  }
+
+  &:active:after {
+    display: none;
+  }
+}

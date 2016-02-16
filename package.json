@@ -82,6 +82,7 @@
     "react-redux": "4.0.4",
     "react-router": "1.0.3",
     "react-tap-event-plugin": "0.2.1",
+    "react-toolbox": "0.14.1",
     "redux": "3.0.5",
     "redux-actions": "0.9.1",
     "redux-devtools": "3.1.1",
@@ -113,6 +114,7 @@
     "jsdom": "7.2.1",
     "json-loader": "0.5.4",
     "mocha": "2.3.4",
+    "modularscale-sass": "2.1.1",
     "node-loader": "0.5.0",
     "postcss-loader": "0.8.0",
     "react-addons-test-utils": "0.14.3",
@@ -120,6 +122,7 @@
     "react-transform-hmr": "1.0.1",
     "redbox-react": "1.2.0",
     "rimraf": "2.5.0",
+    "toolbox-loader": "0.0.3",
     "url-loader": "0.5.7",
     "webpack-dev-middleware": "1.4.0",
     "webpack-hot-middleware": "2.6.0"

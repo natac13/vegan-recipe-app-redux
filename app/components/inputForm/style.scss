@@ -16,6 +16,25 @@
   }
 }
 
+.input {
+  font-size: $ms-1;
+
+  input,
+  label {
+    font-size: inherit;
+  }
+
+}
+
+.datePicker {
+  div[data-react-toolbox="month"] {
+    margin-top: 2rem;
+  }
+
+  button[data-react-toolbox="button"] {
+    font-size: $ms-0;
+  }
+}
 
 
 .buttonGroup {

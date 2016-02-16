@@ -169,29 +169,29 @@ const trace = R.curry((tag, x) => {
  * @return {obejct}        recipe with directions and ingredients stringified
  */
 export const stringifyRecipe = (recipe) => {
-    let plainRecipe = Map.isMap(recipe) ? recipe.toJS() : recipe;
-    let { ingredients, directions } = plainRecipe;
-    let strIngredients,
-        strDirections;
-    if (!!ingredients) {
-        strIngredients = ingredients.reduce((prev, ingredient, index) => {
-            if (index === 0) return `${ingredient.item}:${ingredient.amount}`;
-            return `${prev};${ingredient.item}:${ingredient.amount}`;
-        }, '');
-    }
+  let plainRecipe = Map.isMap(recipe) ? recipe.toJS() : recipe;
+  let { ingredients, directions } = plainRecipe;
+  let strIngredients,
+    strDirections;
+  if (!!ingredients) {
+    strIngredients = ingredients.reduce((prev, ingredient, index) => {
+      if (index === 0) return `${ingredient.item}:${ingredient.amount}`;
+      return `${prev};${ingredient.item}:${ingredient.amount}`;
+    }, '');
+  }
 
-    if (!!directions) {
-        strDirections = directions.reduce((prev, direction, index) => {
-            if (index === 0) return direction;
-            return `${prev};${direction}`;
-        },  '');
-    }
+  if (!!directions) {
+    strDirections = directions.reduce((prev, direction, index) => {
+      if (index === 0) return direction;
+      return `${prev};${direction}`;
+    },  '');
+  }
 
-    return {
-        ...plainRecipe,
-        ingredients: strIngredients,
-        directions: strDirections
-    };
+  return {
+    ...plainRecipe,
+    ingredients: strIngredients,
+    directions: strDirections
+  };
 };
 
 export const lineify = R.replace(/(;)/g, '$1\n');
@@ -202,22 +202,22 @@ export const lineify = R.replace(/(;)/g, '$1\n');
  * @return {[type]}      [description]
  */
 export const formatDate = (date) => {
-    const dateFormatted = moment(new Date(date)).format('MMMM DD, YYYY');
-    return dateFormatted;
+  const dateFormatted = moment(new Date(date)).format('MMMM DD, YYYY');
+  return dateFormatted;
 };
 
 export const handlePreview = (fields) => {
-    const { name, created_date, directions, ingredients } = fields;
-    const defaultDate = moment().format('MMMM DD, YYYY');
-    const finalDate = created_date.value || defaultDate;
-    return {
-        name: format('name')(!name.value ? '' : name.value),
-        created_date: formatDate(finalDate),
-        directions: format('directions')
-                            (!directions.value ? '' : directions.value),
-        ingredients: format('ingredients')
-                            (!ingredients.value ? '' : ingredients.value)
-    };
+  const { name, created_date, directions, ingredients } = fields;
+  const defaultDate = moment().format('MMMM DD, YYYY');
+  const finalDate = created_date.value || defaultDate;
+  return {
+    name: format('name')(!name.value ? '' : name.value),
+    created_date: formatDate(finalDate),
+    directions: format('directions')
+                        (!directions.value ? '' : directions.value),
+    ingredients: format('ingredients')
+                        (!ingredients.value ? '' : ingredients.value)
+  };
 };
 
 /**
