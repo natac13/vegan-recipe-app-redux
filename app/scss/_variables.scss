@@ -1,8 +1,9 @@
 @import '~modularscale-sass/stylesheets/modular-scale';
 
 // modular scale setup
-$ms-base: 1em;
-$ms-ratio: 1.25;
+$ms-base: 1em; // equals 16px;
+$ms-ratio: 1.333;
+
 $ms--3: ms(-3);
 $ms--2: ms(-2);
 $ms--1: ms(-1);
@@ -13,6 +14,7 @@ $ms-3: ms(3);
 $ms-4: ms(4);
 $ms-5: ms(5);
 $ms-6: ms(6);
+$ms-7: ms(7);
 
 
 

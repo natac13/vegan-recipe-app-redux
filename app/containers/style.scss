@@ -1,34 +1,43 @@
-@import '~normalize.css';
 @import '~../scss/variables';
 
 body {
   font-family: 'Roboto', sans-serif;
 }
-@keyframes pulse {
-  0% { text-shadow: 8px 3px 13px darken($primary-color, 80%); }
-  50% { text-shadow: -3px 1px 8px darken($primary-color, 40%); }
-  100% { text-shadow: 8px 3px 13px darken($primary-color, 80%); }
-}
-.header {
-  margin: 0;
-  text-align: center;
-  background-color: $primary-color;
 
-  h1 {
-    color: $primary-text;
-    font-family: 'Allura', cursive;
-    font-size: 7em;
-    font-weight: normal;
-    animation: pulse 5s infinite;
-    letter-spacing: 3px;
-    margin: 0;
+.body {
+  margin-top: 4rem; // bring app down from the fixedNavBar
 
-    @media screen and (max-width: 699px) {
-      font-size: 5em;
-      padding-bottom: 0.5em;
-    }
+  @media (min-width:20em) {
+    /* smartphones, iPhone, portrait 480x320 phones */
+
+  }
+
+  @media (min-width:30.063em) {
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+
+  }
+
+  @media (min-width:40.063em) {
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  }
+
+  @media (min-width:60.063em) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    margin-top: 6rem;
+
+  }
+
+  @media (min-width:64.063em) {
+    /* big landscape tablets, laptops, and desktops */
+
+  }
+
+  @media (min-width:80.063em) {
+    /* hi-res laptops and desktops */
+
   }
 }
+
 
 .container {
   display: block;

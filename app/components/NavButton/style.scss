@@ -1,0 +1,114 @@
+@import '~../../scss/variables';
+
+.navBars {
+  color: $primary-text;
+  font-size: $ms-3;
+  transition: .5s;
+  pointer-events: auto;
+
+
+  &:hover {
+    color: darken($primary-text, 10%);
+  }
+
+  @media (min-width:20em) {
+    /* smartphones, iPhone, portrait 480x320 phones */
+
+  }
+
+  @media (min-width:30.063em) {
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+
+  }
+
+  @media (min-width:40.063em) {
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+
+  }
+
+  @media (min-width:60.063em) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+
+
+  }
+
+  @media (min-width:64.063em) {
+    /* big landscape tablets, laptops, and desktops */
+
+  }
+
+  @media (min-width:80.063em) {
+    /* hi-res laptops and desktops */
+
+  }
+}
+
+
+.dialog {
+  width: 75vw;
+  height: 50vh;
+  border-radius: 3px;
+
+  @media (min-width:30.063em) {
+    /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+    width: 70vw;
+  }
+
+  @media (min-width:40.063em) {
+    /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+    width: 45vw;
+  }
+
+  @media (min-width:60.063em) {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    width: 40vw;
+    height: 40vh;
+  }
+
+  @media (min-width:64.063em) {
+    /* big landscape tablets, laptops, and desktops */
+    width: 30vw;
+  }
+
+
+  section[role='body'] {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  & > nav[role='navigation'] {
+    display: none;
+  }
+}
+
+.link {
+  font-family: inherit;
+  text-transform: uppercase;
+  color: blue;
+  border: 0 solid $primary-text;
+  transition: all 0.4s ease-in;
+  transition-delay: 0.1s;
+  box-shadow: 0 0 0 white inset;
+  padding: 0;
+
+  &:hover {
+  color: white;
+  // text-decoration: underline;
+  // border-bottom: 0.1em solid blue;
+  // border-top: 0.1em solid blue;
+  box-shadow: 0 0 13px white inset;
+  }
+
+  & > span {
+    font-size: ms(1);
+    color: inherit;
+    text-decoration: inherit;
+    transition: all 0.4s ease-out;
+    z-index: 1;
+
+
+  }
+}
