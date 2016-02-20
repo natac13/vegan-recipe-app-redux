@@ -7,10 +7,32 @@
 
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,300italic,300|Allura' rel='stylesheet' type='text/css'>
 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+
   <title>Vegan Recipe App</title>
   <link rel=stylesheet href="./style.css" type='text/css'>
 </head>
 <body>
+<!-- Facebook SDK -->
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1711778675706715',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
   <div id="root"></div>
   <script src="./bundle.js"></script>
 
