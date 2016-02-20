@@ -1,35 +1,100 @@
 @import '~modularscale-sass/stylesheets/modular-scale';
 @import '~./variables';
+// got these values from gridlover.net
 
 body {
   // @include baseline-grid(24);
   font-size: ms(0);
   width: 100vw;
+  padding: 1.5rem;
+  line-height: 1.5rem;
 }
 
 p {
-  line-height: 1.5em;
 }
 
 h1 {
-  line-height: 1em;
+  font-family: inherit;
+  // font weight:
+  font-style: inherit;
+  line-height: 3rem;
   font-size: ms(5);
-
+  margin-top: 1.5rem;
+  margin-bottom: 0rem;
 }
 
 h2 {
-  line-height: 1em;
+  font-family: inherit;
+  // font-weight:
+  font-style: inherit;
+  line-height: 3rem;
   font-size: ms(4);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 h3 {
-  line-height: 1.2em;
+  font-family: inherit;
+  // font-weight:
+  font-style: inherit;
+  line-height: 1.5rem;
   font-size: ms(3);
+  margin-top: 1.5rem;
+  margin-bottom: 0rem;
 }
 
 h4 {
-  line-height: 1.2em;
+  font-family: inherit;
+  // font-weight:
+  font-style: inherit;
+  line-height: 1.5em;
   font-size: ms(2);
+  margin-top: 1.5rem;
+  margin-bottom: 0rem;
+}
+
+h5 {
+  font-family: inherit;
+  // font-weight: 400;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 24px;
+  margin-bottom: 0px;
+}
+
+p, ul, ol, pre, table, blockquote {
+  margin-top: 0px;
+  margin-bottom: 24px;
+}
+
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+hr {
+  border: 1px solid;
+  margin: -1px 0;
+}
+
+b, strong, em, small, code {
+  line-height: 1;
+}
+
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+a {
+  color: #268ED9;
 }
 
 * {

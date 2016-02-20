@@ -68,7 +68,7 @@ const AddRecipe = (props) => {
         name: format('name')(!name ? '' : name),
         id: uuid.v4(),
         created_date: finalDate,
-        imageURL: img, // empty if no img uploaded
+        imageURL: img || '', // empty if no img uploaded
         ingredients: format('ingredients')(!ingredients ? '' : ingredients),
         directions: format('directions')(!directions ? '' : directions)
       });

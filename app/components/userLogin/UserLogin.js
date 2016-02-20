@@ -6,7 +6,6 @@ import Promise from 'bluebird';
 
 /*** Third party components ***/
 import Input from 'react-toolbox/lib/input';
-import TextField from 'material-ui/lib/text-field';
 import Icon from 'react-fa';
 
 /*** My components ***/
@@ -16,38 +15,31 @@ import Button from '../linkButton';
 import style from './style';
 
 
-/*===========================================
-=            Firebase Connection            =
-===========================================*/
-
-import Firebase from 'firebase';
-import Fireproof from 'fireproof';
-const fireRef = new Firebase('https://vegan-recipes.firebaseio.com/');
-const fp = new Fireproof(fireRef);
-
-
-/*=====  End of Firebase Connection  ======*/
-
-
 class UserLogin extends Component {
 
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleGoogle = this.handleGoogle.bind(this);
   }
 
-  handleGoogle(event) {
+
+  handleLogin(type, event) {
     event.preventDefault();
-    const { login, push } = this.props.actions;
-    const action = login();
+    const { push } = this.props.actions;
+    const login = this.props.actions[`login${type}`];
+    const action = login(); // just the loginTYPE being called
     action.then((action) => {
       if (action.error) {
-
+        console.log(action.error);
       } else {
         push('/recipes');
       }
     });
+  }
+
+  handleLogout(event) {
+    event.preventDefault();
+    this.props.actions.logout();
 
   }
 
@@ -110,10 +102,30 @@ class UserLogin extends Component {
               icon={<Icon name="undo" />}
               disabled={submitting} />
           <Button
-              onClick={this.handleGoogle}
-              label="Login with Google"
-              icon={<Icon name="google" />}
-              disabled={submitting} />
+            onClick={this.handleLogin.bind(this, 'Google')}
+            label="Login with Google"
+            icon={<Icon name="google" />}
+            disabled={submitting} />
+          <Button
+            onClick={this.handleLogin.bind(this, 'Github')}
+            label="Login with Github"
+            icon={<Icon name="github" />}
+            disabled={submitting} />
+          <Button
+            onClick={this.handleLogin.bind(this, 'Twitter')}
+            label="Login with Twitter"
+            icon={<Icon name="twitter" />}
+            disabled={submitting} />
+          <Button
+            onClick={this.handleLogin.bind(this, 'Facebook')}
+            label="Login with Facebook"
+            icon={<Icon name="facebook" />}
+            disabled={submitting} />
+          <Button
+            onClick={this.handleLogout.bind(this)}
+            label="Logout Bye Bye!"
+            icon={<Icon name="sign-out" />}
+            disabled={submitting} />
       </form>
     );
   }

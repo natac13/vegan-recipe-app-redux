@@ -11,9 +11,7 @@ import {
 =====================================================*/
 
 import Firebase from 'firebase';
-import Fireproof from 'fireproof';
-const fireRef = new Firebase('https://vegan-recipes.firebaseio.com/');
-const fp = new Fireproof(fireRef);
+const fp = new Firebase('https://vegan-recipes.firebaseio.com/');
 const list = fp.child('recipeList');
 
 
@@ -21,7 +19,8 @@ const list = fp.child('recipeList');
 
 describe('Getting the recipeList from Firebase', () => {
     it('should get data from Firebase', (done) => {
-        list.then((snap) => {
+        list.once('value')
+        .then((snap) => {
             let recipeList;
             recipeList = snap.val();
             expect(recipeList).to.be.ok;

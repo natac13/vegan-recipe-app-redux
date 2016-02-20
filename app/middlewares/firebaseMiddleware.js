@@ -1,24 +1,28 @@
 import {
-    RECIPE_ADD,
-    RECIPE_DELETE,
-    RECIPE_UPDATE,
-    RECIPE_UPDATE_NAME,
-    RECIPE_UPDATE_DIRECTIONS,
-    RECIPE_UPDATE_INGREDIENTS,
-    LIST_BUILD,
-    LOGIN,
-    LOGOUT,
-    LOGIN_ADMIN,
-    LOGOUT_ADMIN
+  RECIPE_ADD,
+  RECIPE_DELETE,
+  RECIPE_UPDATE,
+  RECIPE_UPDATE_NAME,
+  RECIPE_UPDATE_DIRECTIONS,
+  RECIPE_UPDATE_INGREDIENTS,
+  LIST_BUILD,
+  LOGIN,
+  LOGOUT,
+  LOGIN_ADMIN,
+  LOGOUT_ADMIN,
+  LOGIN_GOOGLE,
+  LOGIN_GITHUB,
+  LOGIN_TWITTER,
+  LOGIN_FACEBOOK
 } from '../constants/';
 
 import {
-    dbRequest,
-    failedRequest,
-    successfulRequest,
-    push,
-    login,
-    logout
+  dbRequest,
+  failedRequest,
+  successfulRequest,
+  push,
+  login,
+  logout
 } from '../actions/';
 
 /*==================================
@@ -26,20 +30,21 @@ import {
 ==================================*/
 
 import {
-    snakeCase,
-    snakedNameOf
+  snakeCase,
+  snakedNameOf
 } from '../js/core_helpers';
 
 import {
-    recipeExtras
+  recipeExtras
 } from '../js/core';
 
 
 import {
-    stringifyRecipe,
-    authToUser,
-    properRecipeFormat
+  stringifyRecipe,
+  properRecipeFormat
 } from '../js/format';
+
+import { authToUser } from '../js/formatting/user';
 
 /*=====  End of Formatting  ======*/
 
@@ -48,133 +53,188 @@ import {
 ===========================================*/
 
 import Firebase from 'firebase';
-import Fireproof from 'fireproof';
-const fireRef = new Firebase('https://vegan-recipes.firebaseio.com/');
-const fp = new Fireproof(fireRef);
+const fp = new Firebase('https://vegan-recipes.firebaseio.com/');
 const list = fp.child('recipeList');
+const users = fp.child('users');
+
+/*** Save user to db  ***/
+fp.onAuth((authData) => {
+  console.log(authData)
+  if (authData) {
+    users.child(authData.uid).set(authToUser(authData));
+  }
+});
 
 /*=====  End of Firebase Connection  ======*/
 
 
 const firebaseMiddleware = ({ dispatch, getState }) => next => {
-    let firebaseRecipeList = {};
+  let firebaseRecipeList = {};
 
 
-    return action => {
-        /*
-        When I call the listBuild action from RecipeList.js the middleware will
-        intercept and create the actions signature that I first had. ~~Because I
-        dispatch the same action.type the I need to check action.recipeList
-        is undefined or I get an infinite loop~~ Instead just call next which is
-        the same as dispatch except for the fact it just continues down the
-        middleware chain to the store/reducer. The dispatch will start the
-        cycle from the beginner forcing me into the check with undefined.
-         */
-        if (action.type === LIST_BUILD) {
-            dispatch(dbRequest());
-            return list.then(
-                function listSuccessful(snap)  {
-                    dispatch(successfulRequest());
-                    return next({ ...action, recipeList: snap.val() });
-                },
-                function listFialure(error) {
-                    dispatch(failedRequest(error));
-                });
+  return action => {
+    /*
+    When I call the listBuild action from RecipeList.js the middleware will
+    intercept and create the actions signature that I first had. ~~Because I
+    dispatch the same action.type the I need to check action.recipeList
+    is undefined or I get an infinite loop~~ Instead just call next which is
+    the same as dispatch except for the fact it just continues down the
+    middleware chain to the store/reducer. The dispatch will start the
+    cycle from the beginner forcing me into the check with undefined.
+     */
+    if (action.type === LIST_BUILD) {
+      dispatch(dbRequest());
+      return list.once('value')
+      .then(
+        function listSuccessful(snap)  {
+          dispatch(successfulRequest());
+          return next({ ...action, recipeList: snap.val() });
+        },
+        function listFialure(error) {
+          dispatch(failedRequest(error));
+        });
+    }
+    else if (action.type === RECIPE_ADD) {
+      /*
+      Recipe is from the AddRecipe Component state which is an immutable
+      data structure.
+      Becomes stringified to add to the DB.
+       */
+      let recipe = stringifyRecipe(action.recipe);
+      // create a child Firebase ref for the new recipe
+      const snakedName = snakeCase(recipe.name);
+      const recipeDBPath = list.child(snakedName);
+      // Send to Firebase
+      return recipeDBPath.set(recipe).then(
+        function addSuccessful() {
+          // once successful continue the action to be added
+          return next(action);
+        },
+        function addFailure(error) {
+          // if there was an error I will not continue with recipeAdd
+          // but instead dispatch a failedRequest action, passing in
+          // the error object.
+          return dispatch(failedRequest(error));
         }
-        else if (action.type === RECIPE_ADD) {
-            /*
-            Recipe is from the AddRecipe Component state which is an immutable
-            data structure.
-            Becomes stringified to add to the DB.
-             */
-            let recipe = stringifyRecipe(action.recipe);
-            // create a child Firebase ref for the new recipe
-            const snakedName = snakeCase(recipe.name);
-            const recipeDBPath = list.child(snakedName);
-            // Send to Firebase
-            return recipeDBPath.set(recipe).then(
-                function addSuccessful() {
-                    // once successful continue the action to be added
-                    return next(action);
-                },
-                function addFailure(error) {
-                    // if there was an error I will not continue with recipeAdd
-                    // but instead dispatch a failedRequest action, passing in
-                    // the error object.
-                    return dispatch(failedRequest(error));
-                }
-            );
+      );
 
+    }
+    else if (action.type == RECIPE_UPDATE) {
+      const { newRecipe, oldRecipe } = action;
+      /*
+      Check if the recipe name has been changed from the original. This is
+      important since the name is used as the key for the recipe in both
+      the Firebase data structure and the Redux store.
+       */
+      if (newRecipe.get('name') !== oldRecipe.get('name')) {
+        list.child(snakeCase(oldRecipe.get('name'))).remove();
+      }
+
+      // find the child Firebase ref for the recipe to update
+      // create a DBPath if deleted above
+      const snakedName = snakeCase(newRecipe.get('name'));
+      const recipeDBPath = list.child(snakedName);
+      // Send to Firebase
+      let recipe = stringifyRecipe(newRecipe);
+      return recipeDBPath.set(recipe).then(
+        function updateSuccessful() {
+          return next(action);
+        },
+        function updateFailure(error) {
+          return dispatch(failedRequest(error));
         }
-        else if (action.type == RECIPE_UPDATE) {
-            const { newRecipe, oldRecipe } = action;
-            /*
-            Check if the recipe name has been changed from the original. This is
-            important since the name is used as the key for the recipe in both
-            the Firebase data structure and the Redux store.
-             */
-            if (newRecipe.get('name') !== oldRecipe.get('name')) {
-                list.child(snakeCase(oldRecipe.get('name'))).remove();
-            }
+      );
 
-            // find the child Firebase ref for the recipe to update
-            // create a DBPath if deleted above
-            const snakedName = snakeCase(newRecipe.get('name'));
-            const recipeDBPath = list.child(snakedName);
-            // Send to Firebase
-            let recipe = stringifyRecipe(newRecipe);
-            return recipeDBPath.set(recipe).then(
-                function updateSuccessful() {
-                    return next(action);
-                },
-                function updateFailure(error) {
-                    return dispatch(failedRequest(error));
-                }
-            );
+    } else if (action.type === LOGIN_ADMIN) {
+      // this action is where I started with redux-actions and FSA
+      const { username, password } = action.payload;
+      return fp.authWithPassword({
+        email: username,
+        password
+      }, { remember: 'sessionOnly' }).then(
+        function loginSuccess(authData) {
+          const user = authToUser(authData);
+          return next({
+            ...action,
+            payload: user
+          });
+        },
+        function loginFailure(error) {
+          return dispatch(failedRequest(error));
+        });
 
-        } else if (action.type === LOGIN_ADMIN) {
-            // this action is where I started with redux-actions and FSA
-            const { username, password } = action.payload;
-            return fp.authWithPassword({
-                email: username,
-                password
-            }, { remember: 'sessionOnly' }).then(
-                function loginSuccess(authData) {
-                    const user = authToUser(authData);
-                    return next({
-                        ...action,
-                        payload: user
-                    });
-                },
-                function loginFailure(error) {
-                    return dispatch(failedRequest(error));
-                });
+    } else if (action.type === LOGIN_GOOGLE) {
+      return fp.authWithOAuthPopup('google', {
+        remember: 'sessionOnly'
+      })
+      .then(
+        function loginSuccess(authData) {
+          console.log(authData);
 
-        } else if (action.type === LOGIN) {
-            return fp.authWithOAuthPopup(
-                'google',
-                { remember: 'sessionOnly' }
-            )
-            .then(
-                function loginSuccess(authData) {
+          const user = authToUser(authData);
+          return next({
+            ...action,
+            payload: user
+          });
+        },
+        function loginFailure(error) {
+          return dispatch(failedRequest(error));
+        });
 
-                    const user = authToUser(authData);
-                    return next({
-                        ...action,
-                        payload: user
-                    });
-                },
-                function loginFailure(error) {
-                    return dispatch(failedRequest(error));
-                });
+    } else if (action.type === LOGIN_GITHUB) {
+      return fp.authWithOAuthPopup('github', {
+        remember: 'sessionOnly'
+        // scope: 'user:email'
+      })
+      .then(
+        function loginSuccess(authData) {
+          console.log(authData);
 
-        } else {
-            const nextState = next(action);
-            return nextState;
+          const user = authToUser(authData);
+          return dispatch(login(user));
+        },
+        function loginFailure(error) {
+          return dispatch(failedRequest(error));
+        });
+    } else if (action.type === LOGIN_TWITTER) {
+      return fp.authWithOAuthPopup('twitter', {
+        remember: 'sessionOnly'
+      })
+      .then(
+        function loginSuccess(authData) {
+          console.log(authData);
 
-        }
+          const user = authToUser(authData);
+          return dispatch(login(user));
+        },
+        function loginFailure(error) {
+          return dispatch(failedRequest(error));
+        });
+    } else if (action.type === LOGIN_FACEBOOK) {
+      return fp.authWithOAuthPopup('facebook', {
+        remember: 'sessionOnly'
+      })
+      .then(
+        function loginSuccess(authData) {
+          console.log(authData);
 
-    };
+          const user = authToUser(authData);
+          console.log(user);
+          return dispatch(login(user));
+        },
+        function loginFailure(error) {
+          return dispatch(failedRequest(error));
+        });
+    } else if (action.type === LOGOUT) {
+      fp.unauth();
+      return next({ ...action });
+    } else {
+      const nextState = next(action);
+      return nextState;
+
+    }
+
+  };
 };
 
 export default firebaseMiddleware;

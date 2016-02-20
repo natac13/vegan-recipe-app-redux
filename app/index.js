@@ -45,9 +45,9 @@ import { history } from './store/configureStore';
  * I guessed at just using pushPath to reset the URL which works but I do think
  * there has to be a better way. However I got this working.
  */
-import { push } from './actions/';
+// import { push } from './actions/';
 // console.log(store.getState());
-store.dispatch(push('/'));
+// store.dispatch(push('/'));
 // console.log(store.getState());
 
 
