@@ -65,6 +65,25 @@ fp.onAuth((authData) => {
   }
 });
 
+
+function authenticate(next, action, dispatch, fireRef, provider) {
+  return fireRef.authWithOAuthPopup(provider, {
+    remember: 'sessionOnly'
+  })
+  .then(
+    function loginSuccess(authData) {
+      console.log(authData);
+
+      const user = authToUser(authData);
+      return next({
+        ...action,
+        payload: user
+      });
+    },
+    function loginFailure(error) {
+      return dispatch(failedRequest(error));
+    });
+}
 /*=====  End of Firebase Connection  ======*/
 
 
@@ -164,67 +183,13 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
         });
 
     } else if (action.type === LOGIN_GOOGLE) {
-      return fp.authWithOAuthPopup('google', {
-        remember: 'sessionOnly'
-      })
-      .then(
-        function loginSuccess(authData) {
-          console.log(authData);
-
-          const user = authToUser(authData);
-          return next({
-            ...action,
-            payload: user
-          });
-        },
-        function loginFailure(error) {
-          return dispatch(failedRequest(error));
-        });
-
+      return authenticate(next, action, dispatch, fp, 'google');
     } else if (action.type === LOGIN_GITHUB) {
-      return fp.authWithOAuthPopup('github', {
-        remember: 'sessionOnly'
-        // scope: 'user:email'
-      })
-      .then(
-        function loginSuccess(authData) {
-          console.log(authData);
-
-          const user = authToUser(authData);
-          return dispatch(login(user));
-        },
-        function loginFailure(error) {
-          return dispatch(failedRequest(error));
-        });
+      return authenticate(next, action, dispatch, fp, 'github');
     } else if (action.type === LOGIN_TWITTER) {
-      return fp.authWithOAuthPopup('twitter', {
-        remember: 'sessionOnly'
-      })
-      .then(
-        function loginSuccess(authData) {
-          console.log(authData);
-
-          const user = authToUser(authData);
-          return dispatch(login(user));
-        },
-        function loginFailure(error) {
-          return dispatch(failedRequest(error));
-        });
+      return authenticate(next, action, dispatch, fp, 'twitter');
     } else if (action.type === LOGIN_FACEBOOK) {
-      return fp.authWithOAuthPopup('facebook', {
-        remember: 'sessionOnly'
-      })
-      .then(
-        function loginSuccess(authData) {
-          console.log(authData);
-
-          const user = authToUser(authData);
-          console.log(user);
-          return dispatch(login(user));
-        },
-        function loginFailure(error) {
-          return dispatch(failedRequest(error));
-        });
+      return authenticate(next, action, dispatch, fp, 'facebook');
     } else if (action.type === LOGOUT) {
       fp.unauth();
       return next({ ...action });
