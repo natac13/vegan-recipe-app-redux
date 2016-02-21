@@ -25,6 +25,11 @@ import {
   logout
 } from '../actions/';
 
+import {
+  authenticate,
+  sendRecipe
+} from './helpers';
+
 /*==================================
 =            Formatting            =
 ==================================*/
@@ -56,42 +61,27 @@ import Firebase from 'firebase';
 const fp = new Firebase('https://vegan-recipes.firebaseio.com/');
 const list = fp.child('recipeList');
 const users = fp.child('users');
+let authID;
 
+/*=====  End of Firebase Connection  ======*/
 /*** Save user to db  ***/
 fp.onAuth((authData) => {
-  console.log(authData)
+  console.log(authData);
   if (authData) {
     users.child(authData.uid).set(authToUser(authData));
+    authID = authData.uid;
   }
 });
 
+/*==================================
+=            MIDDLEWARE            =
+==================================*/
 
-function authenticate(next, action, dispatch, fireRef, provider) {
-  return fireRef.authWithOAuthPopup(provider, {
-    remember: 'sessionOnly'
-  })
-  .then(
-    function loginSuccess(authData) {
-      console.log(authData);
-
-      const user = authToUser(authData);
-      return next({
-        ...action,
-        payload: user
-      });
-    },
-    function loginFailure(error) {
-      return dispatch(failedRequest(error));
-    });
-}
-/*=====  End of Firebase Connection  ======*/
-
-
-const firebaseMiddleware = ({ dispatch, getState }) => next => {
+const firebaseMiddleware = ({ dispatch, getState }) => (next) => {
   let firebaseRecipeList = {};
 
 
-  return action => {
+  return (action) => {
     /*
     When I call the listBuild action from RecipeList.js the middleware will
     intercept and create the actions signature that I first had. ~~Because I
@@ -119,50 +109,42 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
       data structure.
       Becomes stringified to add to the DB.
        */
-      let recipe = stringifyRecipe(action.recipe);
+      let recipe = stringifyRecipe(action.recipe, authID);
+
       // create a child Firebase ref for the new recipe
       const snakedName = snakeCase(recipe.name);
       const recipeDBPath = list.child(snakedName);
       // Send to Firebase
-      return recipeDBPath.set(recipe).then(
-        function addSuccessful() {
-          // once successful continue the action to be added
-          return next(action);
-        },
-        function addFailure(error) {
-          // if there was an error I will not continue with recipeAdd
-          // but instead dispatch a failedRequest action, passing in
-          // the error object.
-          return dispatch(failedRequest(error));
-        }
-      );
+      return sendRecipe(next, dispatch, action, recipeDBPath, recipe);
 
     }
     else if (action.type == RECIPE_UPDATE) {
       const { newRecipe, oldRecipe } = action;
-      /*
-      Check if the recipe name has been changed from the original. This is
-      important since the name is used as the key for the recipe in both
-      the Firebase data structure and the Redux store.
-       */
-      if (newRecipe.get('name') !== oldRecipe.get('name')) {
-        list.child(snakeCase(oldRecipe.get('name'))).remove();
-      }
 
       // find the child Firebase ref for the recipe to update
       // create a DBPath if deleted above
       const snakedName = snakeCase(newRecipe.get('name'));
       const recipeDBPath = list.child(snakedName);
       // Send to Firebase
-      let recipe = stringifyRecipe(newRecipe);
-      return recipeDBPath.set(recipe).then(
-        function updateSuccessful() {
-          return next(action);
-        },
-        function updateFailure(error) {
-          return dispatch(failedRequest(error));
-        }
-      );
+      let recipe = stringifyRecipe(newRecipe, authID);
+
+      /*
+      Check if the recipe name has been changed from the original. This is
+      important since the name is used as the key for the recipe in both
+      the Firebase data structure and the Redux store.
+       */
+      if (newRecipe.get('name') !== oldRecipe.get('name')) {
+        return list.child(snakeCase(oldRecipe.get('name'))).remove()
+          .then(
+            function removeSuccess() {
+              return sendRecipe(next, dispatch, action, recipeDBPath, recipe);
+            },
+            function removeFailure(error) {
+              console.log('User does not have privilege to write to this recipe');
+              return dispatch(failedRequest(error));
+            });
+      }
+      return sendRecipe(next, dispatch, action, recipeDBPath, recipe);
 
     } else if (action.type === LOGIN_ADMIN) {
       // this action is where I started with redux-actions and FSA
@@ -183,13 +165,13 @@ const firebaseMiddleware = ({ dispatch, getState }) => next => {
         });
 
     } else if (action.type === LOGIN_GOOGLE) {
-      return authenticate(next, action, dispatch, fp, 'google');
+      return authenticate(next, dispatch, action, fp, 'google');
     } else if (action.type === LOGIN_GITHUB) {
-      return authenticate(next, action, dispatch, fp, 'github');
+      return authenticate(next, dispatch, action, fp, 'github');
     } else if (action.type === LOGIN_TWITTER) {
-      return authenticate(next, action, dispatch, fp, 'twitter');
+      return authenticate(next, dispatch, action, fp, 'twitter');
     } else if (action.type === LOGIN_FACEBOOK) {
-      return authenticate(next, action, dispatch, fp, 'facebook');
+      return authenticate(next, dispatch, action, fp, 'facebook');
     } else if (action.type === LOGOUT) {
       fp.unauth();
       return next({ ...action });

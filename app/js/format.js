@@ -165,10 +165,11 @@ const trace = R.curry((tag, x) => {
  * Takes in the Immutable Map Recipe which is first converted to plain JavaScript
  * which is then run through the conversions to return a stringified recipe
  * object
- * @param  {Immutable Map} recipe
+ * @param {Immutable Map} recipe
+ * @param {String} an id which is the uid from Firebase authentication calls.
  * @return {obejct}        recipe with directions and ingredients stringified
  */
-export const stringifyRecipe = (recipe) => {
+export const stringifyRecipe = (recipe, authorID) => {
   let plainRecipe = Map.isMap(recipe) ? recipe.toJS() : recipe;
   let { ingredients, directions } = plainRecipe;
   let strIngredients,
@@ -186,8 +187,8 @@ export const stringifyRecipe = (recipe) => {
       return `${prev};${direction}`;
     },  '');
   }
-
   return {
+    authorID,
     ...plainRecipe,
     ingredients: strIngredients,
     directions: strDirections

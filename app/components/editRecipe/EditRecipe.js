@@ -36,7 +36,6 @@ class EditRecipe extends Component {
       params: { key }
     } = this.props;
     const recipeToEdit = this.props.recipeList.get(key);
-    console.log(recipeToEdit)
     this.props.initializeForm(stringifyRecipe(recipeToEdit));
   }
 
