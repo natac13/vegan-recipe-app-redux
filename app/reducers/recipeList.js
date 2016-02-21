@@ -18,7 +18,7 @@ import {
     recipeUpdateIngredients
 } from '../js/core';
 
-import { convertFirebaseData } from '../js/format';
+import { convertFirebaseData } from '../js/formatting/database';
 // import { mongoDataToImmutableMap } from '../js/database';
 
 import { snakeCase } from '../js/core_helpers';

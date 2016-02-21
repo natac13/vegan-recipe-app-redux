@@ -29,7 +29,7 @@ class NavButton extends Component {
 
     render() {
       return (
-        <div>
+        <div className={`${style.root} ${this.props.className}`}  >
           <IconButton
             className={style.navBars}
             neutral={false}

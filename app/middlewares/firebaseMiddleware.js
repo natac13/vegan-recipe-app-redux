@@ -44,12 +44,8 @@ import {
 } from '../js/core';
 
 
-import {
-  stringifyRecipe,
-  properRecipeFormat
-} from '../js/format';
-
 import { authToUser } from '../js/formatting/user';
+import { stringifyRecipe } from '../js/formatting/recipe';
 
 /*=====  End of Formatting  ======*/
 
@@ -174,7 +170,7 @@ const firebaseMiddleware = ({ dispatch, getState }) => (next) => {
       return authenticate(next, dispatch, action, fp, 'facebook');
     } else if (action.type === LOGOUT) {
       fp.unauth();
-      return next({ ...action });
+      return next(action);
     } else {
       const nextState = next(action);
       return nextState;

@@ -9,10 +9,12 @@ import moment  from 'moment';
 import uuid    from 'node-uuid';
 
 import format, {
-  formatDate,
   handlePreview,
   dropExtension
 } from '../../js/format';
+
+import { formatDate } from '../../js/formatting/helpers';
+
 import { snakedNameOf } from '../../js/core_helpers';
 
 /*** Components ***/

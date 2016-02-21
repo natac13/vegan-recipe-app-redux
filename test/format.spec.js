@@ -3,8 +3,6 @@ import { Map, List, fromJS } from 'immutable';
 
 import format, {
     capitalize,
-    normalizeTemperature,
-    tempFixer,
     presentation,
     stringifyRecipe,
     dropExtension
@@ -136,129 +134,16 @@ describe('Main format function', () => {
 
 });
 
-/*========================================
-=            Helper functions            =
-========================================*/
-describe('Formating helpers', () => {
-    describe('normalizeTemperature function', () => {
-        it('should take in a string 375F and return a formatted temperature of 375\u00B0F', () => {
-            const state = '375F';
-            const nextState = normalizeTemperature(state);
-            expect(nextState).to.equal('375\u00B0F');
-        });
 
-        it('should take 375 f and return 375\u00B0F', () => {
-            const state = '375 f';
-            const nextState = normalizeTemperature(state);
-            expect(nextState).to.equal('375\u00B0F');
-        });
-
-        it('should be able to handle Celsius as well; 350c to 350\u00B0C', () => {
-            const state = '350c';
-            const nextState = normalizeTemperature(state);
-            expect(nextState).to.equal('350\u00B0C');
-        })
-    });
-
-    describe('tempFixer which is the normalizeTemperature as a function waiting on the string to be given; can use to R.compose()', () => {
-        it('should be a function', () => {
-            expect(tempFixer).to.be.instanceof(Function);
-        });
-
-        it('should take in a string with a temperature value somewhere and normalize it', () => {
-            const state = 'set oven to 375 f and wait';
-            const nextState = tempFixer(state);
-            expect(nextState).to.equal('set oven to 375\u00B0F and wait')
-        });
-
-        it('should handle temperature at the end of strings', () => {
-            const state = 'oven 275c';
-            const nextState = tempFixer(state);
-            expect(nextState).to.equal('oven 275\u00B0C')
-        })
-
-        it('should take in "turn oven to 350f" and return "turn oven to 350\u00B0F"', () => {
-            const state = 'turn oven to 350f';
-            const nextState = tempFixer(state);
-            expect(nextState).to.equal('turn oven to 350\u00B0F')
-        })
-    });
-
-    describe('presentation function', () => {
-        it('should take in a string and make presentable by trimming, capitalizing and normalizing the temp', () => {
-            const state = 'turn oven to 350f';
-            const nextState = presentation(state);
-            expect(nextState).to.equal('Turn oven to 350\u00B0F')
-        });
+describe('presentation function', () => {
+    it('should take in a string and make presentable by trimming, capitalizing and normalizing the temp', () => {
+        const state = 'turn oven to 350f';
+        const nextState = presentation(state);
+        expect(nextState).to.equal('Turn oven to 350\u00B0F')
     });
 });
 
 
-/*=====  End of Helper functions  ======*/
-
-
-/*=======================================
-=            List -> String             =
-=======================================*/
-
-
-
-describe('stringifyRecipe', () => {
-
-    it('should take in a immutable Map recipe to be converted to the string version', () => {
-        const state = fromJS({
-            name: 'Mashed Potatoes',
-            ingredients: [
-                {
-                    item: 'banana',
-                    amount: 3
-                },
-                {
-                    item: 'oatmeal',
-                    amount: '3 scoops'
-                },
-                {
-                    item: 'water',
-                    amount: '2 bottles'
-                }
-            ],
-            directions: ['peel', 'boil', 'enjoy']
-        });
-        const nextState = stringifyRecipe(state);
-        expect(nextState.name).to.equal('Mashed Potatoes');
-        expect(nextState.ingredients).to.equal('banana:3;oatmeal:3 scoops;water:2 bottles');
-        expect(nextState.directions).to.equal('peel;boil;enjoy');
-    });
-
-    it('should be able to handle a plain JS object and still convert to the same string version for Firebase storage', () => {
-        const state = {
-            name: 'Mashed Potatoes',
-            ingredients: [
-                {
-                    item: 'banana',
-                    amount: 3
-                },
-                {
-                    item: 'oatmeal',
-                    amount: '3 scoops'
-                },
-                {
-                    item: 'water',
-                    amount: '2 bottles'
-                }
-            ],
-            directions: ['peel', 'boil', 'enjoy']
-        };
-        const nextState = stringifyRecipe(state);
-        expect(nextState.name).to.equal('Mashed Potatoes');
-        expect(nextState.ingredients).to.equal('banana:3;oatmeal:3 scoops;water:2 bottles');
-        expect(nextState.directions).to.equal('peel;boil;enjoy');
-    });
-
-});
-
-
-/*=====  End of List -> String   ======*/
 
 describe('Drop extension', () => {
     it('should drop the extension of test.js', () => {

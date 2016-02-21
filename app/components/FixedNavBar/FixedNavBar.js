@@ -7,15 +7,10 @@ import style from './style.scss';
 
 const FixedNavBar = (props) => {
   return (
-    <div className={style.fixedNavBar}>
-      <div className={style.logo}>
-        <Logo />
+    <div className={`${style.fixedNavBar} ${props.className}`}>
+      <Logo className={style.logo}/>
+      <NavButton className={style.button}/>
 
-      </div>
-      <div className={style.button}>
-        <NavButton />
-
-      </div>
     </div>
   );
 };

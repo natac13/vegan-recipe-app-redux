@@ -8,11 +8,13 @@ import Promise from 'bluebird';
 
 
 import format, {
-    formatDate,
     handlePreview,
-    stringifyRecipe,
     dropExtension
 } from '../../js/format';
+
+import { formatDate } from '../../js/formatting/helpers';
+
+import { stringifyRecipe } from '../../js/formatting/recipe';
 
 import { snakedNameOf } from '../../js/core_helpers';
 
